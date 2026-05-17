@@ -21,7 +21,9 @@ function updateStage() {
   const isComplete = rect.bottom <= window.innerHeight * 0.08;
 
   panels.forEach((panel, index) => {
-    panel.classList.toggle("is-active", index === activeIndex);
+    const isActive = index === activeIndex;
+    panel.classList.toggle("is-active", isActive);
+    panel.setAttribute("aria-hidden", String(!isActive));
   });
 
   stage.classList.toggle("is-complete", isComplete);
