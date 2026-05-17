@@ -21,6 +21,8 @@
 
 * {
   box-sizing: border-box;
+  overflow-wrap: break-word;
+  word-break: keep-all;
 }
 
 html {
@@ -733,7 +735,8 @@ figcaption {
   font-weight: 800;
   line-height: 1.25;
   text-align: center;
-  overflow-wrap: anywhere;
+  overflow-wrap: break-word;
+  word-break: keep-all;
 }
 
 .chart-detail {
