@@ -610,6 +610,7 @@ a {
 }
 
 .interactive-map-svg [id] {
+  cursor: pointer;
   transition: fill 180ms ease, opacity 180ms ease;
 }
 
@@ -827,8 +828,67 @@ figcaption {
 
 .chart-layout {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(250px, 0.28fr);
+  grid-template-columns: minmax(220px, 0.28fr) minmax(0, 1fr) minmax(250px, 0.28fr);
   min-height: 460px;
+}
+
+.chart-selector {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-content: start;
+  gap: 7px;
+  min-width: 0;
+  max-height: 520px;
+  padding: 24px 18px;
+  overflow: auto;
+  border-right: 1px solid var(--line);
+  background: #fbfcfa;
+}
+
+.chart-choice {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  min-width: 0;
+  padding: 8px 10px;
+  border: 1px solid rgba(17, 19, 24, 0.14);
+  border-radius: 999px;
+  background: #ffffff;
+  color: #17202a;
+  font: inherit;
+  font-size: 10px;
+  font-weight: 800;
+  line-height: 1.2;
+  cursor: pointer;
+  transition: background 160ms ease, color 160ms ease, transform 160ms ease;
+}
+
+.chart-choice span,
+.chart-choice strong {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.chart-choice strong {
+  color: var(--red);
+  font-size: 9px;
+}
+
+.chart-choice:hover,
+.chart-choice:focus-visible,
+.chart-choice.is-active {
+  background: var(--green);
+  color: #ffffff;
+  transform: translateX(2px);
+}
+
+.chart-choice:hover strong,
+.chart-choice:focus-visible strong,
+.chart-choice.is-active strong {
+  color: #ffffff;
 }
 
 .bar-chart {
@@ -841,6 +901,11 @@ figcaption {
   border-right: 1px solid var(--line);
 }
 
+.trend-chart {
+  grid-template-columns: repeat(var(--bar-count, 12), minmax(54px, 1fr));
+  overflow-x: auto;
+}
+
 .chart-bar {
   display: grid;
   grid-template-rows: auto 1fr auto;
@@ -851,6 +916,10 @@ figcaption {
   background: transparent;
   color: inherit;
   cursor: pointer;
+}
+
+.month-bar {
+  cursor: default;
 }
 
 .chart-bar-value {
@@ -947,9 +1016,8 @@ figcaption {
   color: #323943;
   font-size: 15px;
   line-height: 1.75;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  overflow-wrap: break-word;
+  word-break: keep-all;
 }
 
 .sparkline {
@@ -1121,6 +1189,17 @@ figcaption {
     grid-template-columns: 1fr;
   }
 
+  .chart-selector {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    max-height: 280px;
+    border-right: 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .trend-chart {
+    border-right: 0;
+  }
+
   .doc-toc {
     width: 100%;
   }
@@ -1157,6 +1236,10 @@ figcaption {
     overflow-x: auto;
     border-right: 0;
     border-bottom: 1px solid var(--line);
+  }
+
+  .trend-chart {
+    grid-template-columns: repeat(var(--bar-count, 12), minmax(54px, 1fr));
   }
 
   .img-small75 {

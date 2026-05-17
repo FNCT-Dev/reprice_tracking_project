@@ -10,19 +10,27 @@ let countersStarted = false;
 const chartText = {
   ko: {
     average: "1년 평균 거래 가격",
+    monthlyTrend: "월별 거래가격 추세",
+    selectDistrict: "지역 선택",
     rank: "선택 지역 순위",
     trendUp: "최근 12개월 추세가 완만하게 상승했습니다.",
     trendDown: "최근 12개월 추세가 조정 구간에 들어섰습니다.",
-    trendFlat: "최근 12개월 추세가 비교적 안정적으로 유지됐습니다."
+    trendFlat: "최근 12개월 추세가 비교적 안정적으로 유지됐습니다.",
+    seoulAverageNote: "서울 전체 1년 평균 거래가격입니다. 구를 선택하면 지도와 월별 추세가 함께 강조됩니다."
   },
   en: {
     average: "One-year average transaction price",
+    monthlyTrend: "Monthly transaction price trend",
+    selectDistrict: "Select district",
     rank: "Selected region rank",
     trendUp: "The 12-month trend moved upward gradually.",
     trendDown: "The 12-month trend entered a correction phase.",
-    trendFlat: "The 12-month trend stayed comparatively stable."
+    trendFlat: "The 12-month trend stayed comparatively stable.",
+    seoulAverageNote: "Seoul's one-year average transaction price. Select a district to highlight the map and monthly trend."
   }
 };
+
+const trendMonths = ["2025.04", "2025.05", "2025.06", "2025.07", "2025.08", "2025.09", "2025.10", "2025.11", "2025.12", "2026.01", "2026.02", "2026.03"];
 
 const graphData = [
   { id: "seoul", color: "#b65f5b", cluster: { ko: "서울 평균", en: "Seoul Average" }, name: { ko: "서울 평균", en: "Seoul Average" }, value: 14.04, trend: [12.85, 12.98, 13.37, 13.61, 13.77, 13.9, 14.16, 14.44, 14.62, 14.76, 14.93, 15.1] },
@@ -176,6 +184,7 @@ const koreaMapData = [
 ];
 
 const seoulMapData = [
+  { id: "seoul", cluster: { ko: "서울 전체", en: "Seoul Average" }, name: { ko: "서울 평균", en: "Seoul Average" }, price: 14.04, note: { ko: "서울 전체 2025.04-2026.03 실제 1년 평균 거래가격입니다.", en: "Actual one-year Seoul average transaction price from Apr. 2025 to Mar. 2026." } },
   { id: "gangnam", cluster: { ko: "강남권", en: "Southeast Seoul" }, name: { ko: "강남구", en: "Gangnam-gu" }, price: 30.28, note: { ko: "2025.04-2026.03 실제 1년 평균 거래가격입니다.", en: "Actual one-year average transaction price from Apr. 2025 to Mar. 2026." } },
   { id: "gangdong", cluster: { ko: "강동권", en: "Eastern Seoul" }, name: { ko: "강동구", en: "Gangdong-gu" }, price: 14.11, note: { ko: "2025.04-2026.03 실제 1년 평균 거래가격입니다.", en: "Actual one-year average transaction price from Apr. 2025 to Mar. 2026." } },
   { id: "gangbuk", cluster: { ko: "강북권", en: "Northern Seoul" }, name: { ko: "강북구", en: "Gangbuk-gu" }, price: 6.94, note: { ko: "2025.04-2026.03 실제 1년 평균 거래가격입니다.", en: "Actual one-year average transaction price from Apr. 2025 to Mar. 2026." } },
@@ -347,14 +356,20 @@ function formatPrice(value, lang) {
   return lang === "ko" ? `${value.toFixed(1)}억 원` : `₩${(value / 10).toFixed(2)}B`;
 }
 
+function getGraphItem(id) {
+  return graphData.find((item) => item.id === id) || graphData[0];
+}
+
 function updateInteractiveChart(chart, selectedId) {
   const lang = chart.dataset.lang || "en";
   const labels = chartText[lang] || chartText.en;
   const sorted = [...graphData].sort((a, b) => b.value - a.value);
-  const selected = graphData.find((item) => item.id === selectedId) || graphData[0];
+  const selected = getGraphItem(selectedId);
   const rank = sorted.findIndex((item) => item.id === selected.id) + 1;
+  const trendChart = chart.querySelector("[data-trend-chart]");
+  const maxTrend = Math.max(...selected.trend);
 
-  chart.querySelectorAll(".chart-bar").forEach((button) => {
+  chart.querySelectorAll(".chart-choice").forEach((button) => {
     button.classList.toggle("is-active", button.dataset.region === selected.id);
     button.setAttribute("aria-pressed", String(button.dataset.region === selected.id));
   });
@@ -363,29 +378,36 @@ function updateInteractiveChart(chart, selectedId) {
   chart.querySelector("[data-detail-name]").textContent = selected.name[lang];
   chart.querySelector("[data-detail-value]").textContent = formatPrice(selected.value, lang);
   chart.querySelector("[data-detail-note]").textContent = `${labels.average}: ${formatPrice(selected.value, lang)} | ${labels.rank}: ${rank}/${graphData.length}. ${labels[getTrendType(selected.trend)]}`;
-  drawSparkline(chart.querySelector("[data-sparkline]"), selected.trend);
+  trendChart.style.setProperty("--bar-count", selected.trend.length);
+  trendChart.innerHTML = selected.trend.map((value, index) => {
+    const height = Math.max((value / maxTrend) * 100, 12);
+    return `
+      <div class="chart-bar month-bar" style="--bar-color: ${selected.color}">
+        <span class="chart-bar-value">${formatPrice(value, lang)}</span>
+        <span class="chart-bar-fill" style="height: ${height}%"></span>
+        <span class="chart-bar-label">${trendMonths[index]}</span>
+      </div>
+    `;
+  }).join("");
 }
 
 function initInteractiveCharts() {
   document.querySelectorAll("[data-interactive-chart]").forEach((chart) => {
     const lang = chart.dataset.lang || "en";
-    const maxValue = Math.max(...graphData.map((item) => item.value));
-    const barChart = chart.querySelector("[data-bar-chart]");
-    barChart.style.setProperty("--bar-count", graphData.length);
+    const selector = chart.querySelector("[data-chart-selector]");
+    const districts = graphData.filter((item) => item.id !== "seoul");
 
-    barChart.innerHTML = graphData.map((item) => {
-      const height = Math.max((item.value / maxValue) * 100, 10);
+    selector.innerHTML = districts.map((item) => {
       return `
-        <button class="chart-bar" type="button" data-region="${item.id}" aria-pressed="false" style="--bar-color: ${item.color}">
-          <span class="chart-bar-value">${formatPrice(item.value, lang)}</span>
-          <span class="chart-bar-fill" style="height: ${height}%"></span>
-          <span class="chart-bar-label">${item.name[lang]}</span>
+        <button class="chart-choice" type="button" data-region="${item.id}" aria-pressed="false">
+          <span>${item.name[lang]}</span>
+          <strong>${formatPrice(item.value, lang)}</strong>
         </button>
       `;
     }).join("");
 
-    barChart.addEventListener("click", (event) => {
-      const button = event.target.closest(".chart-bar");
+    selector.addEventListener("click", (event) => {
+      const button = event.target.closest(".chart-choice");
       if (!button) return;
       updateInteractiveChart(chart, button.dataset.region);
     });
@@ -406,24 +428,45 @@ function getSvgFill(element) {
   return element.style.fill || element.getAttribute("fill") || "#cdcccc";
 }
 
+function getRegionFromSvgTarget(map, target) {
+  const region = target.closest("[id]");
+  if (!region || region.classList.contains("interactive-map-svg")) return "";
+
+  const ids = getMapSvgIds(map);
+  const match = Object.entries(ids).find(([, svgId]) => svgId === region.id);
+  return match ? match[0] : "";
+}
+
 function colorMapSvg(map, selectedId) {
   const svg = map.querySelector(".interactive-map-svg");
   if (!svg) return;
 
   const ids = getMapSvgIds(map);
+  const isSeoulMap = map.dataset.mapType === "seoul";
   Object.values(ids).forEach((svgId) => {
     const region = svg.querySelector(`#${svgId}`);
     if (!region) return;
     if (!region.dataset.originalFill) {
       region.dataset.originalFill = getSvgFill(region);
     }
-    region.style.fill = region.dataset.originalFill;
-    region.style.opacity = "1";
+    if (isSeoulMap) {
+      const dataId = Object.keys(ids).find((id) => ids[id] === svgId);
+      const item = getGraphItem(dataId);
+      region.style.fill = item.color;
+      region.style.opacity = selectedId === dataId ? "0.95" : "0.32";
+    } else {
+      region.style.fill = region.dataset.originalFill;
+      region.style.opacity = "1";
+    }
   });
 
   const selectedSvgId = ids[selectedId];
   const selectedRegion = selectedSvgId ? svg.querySelector(`#${selectedSvgId}`) : null;
   if (!selectedRegion) return;
+  if (isSeoulMap) {
+    selectedRegion.style.opacity = "0.95";
+    return;
+  }
   selectedRegion.style.fill = "#0b7f72";
   selectedRegion.style.opacity = "1";
 }
@@ -434,7 +477,7 @@ function updateMapWidget(map, selectedId) {
   const selected = data.find((item) => item.id === selectedId) || data[0];
 
   map.querySelectorAll(".map-region").forEach((button) => {
-    const isActive = button.dataset.region === selected.id;
+    const isActive = selected.id !== "seoul" && button.dataset.region === selected.id;
     button.classList.toggle("is-active", isActive);
     button.setAttribute("aria-pressed", String(isActive));
   });
@@ -481,8 +524,14 @@ function initMapWidgets() {
 
     map.addEventListener("click", (event) => {
       const button = event.target.closest(".map-region");
-      if (!button) return;
-      updateMapWidget(map, button.dataset.region);
+      if (button) {
+        updateMapWidget(map, button.dataset.region);
+        return;
+      }
+
+      const regionId = getRegionFromSvgTarget(map, event.target);
+      if (!regionId) return;
+      updateMapWidget(map, regionId);
     });
 
     inlineMapSvg(map).finally(() => {
