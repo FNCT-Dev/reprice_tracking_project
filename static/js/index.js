@@ -213,6 +213,62 @@ const koreaMapData = [
   }
 ];
 
+const seoulMapData = [
+  { id: "gangnam", cluster: { ko: "강남권", en: "Southeast Seoul" }, name: { ko: "강남구", en: "Gangnam-gu" }, price: 27.4, note: { ko: "서울 내 상위권 더미 평균 시세입니다.", en: "A top-tier dummy average price in Seoul." } },
+  { id: "gangdong", cluster: { ko: "강동권", en: "Eastern Seoul" }, name: { ko: "강동구", en: "Gangdong-gu" }, price: 16.1, note: { ko: "동부 생활권 수요를 반영한 예시 값입니다.", en: "A sample value for eastern Seoul demand." } },
+  { id: "gangbuk", cluster: { ko: "강북권", en: "Northern Seoul" }, name: { ko: "강북구", en: "Gangbuk-gu" }, price: 8.4, note: { ko: "북부 주거권 평균을 설명하는 더미 값입니다.", en: "A dummy value for northern residential Seoul." } },
+  { id: "gangseo", cluster: { ko: "서남권", en: "Western Seoul" }, name: { ko: "강서구", en: "Gangseo-gu" }, price: 10.7, note: { ko: "서부 교통권 특성을 반영한 예시 값입니다.", en: "A sample value reflecting western transit access." } },
+  { id: "gwanak", cluster: { ko: "서남권", en: "Southwest Seoul" }, name: { ko: "관악구", en: "Gwanak-gu" }, price: 10.2, note: { ko: "대학가와 주거 수요가 섞인 예시 값입니다.", en: "A sample value mixing campus and housing demand." } },
+  { id: "gwangjin", cluster: { ko: "동북권", en: "Northeast Seoul" }, name: { ko: "광진구", en: "Gwangjin-gu" }, price: 14.9, note: { ko: "한강변 접근성을 반영한 더미 값입니다.", en: "A dummy value reflecting Han River access." } },
+  { id: "guro", cluster: { ko: "서남권", en: "Southwest Seoul" }, name: { ko: "구로구", en: "Guro-gu" }, price: 9.6, note: { ko: "산업 및 교통축 수요의 예시 값입니다.", en: "A sample value for industry and transit corridors." } },
+  { id: "geumcheon", cluster: { ko: "서남권", en: "Southwest Seoul" }, name: { ko: "금천구", en: "Geumcheon-gu" }, price: 8.9, note: { ko: "서남부 업무권 특성을 반영한 더미 값입니다.", en: "A dummy value for the southwest business area." } },
+  { id: "nowon", cluster: { ko: "동북권", en: "Northeast Seoul" }, name: { ko: "노원구", en: "Nowon-gu" }, price: 8.8, note: { ko: "대규모 아파트 생활권의 예시 값입니다.", en: "A sample value for a large apartment district." } },
+  { id: "dobong", cluster: { ko: "동북권", en: "Northeast Seoul" }, name: { ko: "도봉구", en: "Dobong-gu" }, price: 7.8, note: { ko: "북동부 생활권의 더미 평균 시세입니다.", en: "A dummy average for northeastern Seoul." } },
+  { id: "dongdaemun", cluster: { ko: "동북권", en: "Northeast Seoul" }, name: { ko: "동대문구", en: "Dongdaemun-gu" }, price: 11.7, note: { ko: "도심 접근성과 대학가 수요의 예시 값입니다.", en: "A sample value for central access and campus demand." } },
+  { id: "dongjak", cluster: { ko: "서남권", en: "Southwest Seoul" }, name: { ko: "동작구", en: "Dongjak-gu" }, price: 14.3, note: { ko: "한강 이남 주거권을 반영한 더미 값입니다.", en: "A dummy value for south-of-river housing demand." } },
+  { id: "mapo", cluster: { ko: "서북권", en: "Northwest Seoul" }, name: { ko: "마포구", en: "Mapo-gu" }, price: 16.8, note: { ko: "업무와 문화 수요가 섞인 예시 값입니다.", en: "A sample value mixing office and cultural demand." } },
+  { id: "seodaemun", cluster: { ko: "서북권", en: "Northwest Seoul" }, name: { ko: "서대문구", en: "Seodaemun-gu" }, price: 12.6, note: { ko: "서북부 도심 접근성을 반영한 값입니다.", en: "A value reflecting northwest central access." } },
+  { id: "seocho", cluster: { ko: "강남권", en: "Southeast Seoul" }, name: { ko: "서초구", en: "Seocho-gu" }, price: 25.8, note: { ko: "강남권 고가 주거지의 예시 값입니다.", en: "A sample value for premium southeast housing." } },
+  { id: "seongdong", cluster: { ko: "도심권", en: "Central Seoul" }, name: { ko: "성동구", en: "Seongdong-gu" }, price: 17.2, note: { ko: "한강변 재개발 수요를 반영한 값입니다.", en: "A value reflecting riverside redevelopment demand." } },
+  { id: "seongbuk", cluster: { ko: "동북권", en: "Northeast Seoul" }, name: { ko: "성북구", en: "Seongbuk-gu" }, price: 10.5, note: { ko: "북부 주거 및 대학가 수요의 예시 값입니다.", en: "A sample value for northern housing and campus demand." } },
+  { id: "songpa", cluster: { ko: "강남권", en: "Southeast Seoul" }, name: { ko: "송파구", en: "Songpa-gu" }, price: 21.9, note: { ko: "잠실권 수요를 반영한 더미 값입니다.", en: "A dummy value reflecting Jamsil-area demand." } },
+  { id: "yangcheon", cluster: { ko: "서남권", en: "Southwest Seoul" }, name: { ko: "양천구", en: "Yangcheon-gu" }, price: 12.2, note: { ko: "목동권 교육 수요의 예시 값입니다.", en: "A sample value for Mok-dong education demand." } },
+  { id: "yeongdeungpo", cluster: { ko: "서남권", en: "Southwest Seoul" }, name: { ko: "영등포구", en: "Yeongdeungpo-gu" }, price: 13.9, note: { ko: "여의도 업무권 접근성을 반영한 값입니다.", en: "A value reflecting Yeouido business access." } },
+  { id: "yongsan", cluster: { ko: "도심권", en: "Central Seoul" }, name: { ko: "용산구", en: "Yongsan-gu" }, price: 22.8, note: { ko: "도심 핵심 개발 수요의 예시 값입니다.", en: "A sample value for central development demand." } },
+  { id: "eunpyeong", cluster: { ko: "서북권", en: "Northwest Seoul" }, name: { ko: "은평구", en: "Eunpyeong-gu" }, price: 9.4, note: { ko: "서북부 주거권 평균을 나타내는 값입니다.", en: "A value for northwest residential Seoul." } },
+  { id: "jongno", cluster: { ko: "도심권", en: "Central Seoul" }, name: { ko: "종로구", en: "Jongno-gu" }, price: 13.4, note: { ko: "도심 업무·문화축을 반영한 예시 값입니다.", en: "A sample value for central office and culture corridors." } },
+  { id: "jung", cluster: { ko: "도심권", en: "Central Seoul" }, name: { ko: "중구", en: "Jung-gu" }, price: 12.8, note: { ko: "도심 핵심 업무권의 더미 값입니다.", en: "A dummy value for the central business district." } },
+  { id: "jungnang", cluster: { ko: "동북권", en: "Northeast Seoul" }, name: { ko: "중랑구", en: "Jungnang-gu" }, price: 8.7, note: { ko: "동북부 생활권을 설명하는 예시 값입니다.", en: "A sample value for northeastern Seoul living areas." } }
+];
+
+const seoulSvgIds = {
+  gangnam: "Gangnam-gu",
+  gangdong: "Gangdong-gu",
+  gangbuk: "Gangbuk-gu",
+  gangseo: "Gangseo-gu",
+  gwanak: "Gwanak-gu",
+  gwangjin: "Gwangjin-gu",
+  guro: "Guro-gu",
+  geumcheon: "Geumcheon-gu",
+  nowon: "Nowon-gu",
+  dobong: "Dobong-gu",
+  dongdaemun: "Dongdaemun-gu",
+  dongjak: "Dongjak-gu",
+  mapo: "Mapo-gu",
+  seodaemun: "Seodaemun-gu",
+  seocho: "Seocho-gu",
+  seongdong: "Seongdong-gu",
+  seongbuk: "Seongbuk-gu",
+  songpa: "Songpa-gu",
+  yangcheon: "Yangcheon-gu",
+  yeongdeungpo: "Yeongdeungpo-gu_1_",
+  yongsan: "Yongsan-gu",
+  eunpyeong: "Eunpyeong-gu",
+  jongno: "Jongno-gu",
+  jung: "Jung-gu",
+  jungnang: "Jungnang-gu"
+};
+
 function updateHeader() {
   if (!header) return;
   header.classList.toggle("is-scrolled", window.scrollY > 20);
@@ -350,9 +406,14 @@ function initInteractiveCharts() {
   });
 }
 
-function updateKoreaMap(map, selectedId) {
+function getMapData(map) {
+  return map.dataset.mapType === "seoul" ? seoulMapData : koreaMapData;
+}
+
+function updateMapWidget(map, selectedId) {
   const lang = map.dataset.lang || "en";
-  const selected = koreaMapData.find((item) => item.id === selectedId) || koreaMapData[0];
+  const data = getMapData(map);
+  const selected = data.find((item) => item.id === selectedId) || data[0];
 
   map.querySelectorAll(".map-region").forEach((button) => {
     const isActive = button.dataset.region === selected.id;
@@ -368,8 +429,8 @@ function updateKoreaMap(map, selectedId) {
   map.querySelector("[data-map-note]").textContent = selected.note[lang];
 }
 
-function initKoreaMaps() {
-  document.querySelectorAll("[data-korea-map]").forEach((map) => {
+function initMapWidgets() {
+  document.querySelectorAll("[data-map-widget], [data-korea-map]").forEach((map) => {
     map.querySelectorAll(".map-region").forEach((button) => {
       button.setAttribute("type", "button");
       button.setAttribute("aria-pressed", "false");
@@ -378,11 +439,34 @@ function initKoreaMaps() {
     map.addEventListener("click", (event) => {
       const button = event.target.closest(".map-region");
       if (!button) return;
-      updateKoreaMap(map, button.dataset.region);
+      updateMapWidget(map, button.dataset.region);
     });
 
-    updateKoreaMap(map, "seoul");
+    updateMapWidget(map, map.dataset.defaultRegion || "seoul");
   });
+}
+
+function initScrollDots() {
+  const dots = Array.from(document.querySelectorAll("[data-scroll-dots] a"));
+  if (dots.length === 0) return;
+
+  const targets = dots
+    .map((dot) => document.querySelector(dot.getAttribute("href")))
+    .filter(Boolean);
+
+  const dotObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        dots.forEach((dot) => {
+          dot.classList.toggle("is-active", dot.getAttribute("href") === `#${entry.target.id}`);
+        });
+      });
+    },
+    { rootMargin: "-42% 0px -52% 0px", threshold: 0 }
+  );
+
+  targets.forEach((target) => dotObserver.observe(target));
 }
 
 if (navToggle && navMenu && header) {
@@ -430,4 +514,5 @@ updateHeader();
 updateStage();
 maybeStartCounters();
 initInteractiveCharts();
-initKoreaMaps();
+initMapWidgets();
+initScrollDots();

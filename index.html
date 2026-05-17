@@ -5,12 +5,12 @@
   <meta name="description" content="A data visualization project for price change tracking and repricing flows">
   <meta name="keywords" content="reprice, tracking, visualization, data">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>SEOUL MY HOME: 서울 부동산 시세 추적 프로젝트</title>
+  <title>SEOUL MY HOME: Seoul Real Estate Price Tracking Project</title>
 
   <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans:400,500,700,800|Castoro" rel="stylesheet">
   <link rel="stylesheet" href="./static/css/bulma.min.css">
   <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
-  <link rel="stylesheet" href="./static/css/index.css?v=20260518-3">
+  <link rel="stylesheet" href="./static/css/index.css?v=20260518-4">
   <link rel="icon" href="./static/images/favicon.png">
 </head>
 <body>
@@ -23,7 +23,7 @@
     <nav class="global-nav" aria-label="Primary navigation">
       <a class="brand-mark" href="#top" aria-label="SEOUL MY HOME home">
         <span>SEOUL MY HOME</span>
-        <small>: 서울 부동산 시세 추적 프로젝트</small>
+        <small>: Seoul Real Estate Price Tracking Project</small>
       </a>
       <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" data-nav-toggle>
         <span></span>
@@ -38,6 +38,13 @@
       </div>
     </nav>
   </header>
+
+  <nav class="scroll-dots" aria-label="Section shortcuts" data-scroll-dots>
+    <a href="#overview" aria-label="Project Overview"></a>
+    <a href="#features" aria-label="Core Features"></a>
+    <a href="#analysis" aria-label="Analysis Content"></a>
+    <a href="#notes" aria-label="Notes"></a>
+  </nav>
 
   <main id="top">
     <section class="hero-main scroll-stage" aria-label="Project introduction">
@@ -143,27 +150,29 @@
         <p>
           This map uses dummy regional average prices to show how housing prices differ across Korea. Click a region to view its sample average market price.
         </p>
-        <div class="korea-map-widget" data-korea-map data-lang="en">
-          <div class="korea-map-panel">
+        <div class="map-widget korea-map-widget" data-map-widget data-map-type="korea" data-lang="en">
+          <div class="map-panel korea-map-panel">
             <div class="korea-map" role="img" aria-label="Clickable map of South Korea by administrative region">
               <img src="./static/images/southKoreaLow.svg" alt="" aria-hidden="true">
-              <button class="map-region" data-region="seoul" style="left: 41%; top: 22%;">Seoul</button>
-              <button class="map-region" data-region="busan" style="left: 66%; top: 69%;">Busan</button>
-              <button class="map-region" data-region="daegu" style="left: 59%; top: 57%;">Daegu</button>
-              <button class="map-region" data-region="incheon" style="left: 29%; top: 25%;">Incheon</button>
-              <button class="map-region" data-region="gwangju" style="left: 36%; top: 72%;">Gwangju</button>
-              <button class="map-region" data-region="daejeon" style="left: 43%; top: 48%;">Daejeon</button>
-              <button class="map-region" data-region="ulsan" style="left: 72%; top: 64%;">Ulsan</button>
-              <button class="map-region" data-region="sejong" style="left: 40%; top: 43%;">Sejong</button>
-              <button class="map-region" data-region="gyeonggi" style="left: 43%; top: 29%;">Gyeonggi-do</button>
-              <button class="map-region" data-region="gangwon" style="left: 62%; top: 22%;">Gangwon-do</button>
-              <button class="map-region" data-region="chungbuk" style="left: 51%; top: 41%;">Chungbuk</button>
-              <button class="map-region" data-region="chungnam" style="left: 33%; top: 47%;">Chungnam</button>
-              <button class="map-region" data-region="jeonbuk" style="left: 40%; top: 60%;">Jeonbuk</button>
-              <button class="map-region" data-region="jeonnam" style="left: 35%; top: 78%;">Jeonnam</button>
-              <button class="map-region" data-region="gyeongbuk" style="left: 66%; top: 47%;">Gyeongbuk</button>
-              <button class="map-region" data-region="gyeongnam" style="left: 57%; top: 70%;">Gyeongnam</button>
-              <button class="map-region" data-region="jeju" style="left: 39%; top: 92%;">Jeju</button>
+            </div>
+            <div class="map-region-list" aria-label="Korea region buttons">
+              <button class="map-region" data-region="seoul">Seoul</button>
+              <button class="map-region" data-region="incheon">Incheon</button>
+              <button class="map-region" data-region="gyeonggi">Gyeonggi</button>
+              <button class="map-region" data-region="gangwon">Gangwon</button>
+              <button class="map-region" data-region="daejeon">Daejeon</button>
+              <button class="map-region" data-region="sejong">Sejong</button>
+              <button class="map-region" data-region="chungbuk">Chungbuk</button>
+              <button class="map-region" data-region="chungnam">Chungnam</button>
+              <button class="map-region" data-region="gwangju">Gwangju</button>
+              <button class="map-region" data-region="jeonnam">Jeonnam</button>
+              <button class="map-region" data-region="jeonbuk">Jeonbuk</button>
+              <button class="map-region" data-region="busan">Busan</button>
+              <button class="map-region" data-region="ulsan">Ulsan</button>
+              <button class="map-region" data-region="daegu">Daegu</button>
+              <button class="map-region" data-region="gyeongbuk">Gyeongbuk</button>
+              <button class="map-region" data-region="gyeongnam">Gyeongnam</button>
+              <button class="map-region" data-region="jeju">Jeju</button>
             </div>
           </div>
           <aside class="map-detail" aria-live="polite">
@@ -176,8 +185,48 @@
 
         <h3 id="analysis-seoul-growth" class="analysis-subtitle"><span>2.</span> Seoul Housing Price Growth Rate</h3>
         <p>
-          The existing interactive regional graph is used here to compare Seoul and selected regions through clickable bars and a 12-month trend line.
+          This Seoul map uses the same click response pattern to compare district-level dummy average prices.
         </p>
+        <div class="map-widget seoul-map-widget" data-map-widget data-map-type="seoul" data-lang="en" data-default-region="gangnam">
+          <div class="map-panel">
+            <div class="seoul-map" role="img" aria-label="Clickable map of Seoul by district">
+              <img src="./static/images/Seoul_districts.svg" alt="" aria-hidden="true">
+            </div>
+            <div class="map-region-list" aria-label="Seoul district buttons">
+              <button class="map-region" data-region="gangnam">Gangnam</button>
+              <button class="map-region" data-region="seocho">Seocho</button>
+              <button class="map-region" data-region="songpa">Songpa</button>
+              <button class="map-region" data-region="yongsan">Yongsan</button>
+              <button class="map-region" data-region="seongdong">Seongdong</button>
+              <button class="map-region" data-region="mapo">Mapo</button>
+              <button class="map-region" data-region="gwangjin">Gwangjin</button>
+              <button class="map-region" data-region="dongjak">Dongjak</button>
+              <button class="map-region" data-region="yeongdeungpo">Yeongdeungpo</button>
+              <button class="map-region" data-region="seodaemun">Seodaemun</button>
+              <button class="map-region" data-region="yangcheon">Yangcheon</button>
+              <button class="map-region" data-region="dongdaemun">Dongdaemun</button>
+              <button class="map-region" data-region="seongbuk">Seongbuk</button>
+              <button class="map-region" data-region="gangseo">Gangseo</button>
+              <button class="map-region" data-region="gwanak">Gwanak</button>
+              <button class="map-region" data-region="guro">Guro</button>
+              <button class="map-region" data-region="eunpyeong">Eunpyeong</button>
+              <button class="map-region" data-region="geumcheon">Geumcheon</button>
+              <button class="map-region" data-region="nowon">Nowon</button>
+              <button class="map-region" data-region="jung">Jung</button>
+              <button class="map-region" data-region="jongno">Jongno</button>
+              <button class="map-region" data-region="gangdong">Gangdong</button>
+              <button class="map-region" data-region="jungnang">Jungnang</button>
+              <button class="map-region" data-region="gangbuk">Gangbuk</button>
+              <button class="map-region" data-region="dobong">Dobong</button>
+            </div>
+          </div>
+          <aside class="map-detail" aria-live="polite">
+            <span data-map-cluster>Southeast Seoul</span>
+            <h4 data-map-name>Gangnam-gu</h4>
+            <strong data-map-price>0.0</strong>
+            <p data-map-note>Click a district to view the sample average market price.</p>
+          </aside>
+        </div>
         <div class="interactive-chart" data-interactive-chart data-lang="en">
           <div class="chart-head">
             <div>
@@ -255,6 +304,6 @@
     </div>
   </footer>
 
-  <script src="./static/js/index.js?v=20260518-3"></script>
+  <script src="./static/js/index.js?v=20260518-4"></script>
 </body>
 </html>
