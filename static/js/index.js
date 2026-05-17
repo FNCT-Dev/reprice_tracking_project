@@ -94,57 +94,120 @@ const graphData = [
 const koreaMapData = [
   {
     id: "seoul",
-    cluster: { ko: "수도권", en: "Capital Area" },
-    name: { ko: "서울", en: "Seoul" },
+    cluster: { ko: "특별시", en: "Special City" },
+    name: { ko: "서울특별시", en: "Seoul Special City" },
     price: 15.8,
     note: { ko: "전국에서 가장 높은 더미 평균 시세입니다.", en: "The highest dummy average market price in the dataset." }
   },
   {
-    id: "gyeonggi",
-    cluster: { ko: "수도권", en: "Capital Area" },
-    name: { ko: "경기", en: "Gyeonggi" },
-    price: 7.6,
-    note: { ko: "서울 접근성과 신도시 수요가 반영된 예시 값입니다.", en: "A sample value reflecting Seoul access and new-town demand." }
+    id: "busan",
+    cluster: { ko: "광역시", en: "Metropolitan City" },
+    name: { ko: "부산광역시", en: "Busan Metropolitan City" },
+    price: 4.9,
+    note: { ko: "해안권 대도시 수요를 반영한 더미 값입니다.", en: "A dummy value reflecting coastal metropolitan demand." }
+  },
+  {
+    id: "daegu",
+    cluster: { ko: "광역시", en: "Metropolitan City" },
+    name: { ko: "대구광역시", en: "Daegu Metropolitan City" },
+    price: 4.1,
+    note: { ko: "영남 내륙권 중심 도시의 예시 평균 시세입니다.", en: "A sample average for a major inland city in Yeongnam." }
   },
   {
     id: "incheon",
-    cluster: { ko: "수도권", en: "Capital Area" },
-    name: { ko: "인천", en: "Incheon" },
+    cluster: { ko: "광역시", en: "Metropolitan City" },
+    name: { ko: "인천광역시", en: "Incheon Metropolitan City" },
     price: 5.2,
     note: { ko: "수도권 내 상대적으로 낮은 더미 평균 시세입니다.", en: "A comparatively lower dummy average within the capital area." }
   },
   {
+    id: "gwangju",
+    cluster: { ko: "광역시", en: "Metropolitan City" },
+    name: { ko: "광주광역시", en: "Gwangju Metropolitan City" },
+    price: 3.2,
+    note: { ko: "호남권 중심 도시를 설명하기 위한 더미 값입니다.", en: "A dummy value for the central city of the Honam region." }
+  },
+  {
+    id: "daejeon",
+    cluster: { ko: "광역시", en: "Metropolitan City" },
+    name: { ko: "대전광역시", en: "Daejeon Metropolitan City" },
+    price: 3.8,
+    note: { ko: "충청권 광역 생활권의 예시 값입니다.", en: "A sample value for the Chungcheong metropolitan living area." }
+  },
+  {
+    id: "ulsan",
+    cluster: { ko: "광역시", en: "Metropolitan City" },
+    name: { ko: "울산광역시", en: "Ulsan Metropolitan City" },
+    price: 3.6,
+    note: { ko: "산업도시 특성을 반영한 예시 값입니다.", en: "A sample value reflecting industrial-city characteristics." }
+  },
+  {
+    id: "sejong",
+    cluster: { ko: "특별자치시", en: "Special Self-Governing City" },
+    name: { ko: "세종특별자치시", en: "Sejong Special Self-Governing City" },
+    price: 4.6,
+    note: { ko: "행정수도 기능을 반영한 더미 평균 시세입니다.", en: "A dummy average reflecting administrative-capital functions." }
+  },
+  {
+    id: "gyeonggi",
+    cluster: { ko: "도", en: "Province" },
+    name: { ko: "경기도", en: "Gyeonggi-do" },
+    price: 7.6,
+    note: { ko: "서울 접근성과 신도시 수요가 반영된 예시 값입니다.", en: "A sample value reflecting Seoul access and new-town demand." }
+  },
+  {
     id: "gangwon",
-    cluster: { ko: "비수도권", en: "Non-capital Region" },
-    name: { ko: "강원", en: "Gangwon" },
+    cluster: { ko: "특별자치도", en: "Special Self-Governing Province" },
+    name: { ko: "강원특별자치도", en: "Gangwon State" },
     price: 2.4,
     note: { ko: "관광 및 생활권 특성이 섞인 예시 값입니다.", en: "A sample value combining tourism and local living-area traits." }
   },
   {
-    id: "chungcheong",
-    cluster: { ko: "비수도권", en: "Non-capital Region" },
-    name: { ko: "충청", en: "Chungcheong" },
+    id: "chungbuk",
+    cluster: { ko: "도", en: "Province" },
+    name: { ko: "충청북도", en: "North Chungcheong Province" },
+    price: 2.9,
+    note: { ko: "내륙 산업 및 생활권 특성을 반영한 더미 값입니다.", en: "A dummy value reflecting inland industry and living-area traits." }
+  },
+  {
+    id: "chungnam",
+    cluster: { ko: "도", en: "Province" },
+    name: { ko: "충청남도", en: "South Chungcheong Province" },
+    price: 3.0,
+    note: { ko: "수도권 남부 확장과 산업 수요를 반영한 더미 값입니다.", en: "A dummy value reflecting southern capital-area expansion and industrial demand." }
+  },
+  {
+    id: "jeonbuk",
+    cluster: { ko: "특별자치도", en: "Special Self-Governing Province" },
+    name: { ko: "전북특별자치도", en: "Jeonbuk State" },
+    price: 2.6,
+    note: { ko: "전북권 평균을 설명하기 위한 더미 값입니다.", en: "A dummy value used to describe the Jeonbuk regional average." }
+  },
+  {
+    id: "jeonnam",
+    cluster: { ko: "도", en: "Province" },
+    name: { ko: "전라남도", en: "South Jeolla Province" },
+    price: 2.3,
+    note: { ko: "농어촌 및 중소도시 생활권을 반영한 예시 값입니다.", en: "A sample value reflecting rural, coastal, and small-city living areas." }
+  },
+  {
+    id: "gyeongbuk",
+    cluster: { ko: "도", en: "Province" },
+    name: { ko: "경상북도", en: "North Gyeongsang Province" },
+    price: 2.7,
+    note: { ko: "영남 북부권 평균을 나타내는 더미 값입니다.", en: "A dummy value representing the northern Yeongnam average." }
+  },
+  {
+    id: "gyeongnam",
+    cluster: { ko: "도", en: "Province" },
+    name: { ko: "경상남도", en: "South Gyeongsang Province" },
     price: 3.1,
-    note: { ko: "세종과 대전 생활권 영향을 반영한 더미 값입니다.", en: "A dummy value reflecting the influence of Sejong and Daejeon." }
-  },
-  {
-    id: "gyeongsang",
-    cluster: { ko: "비수도권", en: "Non-capital Region" },
-    name: { ko: "경상", en: "Gyeongsang" },
-    price: 3.7,
-    note: { ko: "부산, 대구 등 광역시 효과를 포함한 예시 값입니다.", en: "A sample value including effects from Busan, Daegu, and nearby cities." }
-  },
-  {
-    id: "jeolla",
-    cluster: { ko: "비수도권", en: "Non-capital Region" },
-    name: { ko: "전라", en: "Jeolla" },
-    price: 2.8,
-    note: { ko: "지방권 평균을 설명하기 위한 더미 값입니다.", en: "A dummy value used to describe non-capital regional averages." }
+    note: { ko: "창원과 동남권 산업 생활권을 반영한 예시 값입니다.", en: "A sample value reflecting Changwon and southeast industrial living areas." }
   },
   {
     id: "jeju",
-    cluster: { ko: "비수도권", en: "Non-capital Region" },
-    name: { ko: "제주", en: "Jeju" },
+    cluster: { ko: "특별자치도", en: "Special Self-Governing Province" },
+    name: { ko: "제주특별자치도", en: "Jeju Special Self-Governing Province" },
     price: 4.4,
     note: { ko: "섬 지역의 특수성을 반영한 예시 값입니다.", en: "A sample value reflecting the island-region context." }
   }
