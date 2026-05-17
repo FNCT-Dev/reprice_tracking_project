@@ -1,78 +1,101 @@
-window.HELP_IMPROVE_VIDEOJS = false;
+const header = document.querySelector("[data-header]");
+const navToggle = document.querySelector("[data-nav-toggle]");
+const navMenu = document.querySelector("[data-nav-menu]");
+const panels = Array.from(document.querySelectorAll("[data-stage-panel]"));
+const stage = document.querySelector(".scroll-stage");
+const counters = Array.from(document.querySelectorAll("[data-count]"));
+let countersStarted = false;
 
-var INTERP_BASE = "./static/interpolation/stacked";
-var NUM_INTERP_FRAMES = 240;
-
-var interp_images = [];
-function preloadInterpolationImages() {
-  for (var i = 0; i < NUM_INTERP_FRAMES; i++) {
-    var path = INTERP_BASE + '/' + String(i).padStart(6, '0') + '.jpg';
-    interp_images[i] = new Image();
-    interp_images[i].src = path;
-  }
+function updateHeader() {
+  if (!header) return;
+  header.classList.toggle("is-scrolled", window.scrollY > 20);
 }
 
-function setInterpolationImage(i) {
-  var image = interp_images[i];
-  image.ondragstart = function() { return false; };
-  image.oncontextmenu = function() { return false; };
-  $('#interpolation-image-wrapper').empty().append(image);
+function updateStage() {
+  if (!stage || panels.length === 0) return;
+
+  const rect = stage.getBoundingClientRect();
+  const scrollable = Math.max(stage.offsetHeight - window.innerHeight, 1);
+  const rawProgress = Math.min(Math.max(-rect.top / scrollable, 0), 1);
+  const activeIndex = Math.min(panels.length - 1, Math.floor(rawProgress * panels.length));
+  const isComplete = rect.bottom <= window.innerHeight * 0.08;
+
+  panels.forEach((panel, index) => {
+    panel.classList.toggle("is-active", index === activeIndex);
+  });
+
+  stage.classList.toggle("is-complete", isComplete);
+  document.documentElement.style.setProperty("--hero-scale", (1 + rawProgress * 0.38).toFixed(3));
+  document.documentElement.style.setProperty("--hero-shift", `${Math.round(rawProgress * -90)}px`);
 }
 
+function animateCounters() {
+  counters.forEach((counter) => {
+    const target = Number(counter.dataset.count || 0);
+    const duration = 850;
+    const start = performance.now();
 
-$(document).ready(function() {
-    // Check for click events on the navbar burger icon
-    $(".navbar-burger").click(function() {
-      // Toggle the "is-active" class on both the "navbar-burger" and the "navbar-menu"
-      $(".navbar-burger").toggleClass("is-active");
-      $(".navbar-menu").toggleClass("is-active");
+    function tick(now) {
+      const progress = Math.min((now - start) / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      counter.textContent = Math.round(target * eased).toLocaleString();
 
+      if (progress < 1) {
+        requestAnimationFrame(tick);
+      }
+    }
+
+    requestAnimationFrame(tick);
+  });
+}
+
+function maybeStartCounters() {
+  if (countersStarted || counters.length === 0) return;
+  countersStarted = true;
+  animateCounters();
+}
+
+if (navToggle && navMenu && header) {
+  navToggle.addEventListener("click", () => {
+    const isOpen = navToggle.classList.toggle("is-active");
+    navMenu.classList.toggle("is-active", isOpen);
+    header.classList.toggle("is-open", isOpen);
+    navToggle.setAttribute("aria-expanded", String(isOpen));
+  });
+
+  navMenu.addEventListener("click", (event) => {
+    if (event.target.tagName !== "A") return;
+    navToggle.classList.remove("is-active");
+    navMenu.classList.remove("is-active");
+    header.classList.remove("is-open");
+    navToggle.setAttribute("aria-expanded", "false");
+  });
+}
+
+const revealObserver = new IntersectionObserver(
+  (entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("is-visible");
+        revealObserver.unobserve(entry.target);
+      }
     });
+  },
+  { threshold: 0.18 }
+);
 
-    var options = {
-			slidesToScroll: 1,
-			slidesToShow: 3,
-			loop: true,
-			infinite: true,
-			autoplay: false,
-			autoplaySpeed: 3000,
-    }
+document.querySelectorAll(".reveal-on-scroll").forEach((section) => {
+  revealObserver.observe(section);
+});
 
-		// Initialize all div with carousel class
-    var carousels = bulmaCarousel.attach('.carousel', options);
+window.addEventListener("scroll", () => {
+  updateHeader();
+  updateStage();
+  maybeStartCounters();
+}, { passive: true });
 
-    // Loop on each carousel initialized
-    for(var i = 0; i < carousels.length; i++) {
-    	// Add listener to  event
-    	carousels[i].on('before:show', state => {
-    		console.log(state);
-    	});
-    }
+window.addEventListener("resize", updateStage);
 
-    // Access to bulmaCarousel instance of an element
-    var element = document.querySelector('#my-element');
-    if (element && element.bulmaCarousel) {
-    	// bulmaCarousel instance is available as element.bulmaCarousel
-    	element.bulmaCarousel.on('before-show', function(state) {
-    		console.log(state);
-    	});
-    }
-
-    /*var player = document.getElementById('interpolation-video');
-    player.addEventListener('loadedmetadata', function() {
-      $('#interpolation-slider').on('input', function(event) {
-        console.log(this.value, player.duration);
-        player.currentTime = player.duration / 100 * this.value;
-      })
-    }, false);*/
-    preloadInterpolationImages();
-
-    $('#interpolation-slider').on('input', function(event) {
-      setInterpolationImage(this.value);
-    });
-    setInterpolationImage(0);
-    $('#interpolation-slider').prop('max', NUM_INTERP_FRAMES - 1);
-
-    bulmaSlider.attach();
-
-})
+updateHeader();
+updateStage();
+maybeStartCounters();
