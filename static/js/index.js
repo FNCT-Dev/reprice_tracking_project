@@ -269,6 +269,26 @@ const seoulSvgIds = {
   jungnang: "Jungnang-gu"
 };
 
+const koreaSvgIds = {
+  seoul: "seoul",
+  busan: "busan",
+  daegu: "daegu",
+  incheon: "incheon",
+  gwangju: "gwangju",
+  daejeon: "daejeon",
+  ulsan: "ulsan",
+  sejong: "sejong",
+  gyeonggi: "gyeonggi",
+  gangwon: "gangwon",
+  chungbuk: "chungbuk",
+  chungnam: "chungnam",
+  jeonbuk: "jeonbuk",
+  jeonnam: "jeonnam",
+  gyeongbuk: "gyeongbuk",
+  gyeongnam: "gyeongnam",
+  jeju: "jeju"
+};
+
 function updateHeader() {
   if (!header) return;
   header.classList.toggle("is-scrolled", window.scrollY > 20);
@@ -410,6 +430,36 @@ function getMapData(map) {
   return map.dataset.mapType === "seoul" ? seoulMapData : koreaMapData;
 }
 
+function getMapSvgIds(map) {
+  return map.dataset.mapType === "seoul" ? seoulSvgIds : koreaSvgIds;
+}
+
+function getSvgFill(element) {
+  return element.style.fill || element.getAttribute("fill") || "#cdcccc";
+}
+
+function colorMapSvg(map, selectedId) {
+  const svg = map.querySelector(".interactive-map-svg");
+  if (!svg) return;
+
+  const ids = getMapSvgIds(map);
+  Object.values(ids).forEach((svgId) => {
+    const region = svg.querySelector(`#${svgId}`);
+    if (!region) return;
+    if (!region.dataset.originalFill) {
+      region.dataset.originalFill = getSvgFill(region);
+    }
+    region.style.fill = region.dataset.originalFill;
+    region.style.opacity = "1";
+  });
+
+  const selectedSvgId = ids[selectedId];
+  const selectedRegion = selectedSvgId ? svg.querySelector(`#${selectedSvgId}`) : null;
+  if (!selectedRegion) return;
+  selectedRegion.style.fill = "#0b7f72";
+  selectedRegion.style.opacity = "1";
+}
+
 function updateMapWidget(map, selectedId) {
   const lang = map.dataset.lang || "en";
   const data = getMapData(map);
@@ -427,6 +477,33 @@ function updateMapWidget(map, selectedId) {
     ? `${selected.price.toFixed(1)}억 원`
     : `KRW ${selected.price.toFixed(1)}B`;
   map.querySelector("[data-map-note]").textContent = selected.note[lang];
+  colorMapSvg(map, selected.id);
+}
+
+function inlineMapSvg(map) {
+  const image = map.querySelector("[data-map-svg]");
+  if (!image || image.dataset.inlined === "true") return Promise.resolve();
+
+  image.dataset.inlined = "true";
+  return fetch(image.getAttribute("src"))
+    .then((response) => {
+      if (!response.ok) throw new Error(`Unable to load ${image.getAttribute("src")}`);
+      return response.text();
+    })
+    .then((svgText) => {
+      const parser = new DOMParser();
+      const doc = parser.parseFromString(svgText, "image/svg+xml");
+      const svg = doc.querySelector("svg");
+      if (!svg) return;
+      svg.classList.add("interactive-map-svg");
+      svg.setAttribute("aria-hidden", "true");
+      svg.removeAttribute("width");
+      svg.removeAttribute("height");
+      image.replaceWith(document.importNode(svg, true));
+    })
+    .catch(() => {
+      image.dataset.inlined = "false";
+    });
 }
 
 function initMapWidgets() {
@@ -442,7 +519,9 @@ function initMapWidgets() {
       updateMapWidget(map, button.dataset.region);
     });
 
-    updateMapWidget(map, map.dataset.defaultRegion || "seoul");
+    inlineMapSvg(map).finally(() => {
+      updateMapWidget(map, map.dataset.defaultRegion || "seoul");
+    });
   });
 }
 
