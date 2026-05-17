@@ -296,6 +296,8 @@ a {
   font-weight: 800;
   line-height: 1.02;
   letter-spacing: 0;
+  overflow-wrap: break-word;
+  word-break: keep-all;
 }
 
 .hero-panel h2 {
@@ -308,6 +310,8 @@ a {
   font-size: clamp(17px, 2.3vw, 24px);
   line-height: 1.7;
   color: rgba(255, 255, 255, 0.86);
+  overflow-wrap: break-word;
+  word-break: keep-all;
 }
 
 .hero-metrics {
