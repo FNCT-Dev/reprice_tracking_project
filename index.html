@@ -10,7 +10,7 @@
   <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans:400,500,700,800|Castoro" rel="stylesheet">
   <link rel="stylesheet" href="./static/css/bulma.min.css">
   <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
-  <link rel="stylesheet" href="./static/css/index.css?v=20260517-8">
+  <link rel="stylesheet" href="./static/css/index.css?v=20260517-9">
   <link rel="icon" href="./static/images/favicon.png">
 </head>
 <body>
@@ -124,6 +124,16 @@
       <div class="container is-max-desktop">
         <p class="section-kicker">Analysis</p>
         <h2 class="title is-3">Analysis Content</h2>
+        <nav class="doc-toc" aria-label="Analysis content table of contents">
+          <strong>Contents</strong>
+          <ol>
+            <li><a href="#analysis-data-flow"><span>1.</span> Data Flow</a></li>
+            <li><a href="#analysis-price-movement"><span>2.</span> Price Movement Visualization</a></li>
+            <li><a href="#analysis-regional"><span>3.</span> Interactive Regional Analysis</a></li>
+            <li><a href="#analysis-reference"><span>4.</span> Comparative Reference</a></li>
+          </ol>
+        </nav>
+        <h3 id="analysis-data-flow" class="analysis-subtitle"><span>1.</span> Data Flow</h3>
         <p>
           Price history is divided into a baseline, change intervals, and final outcome. Each interval becomes a small explanatory unit that connects a cause to its visible effect.
         </p>
@@ -131,10 +141,12 @@
           <img src="./static/images/Template_bar.png" alt="Bar visualization of price movement" class="img-small75">
           <figcaption class="is-size-6 has-text-grey">Figure 1. A sample bar view summarizing price movement intervals.</figcaption>
         </figure>
+        <h3 id="analysis-price-movement" class="analysis-subtitle"><span>2.</span> Price Movement Visualization</h3>
         <figure class="image has-text-centered">
           <img src="./static/images/waterfall_example.png" alt="Waterfall chart example">
           <figcaption class="is-size-6 has-text-grey">Figure 2. A waterfall chart shows how each movement contributes to the cumulative result.</figcaption>
         </figure>
+        <h3 id="analysis-regional" class="analysis-subtitle"><span>3.</span> Interactive Regional Analysis</h3>
         <div class="interactive-chart" data-interactive-chart data-lang="en">
           <div class="chart-head">
             <div>
@@ -159,6 +171,7 @@
             A waterfall chart is useful for repricing analysis because it shows how several factors are applied sequentially from a starting value. Separating positive and negative changes makes it easier to see which factor moved the result most strongly.
           </p>
         </div>
+        <h3 id="analysis-reference" class="analysis-subtitle"><span>4.</span> Comparative Reference</h3>
         <figure class="image has-text-centered">
           <img src="./static/images/P_05-playfair-1801-plate1.png" alt="Playfair 1801 chart" class="img-small75">
           <figcaption class="is-size-6 has-text-grey">
@@ -189,6 +202,6 @@
     </div>
   </footer>
 
-  <script src="./static/js/index.js?v=20260517-8"></script>
+  <script src="./static/js/index.js?v=20260517-9"></script>
 </body>
 </html>
