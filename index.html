@@ -10,7 +10,7 @@
   <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans:400,500,700,800|Castoro" rel="stylesheet">
   <link rel="stylesheet" href="./static/css/bulma.min.css">
   <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
-  <link rel="stylesheet" href="./static/css/index.css?v=20260517-2">
+  <link rel="stylesheet" href="./static/css/index.css?v=20260517-3">
   <link rel="icon" href="./static/images/favicon.png">
 </head>
 <body>
@@ -132,6 +132,25 @@
           <img src="./static/images/waterfall_example.png" alt="워터폴 차트 예시">
           <figcaption class="is-size-6 has-text-grey">Figure 2. 워터폴 차트는 각 변동이 누적 결과에 미치는 영향을 단계적으로 보여줍니다.</figcaption>
         </figure>
+        <div class="interactive-chart" data-interactive-chart data-lang="ko">
+          <div class="chart-head">
+            <div>
+              <p class="chart-label">Click Response Graph</p>
+              <h3>지역별 평균 가격 클릭 분석</h3>
+            </div>
+            <p>막대를 클릭하면 선택한 지역의 순위, 평균값, 12개월 추세가 함께 갱신됩니다.</p>
+          </div>
+          <div class="chart-layout">
+            <div class="bar-chart" data-bar-chart aria-label="지역별 평균 가격 막대 그래프"></div>
+            <aside class="chart-detail" data-chart-detail aria-live="polite">
+              <span data-detail-cluster>Seoul</span>
+              <h4 data-detail-name>Seoul Average</h4>
+              <strong data-detail-value>0.00</strong>
+              <p data-detail-note>막대를 선택하면 이 영역에 상세 분석이 표시됩니다.</p>
+              <div class="sparkline" data-sparkline aria-label="12개월 추세선"></div>
+            </aside>
+          </div>
+        </div>
         <div class="content has-text-justified">
           <p>
             워터폴 차트는 시작값에서 여러 변동 요인이 순서대로 반영되는 과정을 보여주기 때문에 리프라이싱 분석에 적합합니다. 상승 요인과 하락 요인을 구분하면 어떤 변화가 전체 결과를 가장 크게 움직였는지 쉽게 확인할 수 있습니다.
@@ -184,6 +203,6 @@
     </div>
   </footer>
 
-  <script src="./static/js/index.js?v=20260517-2"></script>
+  <script src="./static/js/index.js?v=20260517-3"></script>
 </body>
 </html>

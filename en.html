@@ -10,7 +10,7 @@
   <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans:400,500,700,800|Castoro" rel="stylesheet">
   <link rel="stylesheet" href="./static/css/bulma.min.css">
   <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
-  <link rel="stylesheet" href="./static/css/index.css?v=20260517-2">
+  <link rel="stylesheet" href="./static/css/index.css?v=20260517-3">
   <link rel="icon" href="./static/images/favicon.png">
 </head>
 <body>
@@ -132,6 +132,25 @@
           <img src="./static/images/waterfall_example.png" alt="Waterfall chart example">
           <figcaption class="is-size-6 has-text-grey">Figure 2. A waterfall chart shows how each movement contributes to the cumulative result.</figcaption>
         </figure>
+        <div class="interactive-chart" data-interactive-chart data-lang="en">
+          <div class="chart-head">
+            <div>
+              <p class="chart-label">Click Response Graph</p>
+              <h3>Regional Average Price Analysis</h3>
+            </div>
+            <p>Click a bar to update the selected region, rank, average value, and 12-month trend.</p>
+          </div>
+          <div class="chart-layout">
+            <div class="bar-chart" data-bar-chart aria-label="Regional average price bar chart"></div>
+            <aside class="chart-detail" data-chart-detail aria-live="polite">
+              <span data-detail-cluster>Seoul</span>
+              <h4 data-detail-name>Seoul Average</h4>
+              <strong data-detail-value>0.00</strong>
+              <p data-detail-note>Select a bar to show the detailed analysis here.</p>
+              <div class="sparkline" data-sparkline aria-label="12-month trend line"></div>
+            </aside>
+          </div>
+        </div>
         <div class="content has-text-justified">
           <p>
             A waterfall chart is useful for repricing analysis because it shows how several factors are applied sequentially from a starting value. Separating positive and negative changes makes it easier to see which factor moved the result most strongly.
@@ -184,6 +203,6 @@
     </div>
   </footer>
 
-  <script src="./static/js/index.js?v=20260517-2"></script>
+  <script src="./static/js/index.js?v=20260517-3"></script>
 </body>
 </html>
