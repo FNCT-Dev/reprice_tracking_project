@@ -2,6 +2,7 @@ const header = document.querySelector("[data-header]");
 const navToggle = document.querySelector("[data-nav-toggle]");
 const navMenu = document.querySelector("[data-nav-menu]");
 const panels = Array.from(document.querySelectorAll("[data-stage-panel]"));
+const stageBackgrounds = Array.from(document.querySelectorAll("[data-stage-bg]"));
 const stage = document.querySelector(".scroll-stage");
 const counters = Array.from(document.querySelectorAll("[data-count]"));
 let countersStarted = false;
@@ -108,6 +109,10 @@ function updateStage() {
     const isActive = index === activeIndex;
     panel.classList.toggle("is-active", isActive);
     panel.setAttribute("aria-hidden", String(!isActive));
+  });
+
+  stageBackgrounds.forEach((background, index) => {
+    background.classList.toggle("is-active", index === activeIndex);
   });
 
   stage.classList.toggle("is-complete", isComplete);
