@@ -181,8 +181,9 @@ a {
   inset: 0;
   background-position: center;
   background-size: cover;
+  filter: blur(3px) brightness(0.82) saturate(0.92);
   opacity: 0;
-  transform: scale(1.06);
+  transform: scale(1.08);
   transition: opacity 520ms ease, transform 1400ms ease;
 }
 
@@ -190,8 +191,8 @@ a {
   position: absolute;
   inset: 0;
   background:
-    linear-gradient(90deg, rgba(17, 19, 24, 0.78), rgba(17, 19, 24, 0.42) 48%, rgba(17, 19, 24, 0.28)),
-    linear-gradient(0deg, rgba(17, 19, 24, 0.48), rgba(17, 19, 24, 0.08) 42%, rgba(17, 19, 24, 0.34));
+    linear-gradient(90deg, rgba(17, 19, 24, 0.86), rgba(17, 19, 24, 0.58) 48%, rgba(17, 19, 24, 0.46)),
+    linear-gradient(0deg, rgba(17, 19, 24, 0.58), rgba(17, 19, 24, 0.22) 42%, rgba(17, 19, 24, 0.48));
   content: "";
 }
 
