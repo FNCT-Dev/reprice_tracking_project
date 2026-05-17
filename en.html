@@ -5,12 +5,12 @@
   <meta name="description" content="A data visualization project for price change tracking and repricing flows">
   <meta name="keywords" content="reprice, tracking, visualization, data">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Reprice Tracking Project</title>
+  <title>SEOUL MY HOME: 서울 부동산 시세 추적 프로젝트</title>
 
   <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans:400,500,700,800|Castoro" rel="stylesheet">
   <link rel="stylesheet" href="./static/css/bulma.min.css">
   <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
-  <link rel="stylesheet" href="./static/css/index.css?v=20260517-9">
+  <link rel="stylesheet" href="./static/css/index.css?v=20260518-1">
   <link rel="icon" href="./static/images/favicon.png">
 </head>
 <body>
@@ -21,7 +21,10 @@
       <a class="is-active" href="./index.html" aria-current="page">ENG</a>
     </div>
     <nav class="global-nav" aria-label="Primary navigation">
-      <a class="brand-mark" href="#top" aria-label="Reprice Tracking Project home">REPRICE TRACKING</a>
+      <a class="brand-mark" href="#top" aria-label="SEOUL MY HOME home">
+        <span>SEOUL MY HOME</span>
+        <small>: 서울 부동산 시세 추적 프로젝트</small>
+      </a>
       <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" data-nav-toggle>
         <span></span>
         <span></span>
@@ -103,18 +106,18 @@
         <div class="feature-grid">
           <article>
             <span>01</span>
-            <h3>Change Detection</h3>
-            <p>Separate increases and decreases from the baseline price to identify direction and scale quickly.</p>
+            <h3>Visualization of Massive Data</h3>
+            <p>Large datasets are processed into intuitive visual forms so that users can understand complex information at a glance.</p>
           </article>
           <article>
             <span>02</span>
-            <h3>Cumulative Impact</h3>
-            <p>Track how each change is added to or subtracted from the final price result.</p>
+            <h3>Responsive User Design</h3>
+            <p>The site introduces responsive interactions so users can focus on the graphs and data they want to explore.</p>
           </article>
           <article>
             <span>03</span>
-            <h3>Report Structure</h3>
-            <p>Use the sections directly for coursework, research notes, or a presentation-ready project page.</p>
+            <h3>Multilingual Support</h3>
+            <p>The content is provided in both Korean and English.</p>
           </article>
         </div>
       </div>
@@ -127,26 +130,44 @@
         <nav class="doc-toc" aria-label="Analysis content table of contents">
           <strong>Contents</strong>
           <ol>
-            <li><a href="#analysis-data-flow"><span>1.</span> Data Flow</a></li>
-            <li><a href="#analysis-price-movement"><span>2.</span> Price Movement Visualization</a></li>
-            <li><a href="#analysis-regional"><span>3.</span> Interactive Regional Analysis</a></li>
-            <li><a href="#analysis-reference"><span>4.</span> Comparative Reference</a></li>
+            <li><a href="#analysis-map"><span>1.</span> Korea Housing Prices on a Map</a></li>
+            <li><a href="#analysis-seoul-growth"><span>2.</span> Seoul Housing Price Growth Rate</a></li>
+            <li><a href="#analysis-gap"><span>3.</span> Price Gap Between the Capital Area and Other Regions</a></li>
+            <li><a href="#analysis-regulations"><span>4.</span> Barriers Created by Regulations</a></li>
+            <li><a href="#analysis-debt"><span>5.</span> Housing Price Growth by Administration vs. Household Debt</a></li>
+            <li><a href="#analysis-supply"><span>6.</span> Possibility of Supply Expansion</a></li>
+            <li><a href="#analysis-conclusion"><span>7.</span> Conclusion</a></li>
           </ol>
         </nav>
-        <h3 id="analysis-data-flow" class="analysis-subtitle"><span>1.</span> Data Flow</h3>
+        <h3 id="analysis-map" class="analysis-subtitle"><span>1.</span> Korea Housing Prices on a Map</h3>
         <p>
-          Price history is divided into a baseline, change intervals, and final outcome. Each interval becomes a small explanatory unit that connects a cause to its visible effect.
+          This map uses dummy regional average prices to show how housing prices differ across Korea. Click a region to view its sample average market price.
         </p>
-        <figure class="image has-text-centered">
-          <img src="./static/images/Template_bar.png" alt="Bar visualization of price movement" class="img-small75">
-          <figcaption class="is-size-6 has-text-grey">Figure 1. A sample bar view summarizing price movement intervals.</figcaption>
-        </figure>
-        <h3 id="analysis-price-movement" class="analysis-subtitle"><span>2.</span> Price Movement Visualization</h3>
-        <figure class="image has-text-centered">
-          <img src="./static/images/waterfall_example.png" alt="Waterfall chart example">
-          <figcaption class="is-size-6 has-text-grey">Figure 2. A waterfall chart shows how each movement contributes to the cumulative result.</figcaption>
-        </figure>
-        <h3 id="analysis-regional" class="analysis-subtitle"><span>3.</span> Interactive Regional Analysis</h3>
+        <div class="korea-map-widget" data-korea-map data-lang="en">
+          <div class="korea-map-panel">
+            <div class="korea-map" role="img" aria-label="Clickable map of South Korea by region">
+              <button class="map-region" data-region="seoul" style="left: 43%; top: 19%; width: 64px; height: 46px;">Seoul</button>
+              <button class="map-region" data-region="gyeonggi" style="left: 34%; top: 25%; width: 96px; height: 58px;">Gyeonggi</button>
+              <button class="map-region" data-region="incheon" style="left: 20%; top: 24%; width: 64px; height: 46px;">Incheon</button>
+              <button class="map-region" data-region="gangwon" style="left: 57%; top: 19%; width: 100px; height: 78px;">Gangwon</button>
+              <button class="map-region" data-region="chungcheong" style="left: 39%; top: 39%; width: 110px; height: 72px;">Chungcheong</button>
+              <button class="map-region" data-region="gyeongsang" style="left: 58%; top: 52%; width: 112px; height: 104px;">Gyeongsang</button>
+              <button class="map-region" data-region="jeolla" style="left: 30%; top: 58%; width: 108px; height: 96px;">Jeolla</button>
+              <button class="map-region" data-region="jeju" style="left: 39%; top: 84%; width: 82px; height: 42px;">Jeju</button>
+            </div>
+          </div>
+          <aside class="map-detail" aria-live="polite">
+            <span data-map-cluster>Capital Area</span>
+            <h4 data-map-name>Seoul</h4>
+            <strong data-map-price>0.0</strong>
+            <p data-map-note>Click a region to view the sample average market price.</p>
+          </aside>
+        </div>
+
+        <h3 id="analysis-seoul-growth" class="analysis-subtitle"><span>2.</span> Seoul Housing Price Growth Rate</h3>
+        <p>
+          The existing interactive regional graph is used here to compare Seoul and selected regions through clickable bars and a 12-month trend line.
+        </p>
         <div class="interactive-chart" data-interactive-chart data-lang="en">
           <div class="chart-head">
             <div>
@@ -168,16 +189,34 @@
         </div>
         <div class="content has-text-justified">
           <p>
-            A waterfall chart is useful for repricing analysis because it shows how several factors are applied sequentially from a starting value. Separating positive and negative changes makes it easier to see which factor moved the result most strongly.
+            Click each bar to compare regional averages, rankings, and the direction of recent price movement.
           </p>
         </div>
-        <h3 id="analysis-reference" class="analysis-subtitle"><span>4.</span> Comparative Reference</h3>
-        <figure class="image has-text-centered">
-          <img src="./static/images/P_05-playfair-1801-plate1.png" alt="Playfair 1801 chart" class="img-small75">
-          <figcaption class="is-size-6 has-text-grey">
-            Figure 3. This historical visualization offers a reference for placing several measurements within one view.
-          </figcaption>
-        </figure>
+
+        <h3 id="analysis-gap" class="analysis-subtitle"><span>3.</span> Price Gap Between the Capital Area and Other Regions</h3>
+        <p>
+          This section compares the capital area and non-capital regions to explain how regional inequality appears in housing prices.
+        </p>
+
+        <h3 id="analysis-regulations" class="analysis-subtitle"><span>4.</span> Barriers Created by Regulations</h3>
+        <p>
+          Housing purchases are affected not only by prices but also by lending limits, financial regulations, and policy conditions that shape access to the market.
+        </p>
+
+        <h3 id="analysis-debt" class="analysis-subtitle"><span>5.</span> Housing Price Growth by Administration vs. Household Debt</h3>
+        <p>
+          This section connects household debt growth with housing price movements by administration to examine whether policy efforts stabilized the market.
+        </p>
+
+        <h3 id="analysis-supply" class="analysis-subtitle"><span>6.</span> Possibility of Supply Expansion</h3>
+        <p>
+          Supply expansion is reviewed as one possible response to long-term housing pressure, especially in Seoul where available land and redevelopment capacity are limited.
+        </p>
+
+        <h3 id="analysis-conclusion" class="analysis-subtitle"><span>7.</span> Conclusion</h3>
+        <p>
+          The project concludes that Seoul-centered housing inequality is not a simple price issue, but a structural problem connected to infrastructure, jobs, financing, and policy design.
+        </p>
       </div>
     </section>
 
@@ -185,9 +224,13 @@
       <div class="container is-max-desktop">
         <h2 class="title is-3">Notes</h2>
         <div class="content has-text-justified">
-          <p>1. Black, Joe; Doe, Jane; and Lee, Maria. "Template Paper Title on Data Analysis." <em>Journal of Data Analysis & Visualization</em> 30, no. 1 (2023): 100-120.</p>
-          <p>2. White, Chris; Green, Anna; and Kim, Sam. "Template Methods for Interactive Dashboards." <em>International Journal of Interactive Visualization</em> 25, no. 2 (2022): 210-234.</p>
-          <p>3. Miller, Pat; Gomez, Sofia; and Zhang, Lin. "Template Techniques for Labels & Annotation in Multidimensional Graphs." <em>Computational Graphics & Data Systems</em> 12, no. 3 (2024): 45-70.</p>
+          <h3>Reference Data and Sites</h3>
+          <p>KB Real Estate Data Hub, provided by KB Kookmin Bank: <a href="https://data.kbland.kr/" target="_blank" rel="noopener">https://data.kbland.kr/</a></p>
+          <p>Real Estate Statistics Information System, provided by Korea Real Estate Board: <a href="https://www.reb.or.kr/r-one/portal/main/indexPage.do" target="_blank" rel="noopener">https://www.reb.or.kr/r-one/portal/main/indexPage.do</a></p>
+          <p>Public Data Portal, provided by the Ministry of the Interior and Safety: <a href="https://www.data.go.kr/index.do" target="_blank" rel="noopener">https://www.data.go.kr/index.do</a></p>
+          <h3>Reference Interviews</h3>
+          <p>Ms. Daya Sung, Senior Manager, Sage Marketing Team, Mirae Asset Securities</p>
+          <p>Ms. Sookhee Jung, Senior Real Estate Consultant, Sage Consulting Team, Mirae Asset Securities</p>
         </div>
       </div>
     </section>
@@ -202,6 +245,6 @@
     </div>
   </footer>
 
-  <script src="./static/js/index.js?v=20260517-9"></script>
+  <script src="./static/js/index.js?v=20260518-1"></script>
 </body>
 </html>

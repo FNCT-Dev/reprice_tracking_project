@@ -91,6 +91,65 @@ const graphData = [
   }
 ];
 
+const koreaMapData = [
+  {
+    id: "seoul",
+    cluster: { ko: "수도권", en: "Capital Area" },
+    name: { ko: "서울", en: "Seoul" },
+    price: 15.8,
+    note: { ko: "전국에서 가장 높은 더미 평균 시세입니다.", en: "The highest dummy average market price in the dataset." }
+  },
+  {
+    id: "gyeonggi",
+    cluster: { ko: "수도권", en: "Capital Area" },
+    name: { ko: "경기", en: "Gyeonggi" },
+    price: 7.6,
+    note: { ko: "서울 접근성과 신도시 수요가 반영된 예시 값입니다.", en: "A sample value reflecting Seoul access and new-town demand." }
+  },
+  {
+    id: "incheon",
+    cluster: { ko: "수도권", en: "Capital Area" },
+    name: { ko: "인천", en: "Incheon" },
+    price: 5.2,
+    note: { ko: "수도권 내 상대적으로 낮은 더미 평균 시세입니다.", en: "A comparatively lower dummy average within the capital area." }
+  },
+  {
+    id: "gangwon",
+    cluster: { ko: "비수도권", en: "Non-capital Region" },
+    name: { ko: "강원", en: "Gangwon" },
+    price: 2.4,
+    note: { ko: "관광 및 생활권 특성이 섞인 예시 값입니다.", en: "A sample value combining tourism and local living-area traits." }
+  },
+  {
+    id: "chungcheong",
+    cluster: { ko: "비수도권", en: "Non-capital Region" },
+    name: { ko: "충청", en: "Chungcheong" },
+    price: 3.1,
+    note: { ko: "세종과 대전 생활권 영향을 반영한 더미 값입니다.", en: "A dummy value reflecting the influence of Sejong and Daejeon." }
+  },
+  {
+    id: "gyeongsang",
+    cluster: { ko: "비수도권", en: "Non-capital Region" },
+    name: { ko: "경상", en: "Gyeongsang" },
+    price: 3.7,
+    note: { ko: "부산, 대구 등 광역시 효과를 포함한 예시 값입니다.", en: "A sample value including effects from Busan, Daegu, and nearby cities." }
+  },
+  {
+    id: "jeolla",
+    cluster: { ko: "비수도권", en: "Non-capital Region" },
+    name: { ko: "전라", en: "Jeolla" },
+    price: 2.8,
+    note: { ko: "지방권 평균을 설명하기 위한 더미 값입니다.", en: "A dummy value used to describe non-capital regional averages." }
+  },
+  {
+    id: "jeju",
+    cluster: { ko: "비수도권", en: "Non-capital Region" },
+    name: { ko: "제주", en: "Jeju" },
+    price: 4.4,
+    note: { ko: "섬 지역의 특수성을 반영한 예시 값입니다.", en: "A sample value reflecting the island-region context." }
+  }
+];
+
 function updateHeader() {
   if (!header) return;
   header.classList.toggle("is-scrolled", window.scrollY > 20);
@@ -228,6 +287,41 @@ function initInteractiveCharts() {
   });
 }
 
+function updateKoreaMap(map, selectedId) {
+  const lang = map.dataset.lang || "en";
+  const selected = koreaMapData.find((item) => item.id === selectedId) || koreaMapData[0];
+
+  map.querySelectorAll(".map-region").forEach((button) => {
+    const isActive = button.dataset.region === selected.id;
+    button.classList.toggle("is-active", isActive);
+    button.setAttribute("aria-pressed", String(isActive));
+  });
+
+  map.querySelector("[data-map-cluster]").textContent = selected.cluster[lang];
+  map.querySelector("[data-map-name]").textContent = selected.name[lang];
+  map.querySelector("[data-map-price]").textContent = lang === "ko"
+    ? `${selected.price.toFixed(1)}억 원`
+    : `KRW ${selected.price.toFixed(1)}B`;
+  map.querySelector("[data-map-note]").textContent = selected.note[lang];
+}
+
+function initKoreaMaps() {
+  document.querySelectorAll("[data-korea-map]").forEach((map) => {
+    map.querySelectorAll(".map-region").forEach((button) => {
+      button.setAttribute("type", "button");
+      button.setAttribute("aria-pressed", "false");
+    });
+
+    map.addEventListener("click", (event) => {
+      const button = event.target.closest(".map-region");
+      if (!button) return;
+      updateKoreaMap(map, button.dataset.region);
+    });
+
+    updateKoreaMap(map, "seoul");
+  });
+}
+
 if (navToggle && navMenu && header) {
   navToggle.addEventListener("click", () => {
     const isOpen = navToggle.classList.toggle("is-active");
@@ -273,3 +367,4 @@ updateHeader();
 updateStage();
 maybeStartCounters();
 initInteractiveCharts();
+initKoreaMaps();

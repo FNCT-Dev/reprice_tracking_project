@@ -5,12 +5,12 @@
   <meta name="description" content="가격 변동 추적과 리프라이싱 흐름을 설명하는 데이터 시각화 프로젝트">
   <meta name="keywords" content="reprice, tracking, visualization, data">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Reprice Tracking Project</title>
+  <title>SEOUL MY HOME: 서울 부동산 시세 추적 프로젝트</title>
 
   <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans:400,500,700,800|Castoro" rel="stylesheet">
   <link rel="stylesheet" href="./static/css/bulma.min.css">
   <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
-  <link rel="stylesheet" href="./static/css/index.css?v=20260517-9">
+  <link rel="stylesheet" href="./static/css/index.css?v=20260518-1">
   <link rel="icon" href="./static/images/favicon.png">
 </head>
 <body>
@@ -21,7 +21,10 @@
       <a href="./index.html">ENG</a>
     </div>
     <nav class="global-nav" aria-label="주요 메뉴">
-      <a class="brand-mark" href="#top" aria-label="Reprice Tracking Project home">REPRICE TRACKING</a>
+      <a class="brand-mark" href="#top" aria-label="SEOUL MY HOME home">
+        <span>SEOUL MY HOME</span>
+        <small>: 서울 부동산 시세 추적 프로젝트</small>
+      </a>
       <button class="nav-toggle" type="button" aria-label="메뉴 열기" aria-expanded="false" data-nav-toggle>
         <span></span>
         <span></span>
@@ -103,18 +106,18 @@
         <div class="feature-grid">
           <article>
             <span>01</span>
-            <h3>가격 변화 탐지</h3>
-            <p>기준 가격 대비 상승과 하락을 분리해 변동 폭과 방향을 빠르게 확인합니다.</p>
+            <h3>방대한 데이터의 시각화</h3>
+            <p>방대한 데이터들을 간편하게 시각적으로 확인할 수 있도록 직관적으로 데이터를 가공했습니다.</p>
           </article>
           <article>
             <span>02</span>
-            <h3>누적 영향 해석</h3>
-            <p>각 변화가 최종 가격에 더해지거나 차감되는 과정을 시각적으로 추적합니다.</p>
+            <h3>사용자 반응형 설계</h3>
+            <p>수많은 그래프들을 사용자가 보고 싶은 데이터로 직관적으로 볼 수 있게, 사용자 반응형 설계를 도입했습니다.</p>
           </article>
           <article>
             <span>03</span>
-            <h3>보고서형 구성</h3>
-            <p>수업 프로젝트, 리서치 노트, 발표 페이지에 바로 활용할 수 있는 섹션 구조를 제공합니다.</p>
+            <h3>다중 언어 지원</h3>
+            <p>컨텐츠의 내용은 한/영으로 동시 제공됩니다.</p>
           </article>
         </div>
       </div>
@@ -127,26 +130,44 @@
         <nav class="doc-toc" aria-label="분석 내용 목차">
           <strong>목차</strong>
           <ol>
-            <li><a href="#analysis-data-flow"><span>1.</span> 데이터 흐름</a></li>
-            <li><a href="#analysis-price-movement"><span>2.</span> 가격 변동 시각화</a></li>
-            <li><a href="#analysis-regional"><span>3.</span> 지역별 인터랙티브 분석</a></li>
-            <li><a href="#analysis-reference"><span>4.</span> 비교 참고 자료</a></li>
+            <li><a href="#analysis-map"><span>1.</span> 지도로 보는 대한민국의 집값</a></li>
+            <li><a href="#analysis-seoul-growth"><span>2.</span> 서울시 집값의 상승률</a></li>
+            <li><a href="#analysis-gap"><span>3.</span> 수도권과 지방의 가격 차이</a></li>
+            <li><a href="#analysis-regulations"><span>4.</span> 여러 가지 규제들의 장벽</a></li>
+            <li><a href="#analysis-debt"><span>5.</span> 가계부채 대비 정권별 집값 상승률</a></li>
+            <li><a href="#analysis-supply"><span>6.</span> 공급 확대의 가능성</a></li>
+            <li><a href="#analysis-conclusion"><span>7.</span> 결론</a></li>
           </ol>
         </nav>
-        <h3 id="analysis-data-flow" class="analysis-subtitle"><span>1.</span> 데이터 흐름</h3>
+        <h3 id="analysis-map" class="analysis-subtitle"><span>1.</span> 지도로 보는 대한민국의 집값</h3>
         <p>
-          가격 이력 데이터를 기준 시점, 변동 구간, 최종 결과로 나누어 해석합니다. 각 구간은 원인과 결과를 연결하는 작은 단위로 구성되어, 데이터의 변화를 설명 가능한 흐름으로 바꿉니다.
+          아래 지도는 더미 평균 시세를 활용해 대한민국 주요 권역별 집값 차이를 보여줍니다. 지역을 클릭하면 해당 지역의 예시 평균 시세를 확인할 수 있습니다.
         </p>
-        <figure class="image has-text-centered">
-          <img src="./static/images/Template_bar.png" alt="가격 흐름을 나타내는 막대 시각화" class="img-small75">
-          <figcaption class="is-size-6 has-text-grey">Figure 1. 가격 변동 구간을 막대 형태로 요약한 예시입니다.</figcaption>
-        </figure>
-        <h3 id="analysis-price-movement" class="analysis-subtitle"><span>2.</span> 가격 변동 시각화</h3>
-        <figure class="image has-text-centered">
-          <img src="./static/images/waterfall_example.png" alt="워터폴 차트 예시">
-          <figcaption class="is-size-6 has-text-grey">Figure 2. 워터폴 차트는 각 변동이 누적 결과에 미치는 영향을 단계적으로 보여줍니다.</figcaption>
-        </figure>
-        <h3 id="analysis-regional" class="analysis-subtitle"><span>3.</span> 지역별 인터랙티브 분석</h3>
+        <div class="korea-map-widget" data-korea-map data-lang="ko">
+          <div class="korea-map-panel">
+            <div class="korea-map" role="img" aria-label="대한민국 권역별 클릭형 지도">
+              <button class="map-region" data-region="seoul" style="left: 43%; top: 19%; width: 64px; height: 46px;">서울</button>
+              <button class="map-region" data-region="gyeonggi" style="left: 34%; top: 25%; width: 96px; height: 58px;">경기</button>
+              <button class="map-region" data-region="incheon" style="left: 20%; top: 24%; width: 64px; height: 46px;">인천</button>
+              <button class="map-region" data-region="gangwon" style="left: 57%; top: 19%; width: 100px; height: 78px;">강원</button>
+              <button class="map-region" data-region="chungcheong" style="left: 39%; top: 39%; width: 110px; height: 72px;">충청</button>
+              <button class="map-region" data-region="gyeongsang" style="left: 58%; top: 52%; width: 112px; height: 104px;">경상</button>
+              <button class="map-region" data-region="jeolla" style="left: 30%; top: 58%; width: 108px; height: 96px;">전라</button>
+              <button class="map-region" data-region="jeju" style="left: 39%; top: 84%; width: 82px; height: 42px;">제주</button>
+            </div>
+          </div>
+          <aside class="map-detail" aria-live="polite">
+            <span data-map-cluster>수도권</span>
+            <h4 data-map-name>서울</h4>
+            <strong data-map-price>0.0</strong>
+            <p data-map-note>지역을 클릭하면 예시 평균 시세가 표시됩니다.</p>
+          </aside>
+        </div>
+
+        <h3 id="analysis-seoul-growth" class="analysis-subtitle"><span>2.</span> 서울시 집값의 상승률</h3>
+        <p>
+          기존 지역별 인터랙티브 그래프를 이 항목으로 이동해 서울과 주요 지역의 평균값, 순위, 12개월 추세를 클릭형으로 비교할 수 있도록 구성했습니다.
+        </p>
         <div class="interactive-chart" data-interactive-chart data-lang="ko">
           <div class="chart-head">
             <div>
@@ -168,16 +189,34 @@
         </div>
         <div class="content has-text-justified">
           <p>
-            워터폴 차트는 시작값에서 여러 변동 요인이 순서대로 반영되는 과정을 보여주기 때문에 리프라이싱 분석에 적합합니다. 상승 요인과 하락 요인을 구분하면 어떤 변화가 전체 결과를 가장 크게 움직였는지 쉽게 확인할 수 있습니다.
+            막대를 클릭하면 지역별 평균값, 순위, 최근 가격 변화 방향을 함께 비교할 수 있습니다.
           </p>
         </div>
-        <h3 id="analysis-reference" class="analysis-subtitle"><span>4.</span> 비교 참고 자료</h3>
-        <figure class="image has-text-centered">
-          <img src="./static/images/P_05-playfair-1801-plate1.png" alt="Playfair 1801 차트" class="img-small75">
-          <figcaption class="is-size-6 has-text-grey">
-            Figure 3. 역사적 시각화 사례를 통해 여러 지표를 한 화면에 배치하는 방식을 참고할 수 있습니다.
-          </figcaption>
-        </figure>
+
+        <h3 id="analysis-gap" class="analysis-subtitle"><span>3.</span> 수도권과 지방의 가격 차이</h3>
+        <p>
+          수도권과 지방의 집값 차이를 비교하여 주거 비용의 지역 불균형이 어떤 방식으로 나타나는지 설명합니다.
+        </p>
+
+        <h3 id="analysis-regulations" class="analysis-subtitle"><span>4.</span> 여러 가지 규제들의 장벽</h3>
+        <p>
+          주택 구매는 가격뿐 아니라 대출 한도, 금융 규제, 정책 조건에 의해 제한되며, 이러한 장벽이 실제 구매 가능성에 미치는 영향을 살펴봅니다.
+        </p>
+
+        <h3 id="analysis-debt" class="analysis-subtitle"><span>5.</span> 가계부채 대비 정권별 집값 상승률</h3>
+        <p>
+          가계부채 증가와 정권별 집값 상승률을 함께 비교하여 정부 정책이 시장 안정에 얼마나 효과적이었는지를 탐구합니다.
+        </p>
+
+        <h3 id="analysis-supply" class="analysis-subtitle"><span>6.</span> 공급 확대의 가능성</h3>
+        <p>
+          서울의 주거 수요를 완화하기 위한 공급 확대 가능성을 검토하고, 토지 부족과 재개발 여건 같은 현실적 제약을 함께 살펴봅니다.
+        </p>
+
+        <h3 id="analysis-conclusion" class="analysis-subtitle"><span>7.</span> 결론</h3>
+        <p>
+          서울 중심의 집값 불균형은 단순한 가격 문제가 아니라 인프라, 일자리, 금융 접근성, 정책 설계가 얽힌 구조적 문제임을 데이터 시각화를 통해 정리합니다.
+        </p>
       </div>
     </section>
 
@@ -185,9 +224,13 @@
       <div class="container is-max-desktop">
         <h2 class="title is-3">참고사항</h2>
         <div class="content has-text-justified">
-          <p>1. Black, Joe; Doe, Jane; and Lee, Maria. "Template Paper Title on Data Analysis." <em>Journal of Data Analysis & Visualization</em> 30, no. 1 (2023): 100-120.</p>
-          <p>2. White, Chris; Green, Anna; and Kim, Sam. "Template Methods for Interactive Dashboards." <em>International Journal of Interactive Visualization</em> 25, no. 2 (2022): 210-234.</p>
-          <p>3. Miller, Pat; Gomez, Sofia; and Zhang, Lin. "Template Techniques for Labels & Annotation in Multidimensional Graphs." <em>Computational Graphics & Data Systems</em> 12, no. 3 (2024): 45-70.</p>
+          <h3>참고 데이터 및 사이트</h3>
+          <p>KB부동산 데이터허브, KB국민은행 제공 <a href="https://data.kbland.kr/" target="_blank" rel="noopener">https://data.kbland.kr/</a></p>
+          <p>부동산통계정보시스템, 한국부동산원 제공 <a href="https://www.reb.or.kr/r-one/portal/main/indexPage.do" target="_blank" rel="noopener">https://www.reb.or.kr/r-one/portal/main/indexPage.do</a></p>
+          <p>공공데이터포털, 행정안전부 제공 <a href="https://www.data.go.kr/index.do" target="_blank" rel="noopener">https://www.data.go.kr/index.do</a></p>
+          <h3>참고 인터뷰</h3>
+          <p>미래에셋증권 Sage마케팅팀 성다야 수석매니저님</p>
+          <p>미래에셋증권 Sage컨설팅팀 정숙희 부동산 수석컨설턴트님</p>
         </div>
       </div>
     </section>
@@ -202,6 +245,6 @@
     </div>
   </footer>
 
-  <script src="./static/js/index.js?v=20260517-9"></script>
+  <script src="./static/js/index.js?v=20260518-1"></script>
 </body>
 </html>
