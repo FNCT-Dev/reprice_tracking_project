@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta name="description" content="가격 변동 추적과 리프라이싱 흐름을 설명하는 데이터 시각화 프로젝트">
+  <meta name="description" content="A data visualization project for price change tracking and repricing flows">
   <meta name="keywords" content="reprice, tracking, visualization, data">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Reprice Tracking Project</title>
@@ -10,35 +10,35 @@
   <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans:400,500,700,800|Castoro" rel="stylesheet">
   <link rel="stylesheet" href="./static/css/bulma.min.css">
   <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
-  <link rel="stylesheet" href="./static/css/index.css?v=20260517-6">
+  <link rel="stylesheet" href="./static/css/index.css?v=20260517-7">
   <link rel="icon" href="./static/images/favicon.png">
 </head>
 <body>
   <header class="site-header" data-header>
     <div class="language-strip">
-      <a class="is-active" href="./index.html" aria-current="page">KOR</a>
+      <a href="./ko.html">KOR</a>
       <span aria-hidden="true"></span>
-      <a href="./en.html">ENG</a>
+      <a class="is-active" href="./index.html" aria-current="page">ENG</a>
     </div>
-    <nav class="global-nav" aria-label="주요 메뉴">
+    <nav class="global-nav" aria-label="Primary navigation">
       <a class="brand-mark" href="#top" aria-label="Reprice Tracking Project home">REPRICE TRACKING</a>
-      <button class="nav-toggle" type="button" aria-label="메뉴 열기" aria-expanded="false" data-nav-toggle>
+      <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" data-nav-toggle>
         <span></span>
         <span></span>
         <span></span>
       </button>
       <div class="nav-menu" data-nav-menu>
-        <a href="#overview">개요</a>
-        <a href="#method">분석 흐름</a>
-        <a href="#features">핵심 기능</a>
-        <a href="#visuals">시각화</a>
-        <a href="#references">자료</a>
+        <a href="#overview">Overview</a>
+        <a href="#method">Method</a>
+        <a href="#features">Features</a>
+        <a href="#visuals">Visuals</a>
+        <a href="#references">References</a>
       </div>
     </nav>
   </header>
 
   <main id="top">
-    <section class="hero-main scroll-stage" aria-label="메인 소개">
+    <section class="hero-main scroll-stage" aria-label="Project introduction">
       <div class="stage-backgrounds" aria-hidden="true">
         <div class="stage-bg is-active" data-stage-bg style="background-image: url('./static/images/heliocity.jpg');"></div>
         <div class="stage-bg" data-stage-bg style="background-image: url('./static/images/lotteworldtower.png');"></div>
@@ -46,20 +46,20 @@
       </div>
       <div class="hero-panel is-active" data-stage-panel>
         <p class="eyebrow">Scientific Information and Data Visualization</p>
-        <h1>가격 변화를 읽는<br>인터랙티브 리프라이싱 트래커</h1>
-        <p class="hero-copy">상품 가격의 상승과 하락, 누적 변화, 의사결정 지점을 한 화면에서 따라갈 수 있도록 구성한 프로젝트 템플릿입니다.</p>
+        <h1>Interactive Repricing<br>Tracker for Price Movement</h1>
+        <p class="hero-copy">This project template helps readers follow price increases, decreases, accumulated change, and decision points in one visual narrative.</p>
       </div>
       <div class="hero-panel" data-stage-panel>
         <p class="eyebrow">Scroll Driven Story</p>
-        <h2>스크롤할수록 데이터의 맥락이 전환됩니다</h2>
-        <p class="hero-copy">레퍼런스 사이트의 메인 화면처럼 스크롤 위치에 따라 카드가 떠오르고 배경 수치가 반응하도록 설계했습니다.</p>
+        <h2>Context shifts as the user scrolls</h2>
+        <p class="hero-copy">The main section responds to scroll position with staged panels, floating metrics, and depth transitions.</p>
       </div>
       <div class="hero-panel" data-stage-panel>
         <p class="eyebrow">KOR / ENG Separated</p>
-        <h2>한국어와 영어 페이지를 분리했습니다</h2>
-        <p class="hero-copy">상단 언어 전환 버튼으로 독립된 한국어/영어 사이트를 이동할 수 있습니다.</p>
+        <h2>Korean and English pages are split</h2>
+        <p class="hero-copy">The language selector in the top bar moves between two independent pages.</p>
       </div>
-      <div class="hero-metrics" aria-label="주요 지표">
+      <div class="hero-metrics" aria-label="Key metrics">
         <div>
           <strong data-count="240">0</strong>
           <span>tracked frames</span>
@@ -73,19 +73,19 @@
           <span>language sites</span>
         </div>
       </div>
-      <a class="scroll-cue" href="#overview" aria-label="본문으로 이동">Scroll</a>
+      <a class="scroll-cue" href="#overview" aria-label="Skip to content">Scroll</a>
     </section>
 
     <section id="overview" class="section content-section reveal-on-scroll">
       <div class="container is-max-desktop">
         <p class="section-kicker">Overview</p>
-        <h2 class="title is-3">프로젝트 개요</h2>
+        <h2 class="title is-3">Project Overview</h2>
         <div class="content has-text-justified">
           <p>
-            이 프로젝트는 가격 재조정 흐름을 관찰하기 위한 데이터 시각화 템플릿입니다. 가격이 언제, 얼마나, 어떤 방향으로 움직였는지 한눈에 파악하고, 변화가 누적 결과에 미친 영향을 단계적으로 보여주는 것을 목표로 합니다.
+            This project is a data visualization template for observing repricing flows. It is designed to show when prices moved, how large the changes were, and how each movement shaped the final result.
           </p>
           <p>
-            기존 학술 템플릿의 구조는 유지하되, 메인 화면에는 스크롤 기반 전환 애니메이션을 적용하고, 상단에는 언어 선택과 메뉴바가 분리된 기업형 내비게이션을 추가했습니다.
+            The original academic project structure is preserved, while the main screen now includes scroll-based transitions and a corporate-style top navigation with separated language links.
           </p>
         </div>
       </div>
@@ -94,13 +94,13 @@
     <section id="method" class="section content-section reveal-on-scroll">
       <div class="container is-max-desktop">
         <p class="section-kicker">Method</p>
-        <h2 class="title is-3">분석 흐름</h2>
+        <h2 class="title is-3">Analysis Flow</h2>
         <p>
-          가격 이력 데이터를 기준 시점, 변동 구간, 최종 결과로 나누어 해석합니다. 각 구간은 원인과 결과를 연결하는 작은 단위로 구성되어, 데이터의 변화를 설명 가능한 흐름으로 바꿉니다.
+          Price history is divided into a baseline, change intervals, and final outcome. Each interval becomes a small explanatory unit that connects a cause to its visible effect.
         </p>
         <figure class="image has-text-centered">
-          <img src="./static/images/Template_bar.png" alt="가격 흐름을 나타내는 막대 시각화" class="img-small75">
-          <figcaption class="is-size-6 has-text-grey">Figure 1. 가격 변동 구간을 막대 형태로 요약한 예시입니다.</figcaption>
+          <img src="./static/images/Template_bar.png" alt="Bar visualization of price movement" class="img-small75">
+          <figcaption class="is-size-6 has-text-grey">Figure 1. A sample bar view summarizing price movement intervals.</figcaption>
         </figure>
       </div>
     </section>
@@ -108,22 +108,22 @@
     <section id="features" class="section feature-band reveal-on-scroll">
       <div class="container is-max-desktop">
         <p class="section-kicker">Features</p>
-        <h2 class="title is-3">핵심 기능</h2>
+        <h2 class="title is-3">Core Features</h2>
         <div class="feature-grid">
           <article>
             <span>01</span>
-            <h3>가격 변화 탐지</h3>
-            <p>기준 가격 대비 상승과 하락을 분리해 변동 폭과 방향을 빠르게 확인합니다.</p>
+            <h3>Change Detection</h3>
+            <p>Separate increases and decreases from the baseline price to identify direction and scale quickly.</p>
           </article>
           <article>
             <span>02</span>
-            <h3>누적 영향 해석</h3>
-            <p>각 변화가 최종 가격에 더해지거나 차감되는 과정을 시각적으로 추적합니다.</p>
+            <h3>Cumulative Impact</h3>
+            <p>Track how each change is added to or subtracted from the final price result.</p>
           </article>
           <article>
             <span>03</span>
-            <h3>보고서형 구성</h3>
-            <p>수업 프로젝트, 리서치 노트, 발표 페이지에 바로 활용할 수 있는 섹션 구조를 제공합니다.</p>
+            <h3>Report Structure</h3>
+            <p>Use the sections directly for coursework, research notes, or a presentation-ready project page.</p>
           </article>
         </div>
       </div>
@@ -132,33 +132,33 @@
     <section id="visuals" class="section content-section reveal-on-scroll">
       <div class="container is-max-desktop">
         <p class="section-kicker">Visuals</p>
-        <h2 class="title is-3">주요 시각화</h2>
+        <h2 class="title is-3">Main Visualization</h2>
         <figure class="image has-text-centered">
-          <img src="./static/images/waterfall_example.png" alt="워터폴 차트 예시">
-          <figcaption class="is-size-6 has-text-grey">Figure 2. 워터폴 차트는 각 변동이 누적 결과에 미치는 영향을 단계적으로 보여줍니다.</figcaption>
+          <img src="./static/images/waterfall_example.png" alt="Waterfall chart example">
+          <figcaption class="is-size-6 has-text-grey">Figure 2. A waterfall chart shows how each movement contributes to the cumulative result.</figcaption>
         </figure>
-        <div class="interactive-chart" data-interactive-chart data-lang="ko">
+        <div class="interactive-chart" data-interactive-chart data-lang="en">
           <div class="chart-head">
             <div>
               <p class="chart-label">Click Response Graph</p>
-              <h3>지역별 평균 가격 클릭 분석</h3>
+              <h3>Regional Average Price Analysis</h3>
             </div>
-            <p>막대를 클릭하면 선택한 지역의 순위, 평균값, 12개월 추세가 함께 갱신됩니다.</p>
+            <p>Click a bar to update the selected region, rank, average value, and 12-month trend.</p>
           </div>
           <div class="chart-layout">
-            <div class="bar-chart" data-bar-chart aria-label="지역별 평균 가격 막대 그래프"></div>
+            <div class="bar-chart" data-bar-chart aria-label="Regional average price bar chart"></div>
             <aside class="chart-detail" data-chart-detail aria-live="polite">
               <span data-detail-cluster>Seoul</span>
               <h4 data-detail-name>Seoul Average</h4>
               <strong data-detail-value>0.00</strong>
-              <p data-detail-note>막대를 선택하면 이 영역에 상세 분석이 표시됩니다.</p>
-              <div class="sparkline" data-sparkline aria-label="12개월 추세선"></div>
+              <p data-detail-note>Select a bar to show the detailed analysis here.</p>
+              <div class="sparkline" data-sparkline aria-label="12-month trend line"></div>
             </aside>
           </div>
         </div>
         <div class="content has-text-justified">
           <p>
-            워터폴 차트는 시작값에서 여러 변동 요인이 순서대로 반영되는 과정을 보여주기 때문에 리프라이싱 분석에 적합합니다. 상승 요인과 하락 요인을 구분하면 어떤 변화가 전체 결과를 가장 크게 움직였는지 쉽게 확인할 수 있습니다.
+            A waterfall chart is useful for repricing analysis because it shows how several factors are applied sequentially from a starting value. Separating positive and negative changes makes it easier to see which factor moved the result most strongly.
           </p>
         </div>
       </div>
@@ -166,11 +166,11 @@
 
     <section class="section content-section reveal-on-scroll">
       <div class="container is-max-desktop">
-        <h2 class="title is-3">비교 시각화</h2>
+        <h2 class="title is-3">Comparative Visualization</h2>
         <figure class="image has-text-centered">
-          <img src="./static/images/P_05-playfair-1801-plate1.png" alt="Playfair 1801 차트" class="img-small75">
+          <img src="./static/images/P_05-playfair-1801-plate1.png" alt="Playfair 1801 chart" class="img-small75">
           <figcaption class="is-size-6 has-text-grey">
-            Figure 3. 역사적 시각화 사례를 통해 여러 지표를 한 화면에 배치하는 방식을 참고할 수 있습니다.
+            Figure 3. This historical visualization offers a reference for placing several measurements within one view.
           </figcaption>
         </figure>
       </div>
@@ -178,10 +178,10 @@
 
     <section class="section content-section reveal-on-scroll">
       <div class="container is-max-desktop">
-        <h2 class="title is-3">마무리</h2>
+        <h2 class="title is-3">Outro</h2>
         <div class="content">
           <p>
-            이 템플릿은 데이터 설명, 시각화 이미지, 주요 기능 소개, 참고 자료를 하나의 흐름으로 엮습니다. 사용자는 본문 텍스트와 이미지만 교체해도 한국어/영어 사이트를 각각 운영할 수 있습니다.
+            This template connects explanation, figures, feature summaries, and references into one readable flow. Replace the text and images to operate the Korean and English sites independently.
           </p>
         </div>
       </div>
@@ -189,7 +189,7 @@
 
     <section id="references" class="section content-section reveal-on-scroll">
       <div class="container is-max-desktop">
-        <h2 class="title is-3">참고 자료 및 데이터 출처</h2>
+        <h2 class="title is-3">References and Data Sources</h2>
         <div class="content has-text-justified">
           <p>1. Black, Joe; Doe, Jane; and Lee, Maria. "Template Paper Title on Data Analysis." <em>Journal of Data Analysis & Visualization</em> 30, no. 1 (2023): 100-120.</p>
           <p>2. White, Chris; Green, Anna; and Kim, Sam. "Template Methods for Interactive Dashboards." <em>International Journal of Interactive Visualization</em> 25, no. 2 (2022): 210-234.</p>
@@ -208,6 +208,6 @@
     </div>
   </footer>
 
-  <script src="./static/js/index.js?v=20260517-6"></script>
+  <script src="./static/js/index.js?v=20260517-7"></script>
 </body>
 </html>
