@@ -33,7 +33,7 @@ const chartText = {
 const trendMonths = ["2025.04", "2025.05", "2025.06", "2025.07", "2025.08", "2025.09", "2025.10", "2025.11", "2025.12", "2026.01", "2026.02", "2026.03"];
 
 const graphData = [
-  { id: "seoul", color: "#b65f5b", cluster: { ko: "서울 평균", en: "Seoul Average" }, name: { ko: "서울 평균", en: "Seoul Average" }, value: 14.04, trend: [12.85, 12.98, 13.37, 13.61, 13.77, 13.9, 14.16, 14.44, 14.62, 14.76, 14.93, 15.1] },
+  { id: "seoul", color: "#b65f5b", cluster: { ko: "서울 평균", en: "Seoul Average" }, name: { ko: "서울 전체", en: "All Seoul" }, value: 14.04, trend: [12.85, 12.98, 13.37, 13.61, 13.77, 13.9, 14.16, 14.44, 14.62, 14.76, 14.93, 15.1] },
   { id: "gangnam", color: "#5f83ad", cluster: { ko: "상급지", en: "Upper Tier" }, name: { ko: "강남구", en: "Gangnam-gu" }, value: 30.28, trend: [27.06, 27.68, 29.27, 29.75, 30.13, 30.39, 30.73, 31.15, 31.58, 31.85, 31.95, 31.8] },
   { id: "gangdong", color: "#5f83ad", cluster: { ko: "상급지", en: "Upper Tier" }, name: { ko: "강동구", en: "Gangdong-gu" }, value: 14.11, trend: [12.61, 12.65, 12.95, 13.35, 13.53, 13.74, 14.54, 14.86, 14.97, 15.14, 15.32, 15.69] },
   { id: "gangbuk", color: "#6f9b78", cluster: { ko: "하급지", en: "Lower Tier" }, name: { ko: "강북구", en: "Gangbuk-gu" }, value: 6.94, trend: [6.84, 6.84, 6.83, 6.88, 6.88, 6.9, 6.9, 6.93, 6.97, 7.0, 7.08, 7.23] },
@@ -64,122 +64,139 @@ const graphData = [
 const koreaMapData = [
   {
     id: "seoul",
-    cluster: { ko: "특별시", en: "Special City" },
+    color: "#b65f5b",
+    cluster: { ko: "수도권", en: "Capital Area" },
     name: { ko: "서울특별시", en: "Seoul Special City" },
-    price: 15.8,
-    note: { ko: "전국에서 가장 높은 더미 평균 시세입니다.", en: "The highest dummy average market price in the dataset." }
+    price: 14.04,
+    note: { ko: "2025.04-2026.03 전국 엑셀 자료 기준 1년 평균 거래가격입니다.", en: "One-year average transaction price from the national dataset, Apr. 2025 to Mar. 2026." }
   },
   {
     id: "busan",
-    cluster: { ko: "광역시", en: "Metropolitan City" },
+    color: "#8b6f5a",
+    cluster: { ko: "동남권", en: "Southeast Region" },
     name: { ko: "부산광역시", en: "Busan Metropolitan City" },
-    price: 4.9,
-    note: { ko: "해안권 대도시 수요를 반영한 더미 값입니다.", en: "A dummy value reflecting coastal metropolitan demand." }
+    price: 4.18,
+    note: { ko: "2025.04-2026.03 전국 엑셀 자료 기준 1년 평균 거래가격입니다.", en: "One-year average transaction price from the national dataset, Apr. 2025 to Mar. 2026." }
   },
   {
     id: "daegu",
-    cluster: { ko: "광역시", en: "Metropolitan City" },
+    color: "#c77b9a",
+    cluster: { ko: "대구·경북권", en: "Daegu-Gyeongbuk Region" },
     name: { ko: "대구광역시", en: "Daegu Metropolitan City" },
-    price: 4.1,
-    note: { ko: "영남 내륙권 중심 도시의 예시 평균 시세입니다.", en: "A sample average for a major inland city in Yeongnam." }
+    price: 3.60,
+    note: { ko: "2025.04-2026.03 전국 엑셀 자료 기준 1년 평균 거래가격입니다.", en: "One-year average transaction price from the national dataset, Apr. 2025 to Mar. 2026." }
   },
   {
     id: "incheon",
-    cluster: { ko: "광역시", en: "Metropolitan City" },
+    color: "#b65f5b",
+    cluster: { ko: "수도권", en: "Capital Area" },
     name: { ko: "인천광역시", en: "Incheon Metropolitan City" },
-    price: 5.2,
-    note: { ko: "수도권 내 상대적으로 낮은 더미 평균 시세입니다.", en: "A comparatively lower dummy average within the capital area." }
+    price: 4.48,
+    note: { ko: "2025.04-2026.03 전국 엑셀 자료 기준 1년 평균 거래가격입니다.", en: "One-year average transaction price from the national dataset, Apr. 2025 to Mar. 2026." }
   },
   {
     id: "gwangju",
-    cluster: { ko: "광역시", en: "Metropolitan City" },
+    color: "#5f83ad",
+    cluster: { ko: "호남권", en: "Honam Region" },
     name: { ko: "광주광역시", en: "Gwangju Metropolitan City" },
-    price: 3.2,
-    note: { ko: "호남권 중심 도시를 설명하기 위한 더미 값입니다.", en: "A dummy value for the central city of the Honam region." }
+    price: 3.35,
+    note: { ko: "2025.04-2026.03 전국 엑셀 자료 기준 1년 평균 거래가격입니다.", en: "One-year average transaction price from the national dataset, Apr. 2025 to Mar. 2026." }
   },
   {
     id: "daejeon",
-    cluster: { ko: "광역시", en: "Metropolitan City" },
+    color: "#6f9b78",
+    cluster: { ko: "충청권", en: "Chungcheong Region" },
     name: { ko: "대전광역시", en: "Daejeon Metropolitan City" },
-    price: 3.8,
-    note: { ko: "충청권 광역 생활권의 예시 값입니다.", en: "A sample value for the Chungcheong metropolitan living area." }
+    price: 3.78,
+    note: { ko: "2025.04-2026.03 전국 엑셀 자료 기준 1년 평균 거래가격입니다.", en: "One-year average transaction price from the national dataset, Apr. 2025 to Mar. 2026." }
   },
   {
     id: "ulsan",
-    cluster: { ko: "광역시", en: "Metropolitan City" },
+    color: "#8b6f5a",
+    cluster: { ko: "동남권", en: "Southeast Region" },
     name: { ko: "울산광역시", en: "Ulsan Metropolitan City" },
-    price: 3.6,
-    note: { ko: "산업도시 특성을 반영한 예시 값입니다.", en: "A sample value reflecting industrial-city characteristics." }
+    price: 3.53,
+    note: { ko: "2025.04-2026.03 전국 엑셀 자료 기준 1년 평균 거래가격입니다.", en: "One-year average transaction price from the national dataset, Apr. 2025 to Mar. 2026." }
   },
   {
     id: "sejong",
-    cluster: { ko: "특별자치시", en: "Special Self-Governing City" },
+    color: "#6f9b78",
+    cluster: { ko: "충청권", en: "Chungcheong Region" },
     name: { ko: "세종특별자치시", en: "Sejong Special Self-Governing City" },
-    price: 4.6,
-    note: { ko: "행정수도 기능을 반영한 더미 평균 시세입니다.", en: "A dummy average reflecting administrative-capital functions." }
+    price: 5.52,
+    note: { ko: "2025.04-2026.03 전국 엑셀 자료 기준 1년 평균 거래가격입니다.", en: "One-year average transaction price from the national dataset, Apr. 2025 to Mar. 2026." }
   },
   {
     id: "gyeonggi",
-    cluster: { ko: "도", en: "Province" },
+    color: "#b65f5b",
+    cluster: { ko: "수도권", en: "Capital Area" },
     name: { ko: "경기도", en: "Gyeonggi-do" },
-    price: 7.6,
-    note: { ko: "서울 접근성과 신도시 수요가 반영된 예시 값입니다.", en: "A sample value reflecting Seoul access and new-town demand." }
+    price: 5.75,
+    note: { ko: "2025.04-2026.03 전국 엑셀 자료 기준 1년 평균 거래가격입니다.", en: "One-year average transaction price from the national dataset, Apr. 2025 to Mar. 2026." }
   },
   {
     id: "gangwon",
-    cluster: { ko: "특별자치도", en: "Special Self-Governing Province" },
+    color: "#c48755",
+    cluster: { ko: "강원·제주권", en: "Gangwon-Jeju Region" },
     name: { ko: "강원특별자치도", en: "Gangwon State" },
-    price: 2.4,
-    note: { ko: "관광 및 생활권 특성이 섞인 예시 값입니다.", en: "A sample value combining tourism and local living-area traits." }
+    price: 2.76,
+    note: { ko: "2025.04-2026.03 전국 엑셀 자료 기준 1년 평균 거래가격입니다.", en: "One-year average transaction price from the national dataset, Apr. 2025 to Mar. 2026." }
   },
   {
     id: "chungbuk",
-    cluster: { ko: "도", en: "Province" },
+    color: "#6f9b78",
+    cluster: { ko: "충청권", en: "Chungcheong Region" },
     name: { ko: "충청북도", en: "North Chungcheong Province" },
-    price: 2.9,
-    note: { ko: "내륙 산업 및 생활권 특성을 반영한 더미 값입니다.", en: "A dummy value reflecting inland industry and living-area traits." }
+    price: 2.92,
+    note: { ko: "2025.04-2026.03 전국 엑셀 자료 기준 1년 평균 거래가격입니다.", en: "One-year average transaction price from the national dataset, Apr. 2025 to Mar. 2026." }
   },
   {
     id: "chungnam",
-    cluster: { ko: "도", en: "Province" },
+    color: "#6f9b78",
+    cluster: { ko: "충청권", en: "Chungcheong Region" },
     name: { ko: "충청남도", en: "South Chungcheong Province" },
-    price: 3.0,
-    note: { ko: "수도권 남부 확장과 산업 수요를 반영한 더미 값입니다.", en: "A dummy value reflecting southern capital-area expansion and industrial demand." }
+    price: 2.71,
+    note: { ko: "2025.04-2026.03 전국 엑셀 자료 기준 1년 평균 거래가격입니다.", en: "One-year average transaction price from the national dataset, Apr. 2025 to Mar. 2026." }
   },
   {
     id: "jeonbuk",
-    cluster: { ko: "특별자치도", en: "Special Self-Governing Province" },
+    color: "#5f83ad",
+    cluster: { ko: "호남권", en: "Honam Region" },
     name: { ko: "전북특별자치도", en: "Jeonbuk State" },
-    price: 2.6,
-    note: { ko: "전북권 평균을 설명하기 위한 더미 값입니다.", en: "A dummy value used to describe the Jeonbuk regional average." }
+    price: 2.60,
+    note: { ko: "2025.04-2026.03 전국 엑셀 자료 기준 1년 평균 거래가격입니다.", en: "One-year average transaction price from the national dataset, Apr. 2025 to Mar. 2026." }
   },
   {
     id: "jeonnam",
-    cluster: { ko: "도", en: "Province" },
+    color: "#5f83ad",
+    cluster: { ko: "호남권", en: "Honam Region" },
     name: { ko: "전라남도", en: "South Jeolla Province" },
-    price: 2.3,
-    note: { ko: "농어촌 및 중소도시 생활권을 반영한 예시 값입니다.", en: "A sample value reflecting rural, coastal, and small-city living areas." }
+    price: 2.31,
+    note: { ko: "2025.04-2026.03 전국 엑셀 자료 기준 1년 평균 거래가격입니다.", en: "One-year average transaction price from the national dataset, Apr. 2025 to Mar. 2026." }
   },
   {
     id: "gyeongbuk",
-    cluster: { ko: "도", en: "Province" },
+    color: "#c77b9a",
+    cluster: { ko: "대구·경북권", en: "Daegu-Gyeongbuk Region" },
     name: { ko: "경상북도", en: "North Gyeongsang Province" },
-    price: 2.7,
-    note: { ko: "영남 북부권 평균을 나타내는 더미 값입니다.", en: "A dummy value representing the northern Yeongnam average." }
+    price: 2.36,
+    note: { ko: "2025.04-2026.03 전국 엑셀 자료 기준 1년 평균 거래가격입니다.", en: "One-year average transaction price from the national dataset, Apr. 2025 to Mar. 2026." }
   },
   {
     id: "gyeongnam",
-    cluster: { ko: "도", en: "Province" },
+    color: "#8b6f5a",
+    cluster: { ko: "동남권", en: "Southeast Region" },
     name: { ko: "경상남도", en: "South Gyeongsang Province" },
-    price: 3.1,
-    note: { ko: "창원과 동남권 산업 생활권을 반영한 예시 값입니다.", en: "A sample value reflecting Changwon and southeast industrial living areas." }
+    price: 2.72,
+    note: { ko: "2025.04-2026.03 전국 엑셀 자료 기준 1년 평균 거래가격입니다.", en: "One-year average transaction price from the national dataset, Apr. 2025 to Mar. 2026." }
   },
   {
     id: "jeju",
-    cluster: { ko: "특별자치도", en: "Special Self-Governing Province" },
+    color: "#c48755",
+    cluster: { ko: "강원·제주권", en: "Gangwon-Jeju Region" },
     name: { ko: "제주특별자치도", en: "Jeju Special Self-Governing Province" },
-    price: 4.4,
-    note: { ko: "섬 지역의 특수성을 반영한 예시 값입니다.", en: "A sample value reflecting the island-region context." }
+    price: 4.79,
+    note: { ko: "2025.04-2026.03 전국 엑셀 자료 기준 1년 평균 거래가격입니다.", en: "One-year average transaction price from the national dataset, Apr. 2025 to Mar. 2026." }
   }
 ];
 
@@ -360,14 +377,49 @@ function getGraphItem(id) {
   return graphData.find((item) => item.id === id) || graphData[0];
 }
 
+function drawLineChart(container, selected, lang) {
+  const width = 760;
+  const height = 300;
+  const padding = { top: 26, right: 28, bottom: 56, left: 58 };
+  const values = selected.trend;
+  const min = Math.min(...values);
+  const max = Math.max(...values);
+  const range = Math.max(max - min, 0.01);
+  const plotWidth = width - padding.left - padding.right;
+  const plotHeight = height - padding.top - padding.bottom;
+
+  const points = values.map((value, index) => {
+    const x = padding.left + (index / (values.length - 1)) * plotWidth;
+    const y = padding.top + (1 - (value - min) / range) * plotHeight;
+    return { x, y, value };
+  });
+
+  const path = points.map((point, index) => `${index === 0 ? "M" : "L"} ${point.x.toFixed(1)} ${point.y.toFixed(1)}`).join(" ");
+  const pointNodes = points.map((point, index) => `
+    <g class="line-point">
+      <circle cx="${point.x.toFixed(1)}" cy="${point.y.toFixed(1)}" r="4"></circle>
+      <text x="${point.x.toFixed(1)}" y="${(point.y - 10).toFixed(1)}">${formatPrice(point.value, lang)}</text>
+      <text class="line-month" x="${point.x.toFixed(1)}" y="${height - 22}">${trendMonths[index]}</text>
+    </g>
+  `).join("");
+
+  container.innerHTML = `
+    <svg viewBox="0 0 ${width} ${height}" role="img" focusable="false" aria-label="${selected.name[lang]} 12-month trend" style="--line-color: ${selected.color}">
+      <line class="line-axis" x1="${padding.left}" y1="${height - padding.bottom}" x2="${width - padding.right}" y2="${height - padding.bottom}"></line>
+      <line class="line-axis" x1="${padding.left}" y1="${padding.top}" x2="${padding.left}" y2="${height - padding.bottom}"></line>
+      <path class="line-path" d="${path}"></path>
+      ${pointNodes}
+    </svg>
+  `;
+}
+
 function updateInteractiveChart(chart, selectedId) {
   const lang = chart.dataset.lang || "en";
   const labels = chartText[lang] || chartText.en;
   const sorted = [...graphData].sort((a, b) => b.value - a.value);
   const selected = getGraphItem(selectedId);
   const rank = sorted.findIndex((item) => item.id === selected.id) + 1;
-  const trendChart = chart.querySelector("[data-trend-chart]");
-  const maxTrend = Math.max(...selected.trend);
+  const lineChart = chart.querySelector("[data-line-chart]");
 
   chart.querySelectorAll(".chart-choice").forEach((button) => {
     button.classList.toggle("is-active", button.dataset.region === selected.id);
@@ -378,30 +430,18 @@ function updateInteractiveChart(chart, selectedId) {
   chart.querySelector("[data-detail-name]").textContent = selected.name[lang];
   chart.querySelector("[data-detail-value]").textContent = formatPrice(selected.value, lang);
   chart.querySelector("[data-detail-note]").textContent = `${labels.average}: ${formatPrice(selected.value, lang)} | ${labels.rank}: ${rank}/${graphData.length}. ${labels[getTrendType(selected.trend)]}`;
-  trendChart.style.setProperty("--bar-count", selected.trend.length);
-  trendChart.innerHTML = selected.trend.map((value, index) => {
-    const height = Math.max((value / maxTrend) * 100, 12);
-    return `
-      <div class="chart-bar month-bar" style="--bar-color: ${selected.color}">
-        <span class="chart-bar-value">${formatPrice(value, lang)}</span>
-        <span class="chart-bar-fill" style="height: ${height}%"></span>
-        <span class="chart-bar-label">${trendMonths[index]}</span>
-      </div>
-    `;
-  }).join("");
+  drawLineChart(lineChart, selected, lang);
 }
 
 function initInteractiveCharts() {
   document.querySelectorAll("[data-interactive-chart]").forEach((chart) => {
     const lang = chart.dataset.lang || "en";
     const selector = chart.querySelector("[data-chart-selector]");
-    const districts = graphData.filter((item) => item.id !== "seoul");
 
-    selector.innerHTML = districts.map((item) => {
+    selector.innerHTML = graphData.map((item) => {
       return `
         <button class="chart-choice" type="button" data-region="${item.id}" aria-pressed="false">
           <span>${item.name[lang]}</span>
-          <strong>${formatPrice(item.value, lang)}</strong>
         </button>
       `;
     }).join("");
@@ -455,8 +495,10 @@ function colorMapSvg(map, selectedId) {
       region.style.fill = item.color;
       region.style.opacity = selectedId === dataId ? "0.95" : "0.32";
     } else {
-      region.style.fill = region.dataset.originalFill;
-      region.style.opacity = "1";
+      const dataId = Object.keys(ids).find((id) => ids[id] === svgId);
+      const item = getMapData(map).find((entry) => entry.id === dataId);
+      region.style.fill = item?.color || region.dataset.originalFill;
+      region.style.opacity = selectedId === dataId ? "0.95" : "0.34";
     }
   });
 
@@ -467,8 +509,7 @@ function colorMapSvg(map, selectedId) {
     selectedRegion.style.opacity = "0.95";
     return;
   }
-  selectedRegion.style.fill = "#0b7f72";
-  selectedRegion.style.opacity = "1";
+  selectedRegion.style.opacity = "0.95";
 }
 
 function updateMapWidget(map, selectedId) {
@@ -477,7 +518,7 @@ function updateMapWidget(map, selectedId) {
   const selected = data.find((item) => item.id === selectedId) || data[0];
 
   map.querySelectorAll(".map-region").forEach((button) => {
-    const isActive = selected.id !== "seoul" && button.dataset.region === selected.id;
+    const isActive = button.dataset.region === selected.id;
     button.classList.toggle("is-active", isActive);
     button.setAttribute("aria-pressed", String(isActive));
   });

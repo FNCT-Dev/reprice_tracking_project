@@ -731,9 +731,8 @@ a {
   color: #323943;
   font-size: clamp(12px, 1.1vw, 14px);
   line-height: 1.55;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  overflow-wrap: break-word;
+  word-break: keep-all;
 }
 
 .feature-band {
@@ -828,7 +827,7 @@ figcaption {
 
 .chart-layout {
   display: grid;
-  grid-template-columns: minmax(220px, 0.28fr) minmax(0, 1fr) minmax(250px, 0.28fr);
+  grid-template-columns: minmax(220px, 0.28fr) minmax(0, 1fr);
   min-height: 460px;
 }
 
@@ -846,10 +845,7 @@ figcaption {
 }
 
 .chart-choice {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 8px;
+  display: block;
   min-width: 0;
   padding: 8px 10px;
   border: 1px solid rgba(17, 19, 24, 0.14);
@@ -904,6 +900,53 @@ figcaption {
 .trend-chart {
   grid-template-columns: repeat(var(--bar-count, 12), minmax(54px, 1fr));
   overflow-x: auto;
+}
+
+.line-chart {
+  min-width: 0;
+  min-height: 360px;
+  padding: 28px clamp(12px, 2vw, 24px);
+  overflow-x: auto;
+  border-bottom: 1px solid var(--line);
+}
+
+.line-chart svg {
+  display: block;
+  width: 100%;
+  min-width: 700px;
+  height: auto;
+}
+
+.line-axis {
+  stroke: rgba(17, 19, 24, 0.18);
+  stroke-width: 1.5;
+}
+
+.line-path {
+  fill: none;
+  stroke: var(--line-color, var(--blue));
+  stroke-width: 5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.line-point circle {
+  fill: #ffffff;
+  stroke: var(--line-color, var(--blue));
+  stroke-width: 3;
+}
+
+.line-point text {
+  fill: #26313c;
+  font-size: 11px;
+  font-weight: 800;
+  text-anchor: middle;
+}
+
+.line-point .line-month {
+  fill: #5f6872;
+  font-size: 10px;
+  font-weight: 700;
 }
 
 .chart-bar {
@@ -970,6 +1013,7 @@ figcaption {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  grid-column: 1 / -1;
   min-width: 0;
   padding: clamp(24px, 4vw, 36px);
   background: #f4f6f2;
