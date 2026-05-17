@@ -425,6 +425,8 @@ a {
 
 .content-section .container,
 .feature-band .container {
+  width: min(100%, 1280px);
+  max-width: calc(100vw - 48px);
   border-top: 1px solid var(--line);
   padding-top: clamp(28px, 4vw, 48px);
 }
@@ -802,30 +804,41 @@ figcaption {
 
 .chart-layout {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(240px, 0.34fr);
-  min-height: 420px;
+  grid-template-columns: minmax(0, 1fr) minmax(250px, 0.28fr);
+  min-height: 460px;
 }
 
 .bar-chart {
   display: grid;
-  grid-template-columns: repeat(8, minmax(42px, 1fr));
+  grid-template-columns: repeat(var(--bar-count, 8), minmax(32px, 1fr));
   align-items: end;
-  gap: 14px;
+  gap: 7px;
   min-width: 0;
-  padding: 44px clamp(18px, 4vw, 34px) 28px;
+  padding: 34px clamp(12px, 2vw, 24px) 22px;
   border-right: 1px solid var(--line);
 }
 
 .chart-bar {
   display: grid;
-  grid-template-rows: 1fr auto;
-  gap: 12px;
+  grid-template-rows: auto 1fr auto;
+  gap: 8px;
   min-width: 0;
   height: 100%;
   border: 0;
   background: transparent;
   color: inherit;
   cursor: pointer;
+}
+
+.chart-bar-value {
+  display: block;
+  min-height: 28px;
+  color: #26313c;
+  font-size: 10px;
+  font-weight: 800;
+  line-height: 1.2;
+  text-align: center;
+  white-space: nowrap;
 }
 
 .chart-bar-fill {
@@ -851,9 +864,9 @@ figcaption {
 
 .chart-bar-label {
   display: block;
-  min-height: 42px;
+  min-height: 52px;
   color: #303740;
-  font-size: 12px;
+  font-size: 10px;
   font-weight: 800;
   line-height: 1.25;
   text-align: center;
@@ -1116,8 +1129,9 @@ figcaption {
   }
 
   .bar-chart {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-template-columns: repeat(var(--bar-count, 8), minmax(42px, 1fr));
     min-height: 360px;
+    overflow-x: auto;
     border-right: 0;
     border-bottom: 1px solid var(--line);
   }

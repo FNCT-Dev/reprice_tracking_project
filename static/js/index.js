@@ -9,14 +9,14 @@ let countersStarted = false;
 
 const chartText = {
   ko: {
-    average: "평균 거래 가격",
+    average: "1년 평균 거래 가격",
     rank: "선택 지역 순위",
     trendUp: "최근 12개월 추세가 완만하게 상승했습니다.",
     trendDown: "최근 12개월 추세가 조정 구간에 들어섰습니다.",
     trendFlat: "최근 12개월 추세가 비교적 안정적으로 유지됐습니다."
   },
   en: {
-    average: "Average transaction price",
+    average: "One-year average transaction price",
     rank: "Selected region rank",
     trendUp: "The 12-month trend moved upward gradually.",
     trendDown: "The 12-month trend entered a correction phase.",
@@ -25,70 +25,32 @@ const chartText = {
 };
 
 const graphData = [
-  {
-    id: "seoul",
-    color: "#8f1d21",
-    cluster: { ko: "서울 평균", en: "Seoul Average" },
-    name: { ko: "서울 평균", en: "Seoul Average" },
-    value: 15.2,
-    trend: [14.7, 14.8, 14.9, 15.0, 15.1, 15.0, 15.2, 15.3, 15.2, 15.4, 15.3, 15.2]
-  },
-  {
-    id: "gangnam",
-    color: "#1d4f91",
-    cluster: { ko: "상위권", en: "Upper Tier" },
-    name: { ko: "강남구", en: "Gangnam" },
-    value: 27.4,
-    trend: [25.9, 26.1, 26.3, 26.8, 26.9, 27.0, 27.1, 27.3, 27.2, 27.4, 27.5, 27.4]
-  },
-  {
-    id: "seocho",
-    color: "#1d4f91",
-    cluster: { ko: "상위권", en: "Upper Tier" },
-    name: { ko: "서초구", en: "Seocho" },
-    value: 25.8,
-    trend: [24.8, 25.0, 25.2, 25.3, 25.6, 25.7, 25.6, 25.8, 26.0, 25.9, 25.8, 25.8]
-  },
-  {
-    id: "songpa",
-    color: "#1d4f91",
-    cluster: { ko: "상위권", en: "Upper Tier" },
-    name: { ko: "송파구", en: "Songpa" },
-    value: 21.9,
-    trend: [21.2, 21.4, 21.5, 21.6, 21.8, 21.9, 21.7, 21.8, 22.0, 21.9, 22.1, 21.9]
-  },
-  {
-    id: "mapo",
-    color: "#0b7f72",
-    cluster: { ko: "중간권", en: "Middle Tier" },
-    name: { ko: "마포구", en: "Mapo" },
-    value: 16.8,
-    trend: [16.1, 16.3, 16.4, 16.5, 16.7, 16.8, 16.8, 16.9, 16.7, 16.8, 16.9, 16.8]
-  },
-  {
-    id: "gwangjin",
-    color: "#0b7f72",
-    cluster: { ko: "중간권", en: "Middle Tier" },
-    name: { ko: "광진구", en: "Gwangjin" },
-    value: 14.9,
-    trend: [14.5, 14.5, 14.6, 14.7, 14.8, 14.8, 14.9, 15.0, 14.9, 15.0, 14.9, 14.9]
-  },
-  {
-    id: "gangseo",
-    color: "#3f7d45",
-    cluster: { ko: "하위권", en: "Lower Tier" },
-    name: { ko: "강서구", en: "Gangseo" },
-    value: 10.7,
-    trend: [10.9, 10.8, 10.8, 10.7, 10.7, 10.6, 10.7, 10.8, 10.7, 10.7, 10.6, 10.7]
-  },
-  {
-    id: "dobong",
-    color: "#3f7d45",
-    cluster: { ko: "하위권", en: "Lower Tier" },
-    name: { ko: "도봉구", en: "Dobong" },
-    value: 7.8,
-    trend: [8.1, 8.0, 7.9, 7.9, 7.8, 7.8, 7.7, 7.8, 7.8, 7.7, 7.8, 7.8]
-  }
+  { id: "seoul", color: "#b65f5b", cluster: { ko: "서울 평균", en: "Seoul Average" }, name: { ko: "서울 평균", en: "Seoul Average" }, value: 14.04, trend: [12.85, 12.98, 13.37, 13.61, 13.77, 13.9, 14.16, 14.44, 14.62, 14.76, 14.93, 15.1] },
+  { id: "gangnam", color: "#5f83ad", cluster: { ko: "상급지", en: "Upper Tier" }, name: { ko: "강남구", en: "Gangnam-gu" }, value: 30.28, trend: [27.06, 27.68, 29.27, 29.75, 30.13, 30.39, 30.73, 31.15, 31.58, 31.85, 31.95, 31.8] },
+  { id: "gangdong", color: "#5f83ad", cluster: { ko: "상급지", en: "Upper Tier" }, name: { ko: "강동구", en: "Gangdong-gu" }, value: 14.11, trend: [12.61, 12.65, 12.95, 13.35, 13.53, 13.74, 14.54, 14.86, 14.97, 15.14, 15.32, 15.69] },
+  { id: "gangbuk", color: "#6f9b78", cluster: { ko: "하급지", en: "Lower Tier" }, name: { ko: "강북구", en: "Gangbuk-gu" }, value: 6.94, trend: [6.84, 6.84, 6.83, 6.88, 6.88, 6.9, 6.9, 6.93, 6.97, 7.0, 7.08, 7.23] },
+  { id: "gangseo", color: "#6f9b78", cluster: { ko: "하급지", en: "Lower Tier" }, name: { ko: "강서구", en: "Gangseo-gu" }, value: 9.96, trend: [9.56, 9.59, 9.63, 9.69, 9.74, 9.81, 9.89, 10.06, 10.16, 10.24, 10.46, 10.7] },
+  { id: "gwanak", color: "#6f9b78", cluster: { ko: "하급지", en: "Lower Tier" }, name: { ko: "관악구", en: "Gwanak-gu" }, value: 8.55, trend: [8.1, 8.2, 8.26, 8.3, 8.33, 8.37, 8.47, 8.61, 8.71, 8.86, 9.11, 9.33] },
+  { id: "gwangjin", color: "#5f83ad", cluster: { ko: "상급지", en: "Upper Tier" }, name: { ko: "광진구", en: "Gwangjin-gu" }, value: 15.72, trend: [13.82, 13.95, 14.25, 14.67, 14.89, 15.15, 16.14, 16.83, 17.03, 17.15, 17.32, 17.49] },
+  { id: "guro", color: "#6f9b78", cluster: { ko: "하급지", en: "Lower Tier" }, name: { ko: "구로구", en: "Guro-gu" }, value: 7.91, trend: [7.69, 7.69, 7.71, 7.77, 7.81, 7.85, 7.89, 7.95, 8.0, 8.05, 8.18, 8.34] },
+  { id: "geumcheon", color: "#6f9b78", cluster: { ko: "하급지", en: "Lower Tier" }, name: { ko: "금천구", en: "Geumcheon-gu" }, value: 7.33, trend: [7.3, 7.3, 7.28, 7.31, 7.33, 7.34, 7.34, 7.33, 7.34, 7.35, 7.36, 7.39] },
+  { id: "nowon", color: "#6f9b78", cluster: { ko: "하급지", en: "Lower Tier" }, name: { ko: "노원구", en: "Nowon-gu" }, value: 7.67, trend: [7.53, 7.57, 7.57, 7.59, 7.61, 7.63, 7.65, 7.7, 7.72, 7.76, 7.82, 7.93] },
+  { id: "dobong", color: "#6f9b78", cluster: { ko: "하급지", en: "Lower Tier" }, name: { ko: "도봉구", en: "Dobong-gu" }, value: 6.29, trend: [6.23, 6.23, 6.24, 6.25, 6.26, 6.27, 6.29, 6.3, 6.32, 6.33, 6.37, 6.42] },
+  { id: "dongdaemun", color: "#6f9b78", cluster: { ko: "하급지", en: "Lower Tier" }, name: { ko: "동대문구", en: "Dongdaemun-gu" }, value: 10.31, trend: [9.42, 9.43, 9.47, 9.56, 10.17, 10.23, 10.39, 10.68, 10.84, 10.95, 11.1, 11.46] },
+  { id: "dongjak", color: "#6f9b78", cluster: { ko: "하급지", en: "Lower Tier" }, name: { ko: "동작구", en: "Dongjak-gu" }, value: 13.9, trend: [12.49, 12.6, 12.88, 13.12, 13.33, 13.5, 13.83, 14.46, 14.63, 15.07, 15.25, 15.6] },
+  { id: "mapo", color: "#5f83ad", cluster: { ko: "상급지", en: "Upper Tier" }, name: { ko: "마포구", en: "Mapo-gu" }, value: 15.72, trend: [14.27, 14.38, 14.61, 15.02, 15.19, 15.38, 15.86, 16.38, 16.53, 16.68, 17.02, 17.28] },
+  { id: "seodaemun", color: "#6f9b78", cluster: { ko: "하급지", en: "Lower Tier" }, name: { ko: "서대문구", en: "Seodaemun-gu" }, value: 10.81, trend: [10.12, 10.13, 10.3, 10.47, 10.57, 10.63, 10.78, 11.0, 11.1, 11.25, 11.53, 11.79] },
+  { id: "seocho", color: "#5f83ad", cluster: { ko: "상급지", en: "Upper Tier" }, name: { ko: "서초구", en: "Seocho-gu" }, value: 30.35, trend: [27.31, 27.94, 29.2, 29.7, 30.09, 30.36, 30.61, 30.95, 31.61, 31.94, 32.21, 32.23] },
+  { id: "seongdong", color: "#5f83ad", cluster: { ko: "상급지", en: "Upper Tier" }, name: { ko: "성동구", en: "Seongdong-gu" }, value: 16.65, trend: [14.75, 14.93, 15.41, 15.89, 16.05, 16.21, 16.83, 17.52, 17.71, 17.87, 18.12, 18.56] },
+  { id: "seongbuk", color: "#6f9b78", cluster: { ko: "하급지", en: "Lower Tier" }, name: { ko: "성북구", en: "Seongbuk-gu" }, value: 9.04, trend: [8.74, 8.76, 8.8, 8.85, 8.86, 8.91, 8.97, 9.1, 9.16, 9.27, 9.4, 9.7] },
+  { id: "songpa", color: "#5f83ad", cluster: { ko: "상급지", en: "Upper Tier" }, name: { ko: "송파구", en: "Songpa-gu" }, value: 23.25, trend: [20.66, 20.9, 21.73, 22.32, 22.88, 23.21, 23.73, 24.13, 24.64, 24.8, 25.06, 24.9] },
+  { id: "yangcheon", color: "#6f9b78", cluster: { ko: "하급지", en: "Lower Tier" }, name: { ko: "양천구", en: "Yangcheon-gu" }, value: 14.03, trend: [12.53, 12.78, 13.31, 13.77, 13.83, 13.95, 14.22, 14.57, 14.7, 14.79, 14.89, 15.06] },
+  { id: "yeongdeungpo", color: "#6f9b78", cluster: { ko: "하급지", en: "Lower Tier" }, name: { ko: "영등포구", en: "Yeongdeungpo-gu" }, value: 12.39, trend: [11.43, 11.52, 11.7, 11.91, 12.0, 12.13, 12.42, 12.69, 12.89, 13.02, 13.29, 13.72] },
+  { id: "yongsan", color: "#5f83ad", cluster: { ko: "상급지", en: "Upper Tier" }, name: { ko: "용산구", en: "Yongsan-gu" }, value: 18.23, trend: [16.77, 16.86, 17.13, 17.43, 17.71, 17.95, 18.27, 18.63, 19.12, 19.36, 19.54, 19.99] },
+  { id: "eunpyeong", color: "#6f9b78", cluster: { ko: "하급지", en: "Lower Tier" }, name: { ko: "은평구", en: "Eunpyeong-gu" }, value: 8.77, trend: [8.59, 8.6, 8.62, 8.66, 8.67, 8.68, 8.71, 8.76, 8.81, 8.87, 9.03, 9.26] },
+  { id: "jongno", color: "#6f9b78", cluster: { ko: "하급지", en: "Lower Tier" }, name: { ko: "종로구", en: "Jongno-gu" }, value: 13.75, trend: [13.12, 13.24, 13.43, 13.59, 13.63, 13.69, 13.72, 13.95, 14.02, 14.04, 14.18, 14.41] },
+  { id: "jung", color: "#6f9b78", cluster: { ko: "하급지", en: "Lower Tier" }, name: { ko: "중구", en: "Jung-gu" }, value: 13.18, trend: [12.13, 12.16, 12.33, 12.57, 12.65, 12.85, 13.07, 13.6, 14.03, 14.12, 14.24, 14.44] },
+  { id: "jungnang", color: "#6f9b78", cluster: { ko: "하급지", en: "Lower Tier" }, name: { ko: "중랑구", en: "Jungnang-gu" }, value: 7.34, trend: [7.25, 7.27, 7.28, 7.29, 7.3, 7.32, 7.32, 7.35, 7.36, 7.4, 7.44, 7.54] }
 ];
 
 const koreaMapData = [
@@ -214,31 +176,31 @@ const koreaMapData = [
 ];
 
 const seoulMapData = [
-  { id: "gangnam", cluster: { ko: "강남권", en: "Southeast Seoul" }, name: { ko: "강남구", en: "Gangnam-gu" }, price: 27.4, note: { ko: "서울 내 상위권 더미 평균 시세입니다.", en: "A top-tier dummy average price in Seoul." } },
-  { id: "gangdong", cluster: { ko: "강동권", en: "Eastern Seoul" }, name: { ko: "강동구", en: "Gangdong-gu" }, price: 16.1, note: { ko: "동부 생활권 수요를 반영한 예시 값입니다.", en: "A sample value for eastern Seoul demand." } },
-  { id: "gangbuk", cluster: { ko: "강북권", en: "Northern Seoul" }, name: { ko: "강북구", en: "Gangbuk-gu" }, price: 8.4, note: { ko: "북부 주거권 평균을 설명하는 더미 값입니다.", en: "A dummy value for northern residential Seoul." } },
-  { id: "gangseo", cluster: { ko: "서남권", en: "Western Seoul" }, name: { ko: "강서구", en: "Gangseo-gu" }, price: 10.7, note: { ko: "서부 교통권 특성을 반영한 예시 값입니다.", en: "A sample value reflecting western transit access." } },
-  { id: "gwanak", cluster: { ko: "서남권", en: "Southwest Seoul" }, name: { ko: "관악구", en: "Gwanak-gu" }, price: 10.2, note: { ko: "대학가와 주거 수요가 섞인 예시 값입니다.", en: "A sample value mixing campus and housing demand." } },
-  { id: "gwangjin", cluster: { ko: "동북권", en: "Northeast Seoul" }, name: { ko: "광진구", en: "Gwangjin-gu" }, price: 14.9, note: { ko: "한강변 접근성을 반영한 더미 값입니다.", en: "A dummy value reflecting Han River access." } },
-  { id: "guro", cluster: { ko: "서남권", en: "Southwest Seoul" }, name: { ko: "구로구", en: "Guro-gu" }, price: 9.6, note: { ko: "산업 및 교통축 수요의 예시 값입니다.", en: "A sample value for industry and transit corridors." } },
-  { id: "geumcheon", cluster: { ko: "서남권", en: "Southwest Seoul" }, name: { ko: "금천구", en: "Geumcheon-gu" }, price: 8.9, note: { ko: "서남부 업무권 특성을 반영한 더미 값입니다.", en: "A dummy value for the southwest business area." } },
-  { id: "nowon", cluster: { ko: "동북권", en: "Northeast Seoul" }, name: { ko: "노원구", en: "Nowon-gu" }, price: 8.8, note: { ko: "대규모 아파트 생활권의 예시 값입니다.", en: "A sample value for a large apartment district." } },
-  { id: "dobong", cluster: { ko: "동북권", en: "Northeast Seoul" }, name: { ko: "도봉구", en: "Dobong-gu" }, price: 7.8, note: { ko: "북동부 생활권의 더미 평균 시세입니다.", en: "A dummy average for northeastern Seoul." } },
-  { id: "dongdaemun", cluster: { ko: "동북권", en: "Northeast Seoul" }, name: { ko: "동대문구", en: "Dongdaemun-gu" }, price: 11.7, note: { ko: "도심 접근성과 대학가 수요의 예시 값입니다.", en: "A sample value for central access and campus demand." } },
-  { id: "dongjak", cluster: { ko: "서남권", en: "Southwest Seoul" }, name: { ko: "동작구", en: "Dongjak-gu" }, price: 14.3, note: { ko: "한강 이남 주거권을 반영한 더미 값입니다.", en: "A dummy value for south-of-river housing demand." } },
-  { id: "mapo", cluster: { ko: "서북권", en: "Northwest Seoul" }, name: { ko: "마포구", en: "Mapo-gu" }, price: 16.8, note: { ko: "업무와 문화 수요가 섞인 예시 값입니다.", en: "A sample value mixing office and cultural demand." } },
-  { id: "seodaemun", cluster: { ko: "서북권", en: "Northwest Seoul" }, name: { ko: "서대문구", en: "Seodaemun-gu" }, price: 12.6, note: { ko: "서북부 도심 접근성을 반영한 값입니다.", en: "A value reflecting northwest central access." } },
-  { id: "seocho", cluster: { ko: "강남권", en: "Southeast Seoul" }, name: { ko: "서초구", en: "Seocho-gu" }, price: 25.8, note: { ko: "강남권 고가 주거지의 예시 값입니다.", en: "A sample value for premium southeast housing." } },
-  { id: "seongdong", cluster: { ko: "도심권", en: "Central Seoul" }, name: { ko: "성동구", en: "Seongdong-gu" }, price: 17.2, note: { ko: "한강변 재개발 수요를 반영한 값입니다.", en: "A value reflecting riverside redevelopment demand." } },
-  { id: "seongbuk", cluster: { ko: "동북권", en: "Northeast Seoul" }, name: { ko: "성북구", en: "Seongbuk-gu" }, price: 10.5, note: { ko: "북부 주거 및 대학가 수요의 예시 값입니다.", en: "A sample value for northern housing and campus demand." } },
-  { id: "songpa", cluster: { ko: "강남권", en: "Southeast Seoul" }, name: { ko: "송파구", en: "Songpa-gu" }, price: 21.9, note: { ko: "잠실권 수요를 반영한 더미 값입니다.", en: "A dummy value reflecting Jamsil-area demand." } },
-  { id: "yangcheon", cluster: { ko: "서남권", en: "Southwest Seoul" }, name: { ko: "양천구", en: "Yangcheon-gu" }, price: 12.2, note: { ko: "목동권 교육 수요의 예시 값입니다.", en: "A sample value for Mok-dong education demand." } },
-  { id: "yeongdeungpo", cluster: { ko: "서남권", en: "Southwest Seoul" }, name: { ko: "영등포구", en: "Yeongdeungpo-gu" }, price: 13.9, note: { ko: "여의도 업무권 접근성을 반영한 값입니다.", en: "A value reflecting Yeouido business access." } },
-  { id: "yongsan", cluster: { ko: "도심권", en: "Central Seoul" }, name: { ko: "용산구", en: "Yongsan-gu" }, price: 22.8, note: { ko: "도심 핵심 개발 수요의 예시 값입니다.", en: "A sample value for central development demand." } },
-  { id: "eunpyeong", cluster: { ko: "서북권", en: "Northwest Seoul" }, name: { ko: "은평구", en: "Eunpyeong-gu" }, price: 9.4, note: { ko: "서북부 주거권 평균을 나타내는 값입니다.", en: "A value for northwest residential Seoul." } },
-  { id: "jongno", cluster: { ko: "도심권", en: "Central Seoul" }, name: { ko: "종로구", en: "Jongno-gu" }, price: 13.4, note: { ko: "도심 업무·문화축을 반영한 예시 값입니다.", en: "A sample value for central office and culture corridors." } },
-  { id: "jung", cluster: { ko: "도심권", en: "Central Seoul" }, name: { ko: "중구", en: "Jung-gu" }, price: 12.8, note: { ko: "도심 핵심 업무권의 더미 값입니다.", en: "A dummy value for the central business district." } },
-  { id: "jungnang", cluster: { ko: "동북권", en: "Northeast Seoul" }, name: { ko: "중랑구", en: "Jungnang-gu" }, price: 8.7, note: { ko: "동북부 생활권을 설명하는 예시 값입니다.", en: "A sample value for northeastern Seoul living areas." } }
+  { id: "gangnam", cluster: { ko: "강남권", en: "Southeast Seoul" }, name: { ko: "강남구", en: "Gangnam-gu" }, price: 30.28, note: { ko: "2025.04-2026.03 실제 1년 평균 거래가격입니다.", en: "Actual one-year average transaction price from Apr. 2025 to Mar. 2026." } },
+  { id: "gangdong", cluster: { ko: "강동권", en: "Eastern Seoul" }, name: { ko: "강동구", en: "Gangdong-gu" }, price: 14.11, note: { ko: "2025.04-2026.03 실제 1년 평균 거래가격입니다.", en: "Actual one-year average transaction price from Apr. 2025 to Mar. 2026." } },
+  { id: "gangbuk", cluster: { ko: "강북권", en: "Northern Seoul" }, name: { ko: "강북구", en: "Gangbuk-gu" }, price: 6.94, note: { ko: "2025.04-2026.03 실제 1년 평균 거래가격입니다.", en: "Actual one-year average transaction price from Apr. 2025 to Mar. 2026." } },
+  { id: "gangseo", cluster: { ko: "서남권", en: "Western Seoul" }, name: { ko: "강서구", en: "Gangseo-gu" }, price: 9.96, note: { ko: "2025.04-2026.03 실제 1년 평균 거래가격입니다.", en: "Actual one-year average transaction price from Apr. 2025 to Mar. 2026." } },
+  { id: "gwanak", cluster: { ko: "서남권", en: "Southwest Seoul" }, name: { ko: "관악구", en: "Gwanak-gu" }, price: 8.55, note: { ko: "2025.04-2026.03 실제 1년 평균 거래가격입니다.", en: "Actual one-year average transaction price from Apr. 2025 to Mar. 2026." } },
+  { id: "gwangjin", cluster: { ko: "동북권", en: "Northeast Seoul" }, name: { ko: "광진구", en: "Gwangjin-gu" }, price: 15.72, note: { ko: "2025.04-2026.03 실제 1년 평균 거래가격입니다.", en: "Actual one-year average transaction price from Apr. 2025 to Mar. 2026." } },
+  { id: "guro", cluster: { ko: "서남권", en: "Southwest Seoul" }, name: { ko: "구로구", en: "Guro-gu" }, price: 7.91, note: { ko: "2025.04-2026.03 실제 1년 평균 거래가격입니다.", en: "Actual one-year average transaction price from Apr. 2025 to Mar. 2026." } },
+  { id: "geumcheon", cluster: { ko: "서남권", en: "Southwest Seoul" }, name: { ko: "금천구", en: "Geumcheon-gu" }, price: 7.33, note: { ko: "2025.04-2026.03 실제 1년 평균 거래가격입니다.", en: "Actual one-year average transaction price from Apr. 2025 to Mar. 2026." } },
+  { id: "nowon", cluster: { ko: "동북권", en: "Northeast Seoul" }, name: { ko: "노원구", en: "Nowon-gu" }, price: 7.67, note: { ko: "2025.04-2026.03 실제 1년 평균 거래가격입니다.", en: "Actual one-year average transaction price from Apr. 2025 to Mar. 2026." } },
+  { id: "dobong", cluster: { ko: "동북권", en: "Northeast Seoul" }, name: { ko: "도봉구", en: "Dobong-gu" }, price: 6.29, note: { ko: "2025.04-2026.03 실제 1년 평균 거래가격입니다.", en: "Actual one-year average transaction price from Apr. 2025 to Mar. 2026." } },
+  { id: "dongdaemun", cluster: { ko: "동북권", en: "Northeast Seoul" }, name: { ko: "동대문구", en: "Dongdaemun-gu" }, price: 10.31, note: { ko: "2025.04-2026.03 실제 1년 평균 거래가격입니다.", en: "Actual one-year average transaction price from Apr. 2025 to Mar. 2026." } },
+  { id: "dongjak", cluster: { ko: "서남권", en: "Southwest Seoul" }, name: { ko: "동작구", en: "Dongjak-gu" }, price: 13.9, note: { ko: "2025.04-2026.03 실제 1년 평균 거래가격입니다.", en: "Actual one-year average transaction price from Apr. 2025 to Mar. 2026." } },
+  { id: "mapo", cluster: { ko: "서북권", en: "Northwest Seoul" }, name: { ko: "마포구", en: "Mapo-gu" }, price: 15.72, note: { ko: "2025.04-2026.03 실제 1년 평균 거래가격입니다.", en: "Actual one-year average transaction price from Apr. 2025 to Mar. 2026." } },
+  { id: "seodaemun", cluster: { ko: "서북권", en: "Northwest Seoul" }, name: { ko: "서대문구", en: "Seodaemun-gu" }, price: 10.81, note: { ko: "2025.04-2026.03 실제 1년 평균 거래가격입니다.", en: "Actual one-year average transaction price from Apr. 2025 to Mar. 2026." } },
+  { id: "seocho", cluster: { ko: "강남권", en: "Southeast Seoul" }, name: { ko: "서초구", en: "Seocho-gu" }, price: 30.35, note: { ko: "2025.04-2026.03 실제 1년 평균 거래가격입니다.", en: "Actual one-year average transaction price from Apr. 2025 to Mar. 2026." } },
+  { id: "seongdong", cluster: { ko: "도심권", en: "Central Seoul" }, name: { ko: "성동구", en: "Seongdong-gu" }, price: 16.65, note: { ko: "2025.04-2026.03 실제 1년 평균 거래가격입니다.", en: "Actual one-year average transaction price from Apr. 2025 to Mar. 2026." } },
+  { id: "seongbuk", cluster: { ko: "동북권", en: "Northeast Seoul" }, name: { ko: "성북구", en: "Seongbuk-gu" }, price: 9.04, note: { ko: "2025.04-2026.03 실제 1년 평균 거래가격입니다.", en: "Actual one-year average transaction price from Apr. 2025 to Mar. 2026." } },
+  { id: "songpa", cluster: { ko: "강남권", en: "Southeast Seoul" }, name: { ko: "송파구", en: "Songpa-gu" }, price: 23.25, note: { ko: "2025.04-2026.03 실제 1년 평균 거래가격입니다.", en: "Actual one-year average transaction price from Apr. 2025 to Mar. 2026." } },
+  { id: "yangcheon", cluster: { ko: "서남권", en: "Southwest Seoul" }, name: { ko: "양천구", en: "Yangcheon-gu" }, price: 14.03, note: { ko: "2025.04-2026.03 실제 1년 평균 거래가격입니다.", en: "Actual one-year average transaction price from Apr. 2025 to Mar. 2026." } },
+  { id: "yeongdeungpo", cluster: { ko: "서남권", en: "Southwest Seoul" }, name: { ko: "영등포구", en: "Yeongdeungpo-gu" }, price: 12.39, note: { ko: "2025.04-2026.03 실제 1년 평균 거래가격입니다.", en: "Actual one-year average transaction price from Apr. 2025 to Mar. 2026." } },
+  { id: "yongsan", cluster: { ko: "도심권", en: "Central Seoul" }, name: { ko: "용산구", en: "Yongsan-gu" }, price: 18.23, note: { ko: "2025.04-2026.03 실제 1년 평균 거래가격입니다.", en: "Actual one-year average transaction price from Apr. 2025 to Mar. 2026." } },
+  { id: "eunpyeong", cluster: { ko: "서북권", en: "Northwest Seoul" }, name: { ko: "은평구", en: "Eunpyeong-gu" }, price: 8.77, note: { ko: "2025.04-2026.03 실제 1년 평균 거래가격입니다.", en: "Actual one-year average transaction price from Apr. 2025 to Mar. 2026." } },
+  { id: "jongno", cluster: { ko: "도심권", en: "Central Seoul" }, name: { ko: "종로구", en: "Jongno-gu" }, price: 13.75, note: { ko: "2025.04-2026.03 실제 1년 평균 거래가격입니다.", en: "Actual one-year average transaction price from Apr. 2025 to Mar. 2026." } },
+  { id: "jung", cluster: { ko: "도심권", en: "Central Seoul" }, name: { ko: "중구", en: "Jung-gu" }, price: 13.18, note: { ko: "2025.04-2026.03 실제 1년 평균 거래가격입니다.", en: "Actual one-year average transaction price from Apr. 2025 to Mar. 2026." } },
+  { id: "jungnang", cluster: { ko: "동북권", en: "Northeast Seoul" }, name: { ko: "중랑구", en: "Jungnang-gu" }, price: 7.34, note: { ko: "2025.04-2026.03 실제 1년 평균 거래가격입니다.", en: "Actual one-year average transaction price from Apr. 2025 to Mar. 2026." } }
 ];
 
 const seoulSvgIds = {
@@ -381,6 +343,10 @@ function drawSparkline(container, trend) {
   `;
 }
 
+function formatPrice(value, lang) {
+  return lang === "ko" ? `${value.toFixed(1)}억 원` : `₩${(value / 10).toFixed(2)}B`;
+}
+
 function updateInteractiveChart(chart, selectedId) {
   const lang = chart.dataset.lang || "en";
   const labels = chartText[lang] || chartText.en;
@@ -395,8 +361,8 @@ function updateInteractiveChart(chart, selectedId) {
 
   chart.querySelector("[data-detail-cluster]").textContent = selected.cluster[lang];
   chart.querySelector("[data-detail-name]").textContent = selected.name[lang];
-  chart.querySelector("[data-detail-value]").textContent = selected.value.toFixed(1);
-  chart.querySelector("[data-detail-note]").textContent = `${labels.average}: ${selected.value.toFixed(1)} | ${labels.rank}: ${rank}/${graphData.length}. ${labels[getTrendType(selected.trend)]}`;
+  chart.querySelector("[data-detail-value]").textContent = formatPrice(selected.value, lang);
+  chart.querySelector("[data-detail-note]").textContent = `${labels.average}: ${formatPrice(selected.value, lang)} | ${labels.rank}: ${rank}/${graphData.length}. ${labels[getTrendType(selected.trend)]}`;
   drawSparkline(chart.querySelector("[data-sparkline]"), selected.trend);
 }
 
@@ -405,11 +371,13 @@ function initInteractiveCharts() {
     const lang = chart.dataset.lang || "en";
     const maxValue = Math.max(...graphData.map((item) => item.value));
     const barChart = chart.querySelector("[data-bar-chart]");
+    barChart.style.setProperty("--bar-count", graphData.length);
 
     barChart.innerHTML = graphData.map((item) => {
       const height = Math.max((item.value / maxValue) * 100, 10);
       return `
         <button class="chart-bar" type="button" data-region="${item.id}" aria-pressed="false" style="--bar-color: ${item.color}">
+          <span class="chart-bar-value">${formatPrice(item.value, lang)}</span>
           <span class="chart-bar-fill" style="height: ${height}%"></span>
           <span class="chart-bar-label">${item.name[lang]}</span>
         </button>
@@ -473,9 +441,7 @@ function updateMapWidget(map, selectedId) {
 
   map.querySelector("[data-map-cluster]").textContent = selected.cluster[lang];
   map.querySelector("[data-map-name]").textContent = selected.name[lang];
-  map.querySelector("[data-map-price]").textContent = lang === "ko"
-    ? `${selected.price.toFixed(1)}억 원`
-    : `KRW ${selected.price.toFixed(1)}B`;
+  map.querySelector("[data-map-price]").textContent = formatPrice(selected.price, lang);
   map.querySelector("[data-map-note]").textContent = selected.note[lang];
   colorMapSvg(map, selected.id);
 }
