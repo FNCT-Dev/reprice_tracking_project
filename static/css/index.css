@@ -1194,6 +1194,11 @@ figcaption {
 }
 
 .reveal-on-scroll {
+  opacity: 1;
+  transform: none;
+}
+
+.reveal-on-scroll.is-reveal-ready {
   opacity: 0;
   transform: translateY(36px);
   transition: opacity 520ms ease, transform 520ms ease;

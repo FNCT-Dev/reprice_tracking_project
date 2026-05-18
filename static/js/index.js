@@ -738,21 +738,41 @@ if (navToggle && navMenu && header) {
   });
 }
 
-const revealObserver = new IntersectionObserver(
-  (entries) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
+function initRevealSections() {
+  const sections = Array.from(document.querySelectorAll(".reveal-on-scroll"));
+  if (sections.length === 0) return;
+
+  if (!("IntersectionObserver" in window)) {
+    sections.forEach((section) => section.classList.add("is-visible"));
+    return;
+  }
+
+  const revealObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
         entry.target.classList.add("is-visible");
         revealObserver.unobserve(entry.target);
-      }
-    });
-  },
-  { threshold: 0.18 }
-);
+      });
+    },
+    { rootMargin: "0px 0px -8% 0px", threshold: 0.08 }
+  );
 
-document.querySelectorAll(".reveal-on-scroll").forEach((section) => {
-  revealObserver.observe(section);
-});
+  sections.forEach((section) => {
+    section.classList.add("is-reveal-ready");
+    revealObserver.observe(section);
+  });
+}
+
+function initPage() {
+  updateHeader();
+  updateStage();
+  maybeStartCounters();
+  initRevealSections();
+  initInteractiveCharts();
+  initMapWidgets();
+  initScrollDots();
+}
 
 window.addEventListener("scroll", () => {
   updateHeader();
@@ -762,9 +782,4 @@ window.addEventListener("scroll", () => {
 
 window.addEventListener("resize", updateStage);
 
-updateHeader();
-updateStage();
-maybeStartCounters();
-initInteractiveCharts();
-initMapWidgets();
-initScrollDots();
+initPage();
