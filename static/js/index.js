@@ -603,11 +603,11 @@ function renderComparisonChart(chart, selectedId) {
       </div>
       <div class="bar-chart comparison-bars" style="--bar-count: ${bars.length}">
         ${bars.map((bar) => `
-          <div class="chart-bar month-bar ${bar.id === selected.id ? "is-active" : ""} ${bar.id !== "baseline" && bar.id !== selected.id ? "is-muted" : ""}">
+          <button class="chart-bar month-bar ${bar.id === selected.id ? "is-active" : ""} ${bar.id !== "baseline" && bar.id !== selected.id ? "is-muted" : ""}" type="button" data-region="${bar.id}" ${bar.id === "baseline" ? "disabled" : ""}>
             <span class="chart-bar-value">${formatPrice(bar.value, lang)}</span>
             <span class="chart-bar-fill" style="--bar-color: ${bar.color}; height: ${(bar.value / maxValue * 100).toFixed(1)}%"></span>
             <span class="chart-bar-label">${bar.name[lang]}</span>
-          </div>
+          </button>
         `).join("")}
       </div>
       <aside class="chart-detail" aria-live="polite">
@@ -626,8 +626,9 @@ function initComparisonCharts() {
     const config = comparisonChartData[chart.dataset.comparisonType] || comparisonChartData.capital;
     renderComparisonChart(chart, config.items[0].id);
     chart.addEventListener("click", (event) => {
-      const button = event.target.closest(".chart-choice");
+      const button = event.target.closest(".chart-choice, .comparison-bars .chart-bar");
       if (!button) return;
+      if (button.dataset.region === "baseline") return;
       renderComparisonChart(chart, button.dataset.region);
     });
   });
