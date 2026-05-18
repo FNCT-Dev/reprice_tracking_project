@@ -583,9 +583,10 @@ function renderComparisonChart(chart, selectedId) {
   const maxValue = Math.max(config.baselineValue, ...config.items.map((item) => item.value));
   const gap = selected.value - config.baselineValue;
   const gapText = lang === "ko" ? `지방 평균 대비 ${formatPrice(Math.abs(gap), lang)} ${gap >= 0 ? "높습니다" : "낮습니다"}.` : `${formatPrice(Math.abs(gap), lang)} ${gap >= 0 ? "above" : "below"} the local average.`;
+  const sortedBars = [...config.items].sort((a, b) => b.value - a.value);
   const bars = [
     { id: "baseline", name: config.baseline, value: config.baselineValue, color: "#9fb4c9" },
-    ...config.items.map((item) => ({ ...item, color: "#1f5eff" }))
+    ...sortedBars.map((item) => ({ ...item, color: "#1f5eff" }))
   ];
 
   chart.innerHTML = `
