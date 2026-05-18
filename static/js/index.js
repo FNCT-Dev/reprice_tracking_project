@@ -35,15 +35,32 @@ const pricePalette = ["#d9ecff", "#a9d4f7", "#75b7ec", "#3e93d4", "#1768a8"];
 const mapViewText = {
   ko: {
     legendTitle: "시세 범주",
+    regionLegendTitle: "색상 범례",
     lowest: "낮음",
     highest: "높음"
   },
   en: {
     legendTitle: "Price range",
+    regionLegendTitle: "Color legend",
     lowest: "Low",
     highest: "High"
   }
 };
+
+const koreaRegionLegend = [
+  { color: "#b65f5b", label: { ko: "수도권", en: "Capital Area" } },
+  { color: "#c48755", label: { ko: "강원·제주권", en: "Gangwon-Jeju Region" } },
+  { color: "#6f9b78", label: { ko: "충청권", en: "Chungcheong Region" } },
+  { color: "#5f83ad", label: { ko: "호남권", en: "Honam Region" } },
+  { color: "#8b6f5a", label: { ko: "동남권", en: "Southeast Region" } },
+  { color: "#c77b9a", label: { ko: "대구·경북권", en: "Daegu-Gyeongbuk Region" } }
+];
+
+const seoulRegionLegend = [
+  { color: "#b65f5b", label: { ko: "서울 평균", en: "Seoul Average" } },
+  { color: "#5f83ad", label: { ko: "서울 평균보다 높음", en: "Above Seoul Average" } },
+  { color: "#6f9b78", label: { ko: "서울 평균보다 낮음", en: "Below Seoul Average" } }
+];
 
 const graphData = [
   { id: "seoul", color: "#b65f5b", cluster: { ko: "서울 평균", en: "Seoul Average" }, name: { ko: "서울 전체", en: "All Seoul" }, value: 14.04, trend: [12.85, 12.98, 13.37, 13.61, 13.77, 13.9, 14.16, 14.44, 14.62, 14.76, 14.93, 15.1] },
@@ -505,6 +522,21 @@ function renderMapLegend(map) {
 
   const lang = map.dataset.lang || "en";
   const labels = mapViewText[lang] || mapViewText.en;
+  const isPriceView = map.dataset.mapView === "price";
+
+  if (!isPriceView) {
+    const regionLegend = map.dataset.mapType === "seoul" ? seoulRegionLegend : koreaRegionLegend;
+    const items = regionLegend.map((item) => `
+      <span class="map-legend-item">
+        <span class="map-legend-swatch" style="background: ${item.color}"></span>
+        ${item.label[lang]}
+      </span>
+    `).join("");
+
+    legend.innerHTML = `<span class="map-legend-title">${labels.regionLegendTitle}</span>${items}`;
+    return;
+  }
+
   const data = getPriceMapData(map);
   const prices = data.map((item) => item.price);
   const min = Math.min(...prices);
@@ -588,7 +620,6 @@ function updateMapWidget(map, selectedId) {
   const data = getMapData(map);
   const selected = data.find((item) => item.id === selectedId) || data[0];
   map.dataset.selectedRegion = selected.id;
-  map.classList.toggle("is-price-view", map.dataset.mapView === "price");
 
   map.querySelectorAll(".map-region").forEach((button) => {
     const isActive = button.dataset.region === selected.id;
