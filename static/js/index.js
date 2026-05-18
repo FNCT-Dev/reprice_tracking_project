@@ -31,6 +31,19 @@ const chartText = {
 };
 
 const trendMonths = ["2025.04", "2025.05", "2025.06", "2025.07", "2025.08", "2025.09", "2025.10", "2025.11", "2025.12", "2026.01", "2026.02", "2026.03"];
+const pricePalette = ["#d9ecff", "#a9d4f7", "#75b7ec", "#3e93d4", "#1768a8"];
+const mapViewText = {
+  ko: {
+    legendTitle: "시세 범주",
+    lowest: "낮음",
+    highest: "높음"
+  },
+  en: {
+    legendTitle: "Price range",
+    lowest: "Low",
+    highest: "High"
+  }
+};
 
 const graphData = [
   { id: "seoul", color: "#b65f5b", cluster: { ko: "서울 평균", en: "Seoul Average" }, name: { ko: "서울 전체", en: "All Seoul" }, value: 14.04, trend: [12.85, 12.98, 13.37, 13.61, 13.77, 13.9, 14.16, 14.44, 14.62, 14.76, 14.93, 15.1] },
@@ -468,6 +481,50 @@ function getSvgFill(element) {
   return element.style.fill || element.getAttribute("fill") || "#cdcccc";
 }
 
+function getPriceMapData(map) {
+  const data = getMapData(map);
+  return map.dataset.mapType === "seoul" ? data.filter((item) => item.id !== "seoul") : data;
+}
+
+function getPriceBucketIndex(value, data) {
+  const prices = data.map((item) => item.price);
+  const min = Math.min(...prices);
+  const max = Math.max(...prices);
+  const range = Math.max(max - min, 0.01);
+  const normalized = (value - min) / range;
+  return Math.min(pricePalette.length - 1, Math.floor(normalized * pricePalette.length));
+}
+
+function getPriceColor(item, data) {
+  return pricePalette[getPriceBucketIndex(item.price, data)];
+}
+
+function renderMapLegend(map) {
+  const legend = map.querySelector("[data-map-legend]");
+  if (!legend) return;
+
+  const lang = map.dataset.lang || "en";
+  const labels = mapViewText[lang] || mapViewText.en;
+  const data = getPriceMapData(map);
+  const prices = data.map((item) => item.price);
+  const min = Math.min(...prices);
+  const max = Math.max(...prices);
+  const step = (max - min) / pricePalette.length;
+
+  const items = pricePalette.map((color, index) => {
+    const start = min + step * index;
+    const end = index === pricePalette.length - 1 ? max : min + step * (index + 1);
+    return `
+      <span class="map-legend-item">
+        <span class="map-legend-swatch" style="background: ${color}"></span>
+        ${formatPrice(start, lang)}-${formatPrice(end, lang)}
+      </span>
+    `;
+  }).join("");
+
+  legend.innerHTML = `<span class="map-legend-title">${labels.legendTitle}</span>${items}<span>${labels.lowest} → ${labels.highest}</span>`;
+}
+
 function getRegionFromSvgTarget(map, target) {
   const region = target.closest("[id]");
   if (!region || region.classList.contains("interactive-map-svg")) return "";
@@ -483,23 +540,37 @@ function colorMapSvg(map, selectedId) {
 
   const ids = getMapSvgIds(map);
   const isSeoulMap = map.dataset.mapType === "seoul";
+  const isPriceView = map.dataset.mapView === "price";
+  const priceData = getPriceMapData(map);
+
   Object.values(ids).forEach((svgId) => {
     const region = svg.querySelector(`#${svgId}`);
     if (!region) return;
     if (!region.dataset.originalFill) {
       region.dataset.originalFill = getSvgFill(region);
     }
-    if (isSeoulMap) {
-      const dataId = Object.keys(ids).find((id) => ids[id] === svgId);
-      const item = getGraphItem(dataId);
-      region.style.fill = item.color;
-      region.style.opacity = selectedId === dataId ? "0.95" : "0.32";
-    } else {
-      const dataId = Object.keys(ids).find((id) => ids[id] === svgId);
-      const item = getMapData(map).find((entry) => entry.id === dataId);
-      region.style.fill = item?.color || region.dataset.originalFill;
-      region.style.opacity = selectedId === dataId ? "0.95" : "0.34";
+    const dataId = Object.keys(ids).find((id) => ids[id] === svgId);
+    const item = getMapData(map).find((entry) => entry.id === dataId);
+    const isSelected = selectedId === dataId;
+
+    region.style.stroke = isSelected ? "#0d355a" : "";
+    region.style.strokeWidth = isSelected ? "2.4" : "";
+
+    if (isPriceView && item) {
+      region.style.fill = getPriceColor(item, priceData);
+      region.style.opacity = isSelected || (isSeoulMap && selectedId === "seoul") ? "0.96" : "0.78";
+      return;
     }
+
+    if (isSeoulMap) {
+      const graphItem = getGraphItem(dataId);
+      region.style.fill = graphItem.color;
+      region.style.opacity = isSelected || selectedId === "seoul" ? "0.88" : "0.32";
+      return;
+    }
+
+    region.style.fill = item?.color || region.dataset.originalFill;
+    region.style.opacity = isSelected ? "0.95" : "0.34";
   });
 
   const selectedSvgId = ids[selectedId];
@@ -516,6 +587,8 @@ function updateMapWidget(map, selectedId) {
   const lang = map.dataset.lang || "en";
   const data = getMapData(map);
   const selected = data.find((item) => item.id === selectedId) || data[0];
+  map.dataset.selectedRegion = selected.id;
+  map.classList.toggle("is-price-view", map.dataset.mapView === "price");
 
   map.querySelectorAll(".map-region").forEach((button) => {
     const isActive = button.dataset.region === selected.id;
@@ -527,6 +600,7 @@ function updateMapWidget(map, selectedId) {
   map.querySelector("[data-map-name]").textContent = selected.name[lang];
   map.querySelector("[data-map-price]").textContent = formatPrice(selected.price, lang);
   map.querySelector("[data-map-note]").textContent = selected.note[lang];
+  renderMapLegend(map);
   colorMapSvg(map, selected.id);
 }
 
@@ -564,6 +638,18 @@ function initMapWidgets() {
     });
 
     map.addEventListener("click", (event) => {
+      const viewButton = event.target.closest("[data-map-view-option]");
+      if (viewButton) {
+        map.dataset.mapView = viewButton.dataset.mapViewOption;
+        map.querySelectorAll("[data-map-view-option]").forEach((button) => {
+          const isActive = button === viewButton;
+          button.classList.toggle("is-active", isActive);
+          button.setAttribute("aria-pressed", String(isActive));
+        });
+        updateMapWidget(map, map.dataset.selectedRegion || map.dataset.defaultRegion || "seoul");
+        return;
+      }
+
       const button = event.target.closest(".map-region");
       if (button) {
         updateMapWidget(map, button.dataset.region);

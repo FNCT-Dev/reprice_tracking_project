@@ -10,7 +10,7 @@
   <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans:400,500,700,800|Castoro" rel="stylesheet">
   <link rel="stylesheet" href="./static/css/bulma.min.css">
   <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
-  <link rel="stylesheet" href="./static/css/index.css?v=20260518-8">
+  <link rel="stylesheet" href="./static/css/index.css?v=20260518-9">
   <link rel="icon" href="./static/images/favicon.png">
 </head>
 <body>
@@ -156,11 +156,16 @@
         <p>
           This map uses dummy regional average prices to show how housing prices differ across Korea. Click a region to view its sample average market price.
         </p>
-        <div class="map-widget korea-map-widget" data-map-widget data-map-type="korea" data-lang="en">
+        <div class="map-widget korea-map-widget" data-map-widget data-map-type="korea" data-lang="en" data-map-view="region">
+          <div class="map-view-toggle" role="group" aria-label="Korea map view mode">
+            <button class="map-view-button is-active" type="button" data-map-view-option="region" aria-pressed="true">Administrative / Regional View</button>
+            <button class="map-view-button" type="button" data-map-view-option="price" aria-pressed="false">Price Highlight Map</button>
+          </div>
           <div class="map-panel korea-map-panel">
             <div class="korea-map" role="img" aria-label="Clickable map of South Korea by administrative region">
-              <img src="./static/images/southKoreaLow.svg?v=20260518-8" alt="" aria-hidden="true" data-map-svg>
+              <img src="./static/images/southKoreaLow.svg?v=20260518-9" alt="" aria-hidden="true" data-map-svg>
             </div>
+            <div class="map-price-legend" data-map-legend aria-label="Price color legend"></div>
             <div class="map-region-list" aria-label="Korea region buttons">
               <button class="map-region" data-region="seoul">Seoul</button>
               <button class="map-region" data-region="incheon">Incheon</button>
@@ -193,11 +198,16 @@
         <p>
           The Seoul map starts from the citywide average, while each district is softly colored by its one-year average price from the attached dataset.
         </p>
-        <div class="map-widget seoul-map-widget" data-map-widget data-map-type="seoul" data-lang="en" data-default-region="seoul">
+        <div class="map-widget seoul-map-widget" data-map-widget data-map-type="seoul" data-lang="en" data-default-region="seoul" data-map-view="region">
+          <div class="map-view-toggle" role="group" aria-label="Seoul map view mode">
+            <button class="map-view-button is-active" type="button" data-map-view-option="region" aria-pressed="true">Administrative View</button>
+            <button class="map-view-button" type="button" data-map-view-option="price" aria-pressed="false">Price Highlight Map</button>
+          </div>
           <div class="map-panel">
             <div class="seoul-map" role="img" aria-label="Clickable map of Seoul by district">
-              <img src="./static/images/Seoul_districts.svg?v=20260518-8" alt="" aria-hidden="true" data-map-svg>
+              <img src="./static/images/Seoul_districts.svg?v=20260518-9" alt="" aria-hidden="true" data-map-svg>
             </div>
+            <div class="map-price-legend" data-map-legend aria-label="Price color legend"></div>
             <div class="map-region-list" aria-label="Seoul district buttons">
               <button class="map-region" data-region="seoul">All Seoul</button>
               <button class="map-region" data-region="gangnam">Gangnam</button>
@@ -312,6 +322,6 @@
     </div>
   </footer>
 
-  <script src="./static/js/index.js?v=20260518-8"></script>
+  <script src="./static/js/index.js?v=20260518-9"></script>
 </body>
 </html>
