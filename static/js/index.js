@@ -1,4 +1,4 @@
-const header = document.querySelector("[data-header]");
+﻿const header = document.querySelector("[data-header]");
 const navToggle = document.querySelector("[data-nav-toggle]");
 const navMenu = document.querySelector("[data-nav-menu]");
 const panels = Array.from(document.querySelectorAll("[data-stage-panel]"));
@@ -13,9 +13,10 @@ const chartText = {
     monthlyTrend: "월별 거래가격 추세",
     selectDistrict: "지역 선택",
     rank: "선택 지역 순위",
-    trendUp: "최근 12개월 추세가 완만하게 상승했습니다.",
-    trendDown: "최근 12개월 추세가 조정 구간에 들어섰습니다.",
-    trendFlat: "최근 12개월 추세가 비교적 안정적으로 유지됐습니다.",
+    trendUp: "완만하게 상승했습니다.",
+    trendSteep: "가파르게 상승했습니다.",
+    trendJump: "에서 가파른 상승세를 보였습니다.",
+    trendFlat: "완만하게 상승했습니다.",
     seoulAverageNote: "서울 전체 1년 평균 거래가격입니다. 구를 선택하면 지도와 월별 추세가 함께 강조됩니다."
   },
   en: {
@@ -23,9 +24,10 @@ const chartText = {
     monthlyTrend: "Monthly transaction price trend",
     selectDistrict: "Select district",
     rank: "Selected region rank",
-    trendUp: "The 12-month trend moved upward gradually.",
-    trendDown: "The 12-month trend entered a correction phase.",
-    trendFlat: "The 12-month trend stayed comparatively stable.",
+    trendUp: "rose gradually.",
+    trendSteep: "rose sharply.",
+    trendJump: "showed a sharp upward movement between",
+    trendFlat: "rose gradually.",
     seoulAverageNote: "Seoul's one-year average transaction price. Select a district to highlight the map and monthly trend."
   }
 };
@@ -57,7 +59,7 @@ const koreaRegionLegend = [
 ];
 
 const seoulRegionLegend = [
-  { color: "#b65f5b", label: { ko: "서울 평균", en: "Seoul Average" } },
+  { color: "#b65f5b", label: { ko: "서울 평균 (14.0억 원)", en: "Seoul Average (₩1.40B)" } },
   { color: "#5f83ad", label: { ko: "서울 평균보다 높음", en: "Above Seoul Average" } },
   { color: "#6f9b78", label: { ko: "서울 평균보다 낮음", en: "Below Seoul Average" } }
 ];
@@ -98,7 +100,7 @@ const koreaMapData = [
     cluster: { ko: "수도권", en: "Capital Area" },
     name: { ko: "서울특별시", en: "Seoul Special City" },
     price: 14.04,
-    note: { ko: "2025.04-2026.03 전국 엑셀 자료 기준 1년 평균 거래가격입니다.", en: "One-year average transaction price from the national dataset, Apr. 2025 to Mar. 2026." }
+    note: { ko: "2025.04-2026.03 KB부동산 자료 기준 1년 평균 거래가격입니다.", en: "One-year average transaction price based on KB Real Estate data, Apr. 2025 to Mar. 2026." }
   },
   {
     id: "busan",
@@ -106,7 +108,7 @@ const koreaMapData = [
     cluster: { ko: "동남권", en: "Southeast Region" },
     name: { ko: "부산광역시", en: "Busan Metropolitan City" },
     price: 4.18,
-    note: { ko: "2025.04-2026.03 전국 엑셀 자료 기준 1년 평균 거래가격입니다.", en: "One-year average transaction price from the national dataset, Apr. 2025 to Mar. 2026." }
+    note: { ko: "2025.04-2026.03 KB부동산 자료 기준 1년 평균 거래가격입니다.", en: "One-year average transaction price based on KB Real Estate data, Apr. 2025 to Mar. 2026." }
   },
   {
     id: "daegu",
@@ -114,7 +116,7 @@ const koreaMapData = [
     cluster: { ko: "대구·경북권", en: "Daegu-Gyeongbuk Region" },
     name: { ko: "대구광역시", en: "Daegu Metropolitan City" },
     price: 3.60,
-    note: { ko: "2025.04-2026.03 전국 엑셀 자료 기준 1년 평균 거래가격입니다.", en: "One-year average transaction price from the national dataset, Apr. 2025 to Mar. 2026." }
+    note: { ko: "2025.04-2026.03 KB부동산 자료 기준 1년 평균 거래가격입니다.", en: "One-year average transaction price based on KB Real Estate data, Apr. 2025 to Mar. 2026." }
   },
   {
     id: "incheon",
@@ -122,7 +124,7 @@ const koreaMapData = [
     cluster: { ko: "수도권", en: "Capital Area" },
     name: { ko: "인천광역시", en: "Incheon Metropolitan City" },
     price: 4.48,
-    note: { ko: "2025.04-2026.03 전국 엑셀 자료 기준 1년 평균 거래가격입니다.", en: "One-year average transaction price from the national dataset, Apr. 2025 to Mar. 2026." }
+    note: { ko: "2025.04-2026.03 KB부동산 자료 기준 1년 평균 거래가격입니다.", en: "One-year average transaction price based on KB Real Estate data, Apr. 2025 to Mar. 2026." }
   },
   {
     id: "gwangju",
@@ -130,7 +132,7 @@ const koreaMapData = [
     cluster: { ko: "호남권", en: "Honam Region" },
     name: { ko: "광주광역시", en: "Gwangju Metropolitan City" },
     price: 3.35,
-    note: { ko: "2025.04-2026.03 전국 엑셀 자료 기준 1년 평균 거래가격입니다.", en: "One-year average transaction price from the national dataset, Apr. 2025 to Mar. 2026." }
+    note: { ko: "2025.04-2026.03 KB부동산 자료 기준 1년 평균 거래가격입니다.", en: "One-year average transaction price based on KB Real Estate data, Apr. 2025 to Mar. 2026." }
   },
   {
     id: "daejeon",
@@ -138,7 +140,7 @@ const koreaMapData = [
     cluster: { ko: "충청권", en: "Chungcheong Region" },
     name: { ko: "대전광역시", en: "Daejeon Metropolitan City" },
     price: 3.78,
-    note: { ko: "2025.04-2026.03 전국 엑셀 자료 기준 1년 평균 거래가격입니다.", en: "One-year average transaction price from the national dataset, Apr. 2025 to Mar. 2026." }
+    note: { ko: "2025.04-2026.03 KB부동산 자료 기준 1년 평균 거래가격입니다.", en: "One-year average transaction price based on KB Real Estate data, Apr. 2025 to Mar. 2026." }
   },
   {
     id: "ulsan",
@@ -146,7 +148,7 @@ const koreaMapData = [
     cluster: { ko: "동남권", en: "Southeast Region" },
     name: { ko: "울산광역시", en: "Ulsan Metropolitan City" },
     price: 3.53,
-    note: { ko: "2025.04-2026.03 전국 엑셀 자료 기준 1년 평균 거래가격입니다.", en: "One-year average transaction price from the national dataset, Apr. 2025 to Mar. 2026." }
+    note: { ko: "2025.04-2026.03 KB부동산 자료 기준 1년 평균 거래가격입니다.", en: "One-year average transaction price based on KB Real Estate data, Apr. 2025 to Mar. 2026." }
   },
   {
     id: "sejong",
@@ -154,7 +156,7 @@ const koreaMapData = [
     cluster: { ko: "충청권", en: "Chungcheong Region" },
     name: { ko: "세종특별자치시", en: "Sejong Special Self-Governing City" },
     price: 5.52,
-    note: { ko: "2025.04-2026.03 전국 엑셀 자료 기준 1년 평균 거래가격입니다.", en: "One-year average transaction price from the national dataset, Apr. 2025 to Mar. 2026." }
+    note: { ko: "2025.04-2026.03 KB부동산 자료 기준 1년 평균 거래가격입니다.", en: "One-year average transaction price based on KB Real Estate data, Apr. 2025 to Mar. 2026." }
   },
   {
     id: "gyeonggi",
@@ -162,7 +164,7 @@ const koreaMapData = [
     cluster: { ko: "수도권", en: "Capital Area" },
     name: { ko: "경기도", en: "Gyeonggi-do" },
     price: 5.75,
-    note: { ko: "2025.04-2026.03 전국 엑셀 자료 기준 1년 평균 거래가격입니다.", en: "One-year average transaction price from the national dataset, Apr. 2025 to Mar. 2026." }
+    note: { ko: "2025.04-2026.03 KB부동산 자료 기준 1년 평균 거래가격입니다.", en: "One-year average transaction price based on KB Real Estate data, Apr. 2025 to Mar. 2026." }
   },
   {
     id: "gangwon",
@@ -170,7 +172,7 @@ const koreaMapData = [
     cluster: { ko: "강원·제주권", en: "Gangwon-Jeju Region" },
     name: { ko: "강원특별자치도", en: "Gangwon State" },
     price: 2.76,
-    note: { ko: "2025.04-2026.03 전국 엑셀 자료 기준 1년 평균 거래가격입니다.", en: "One-year average transaction price from the national dataset, Apr. 2025 to Mar. 2026." }
+    note: { ko: "2025.04-2026.03 KB부동산 자료 기준 1년 평균 거래가격입니다.", en: "One-year average transaction price based on KB Real Estate data, Apr. 2025 to Mar. 2026." }
   },
   {
     id: "chungbuk",
@@ -178,7 +180,7 @@ const koreaMapData = [
     cluster: { ko: "충청권", en: "Chungcheong Region" },
     name: { ko: "충청북도", en: "North Chungcheong Province" },
     price: 2.92,
-    note: { ko: "2025.04-2026.03 전국 엑셀 자료 기준 1년 평균 거래가격입니다.", en: "One-year average transaction price from the national dataset, Apr. 2025 to Mar. 2026." }
+    note: { ko: "2025.04-2026.03 KB부동산 자료 기준 1년 평균 거래가격입니다.", en: "One-year average transaction price based on KB Real Estate data, Apr. 2025 to Mar. 2026." }
   },
   {
     id: "chungnam",
@@ -186,7 +188,7 @@ const koreaMapData = [
     cluster: { ko: "충청권", en: "Chungcheong Region" },
     name: { ko: "충청남도", en: "South Chungcheong Province" },
     price: 2.71,
-    note: { ko: "2025.04-2026.03 전국 엑셀 자료 기준 1년 평균 거래가격입니다.", en: "One-year average transaction price from the national dataset, Apr. 2025 to Mar. 2026." }
+    note: { ko: "2025.04-2026.03 KB부동산 자료 기준 1년 평균 거래가격입니다.", en: "One-year average transaction price based on KB Real Estate data, Apr. 2025 to Mar. 2026." }
   },
   {
     id: "jeonbuk",
@@ -194,7 +196,7 @@ const koreaMapData = [
     cluster: { ko: "호남권", en: "Honam Region" },
     name: { ko: "전북특별자치도", en: "Jeonbuk State" },
     price: 2.60,
-    note: { ko: "2025.04-2026.03 전국 엑셀 자료 기준 1년 평균 거래가격입니다.", en: "One-year average transaction price from the national dataset, Apr. 2025 to Mar. 2026." }
+    note: { ko: "2025.04-2026.03 KB부동산 자료 기준 1년 평균 거래가격입니다.", en: "One-year average transaction price based on KB Real Estate data, Apr. 2025 to Mar. 2026." }
   },
   {
     id: "jeonnam",
@@ -202,7 +204,7 @@ const koreaMapData = [
     cluster: { ko: "호남권", en: "Honam Region" },
     name: { ko: "전라남도", en: "South Jeolla Province" },
     price: 2.31,
-    note: { ko: "2025.04-2026.03 전국 엑셀 자료 기준 1년 평균 거래가격입니다.", en: "One-year average transaction price from the national dataset, Apr. 2025 to Mar. 2026." }
+    note: { ko: "2025.04-2026.03 KB부동산 자료 기준 1년 평균 거래가격입니다.", en: "One-year average transaction price based on KB Real Estate data, Apr. 2025 to Mar. 2026." }
   },
   {
     id: "gyeongbuk",
@@ -210,7 +212,7 @@ const koreaMapData = [
     cluster: { ko: "대구·경북권", en: "Daegu-Gyeongbuk Region" },
     name: { ko: "경상북도", en: "North Gyeongsang Province" },
     price: 2.36,
-    note: { ko: "2025.04-2026.03 전국 엑셀 자료 기준 1년 평균 거래가격입니다.", en: "One-year average transaction price from the national dataset, Apr. 2025 to Mar. 2026." }
+    note: { ko: "2025.04-2026.03 KB부동산 자료 기준 1년 평균 거래가격입니다.", en: "One-year average transaction price based on KB Real Estate data, Apr. 2025 to Mar. 2026." }
   },
   {
     id: "gyeongnam",
@@ -218,7 +220,7 @@ const koreaMapData = [
     cluster: { ko: "동남권", en: "Southeast Region" },
     name: { ko: "경상남도", en: "South Gyeongsang Province" },
     price: 2.72,
-    note: { ko: "2025.04-2026.03 전국 엑셀 자료 기준 1년 평균 거래가격입니다.", en: "One-year average transaction price from the national dataset, Apr. 2025 to Mar. 2026." }
+    note: { ko: "2025.04-2026.03 KB부동산 자료 기준 1년 평균 거래가격입니다.", en: "One-year average transaction price based on KB Real Estate data, Apr. 2025 to Mar. 2026." }
   },
   {
     id: "jeju",
@@ -226,37 +228,46 @@ const koreaMapData = [
     cluster: { ko: "강원·제주권", en: "Gangwon-Jeju Region" },
     name: { ko: "제주특별자치도", en: "Jeju Special Self-Governing Province" },
     price: 4.79,
-    note: { ko: "2025.04-2026.03 전국 엑셀 자료 기준 1년 평균 거래가격입니다.", en: "One-year average transaction price from the national dataset, Apr. 2025 to Mar. 2026." }
+    note: { ko: "2025.04-2026.03 KB부동산 자료 기준 1년 평균 거래가격입니다.", en: "One-year average transaction price based on KB Real Estate data, Apr. 2025 to Mar. 2026." }
   }
 ];
 
+koreaMapData.push(
+  { id: "capitalArea", color: "#b65f5b", cluster: { ko: "권역 평균", en: "Regional Average" }, name: { ko: "수도권 평균", en: "Capital Area Average" }, price: 8.09, note: { ko: "2025.04-2026.03 KB부동산 자료 기준 1년 평균 거래가격입니다.", en: "One-year average transaction price based on KB Real Estate data, Apr. 2025 to Mar. 2026." } },
+  { id: "gangwonJeju", color: "#c48755", cluster: { ko: "권역 평균", en: "Regional Average" }, name: { ko: "강원/제주권 평균", en: "Gangwon/Jeju Average" }, price: 3.78, note: { ko: "2025.04-2026.03 KB부동산 자료 기준 1년 평균 거래가격입니다.", en: "One-year average transaction price based on KB Real Estate data, Apr. 2025 to Mar. 2026." } },
+  { id: "chungcheong", color: "#6f9b78", cluster: { ko: "권역 평균", en: "Regional Average" }, name: { ko: "충청권 평균", en: "Chungcheong Average" }, price: 3.73, note: { ko: "2025.04-2026.03 KB부동산 자료 기준 1년 평균 거래가격입니다.", en: "One-year average transaction price based on KB Real Estate data, Apr. 2025 to Mar. 2026." } },
+  { id: "honam", color: "#5f83ad", cluster: { ko: "권역 평균", en: "Regional Average" }, name: { ko: "호남권 평균", en: "Honam Average" }, price: 2.75, note: { ko: "2025.04-2026.03 KB부동산 자료 기준 1년 평균 거래가격입니다.", en: "One-year average transaction price based on KB Real Estate data, Apr. 2025 to Mar. 2026." } },
+  { id: "southeast", color: "#8b6f5a", cluster: { ko: "권역 평균", en: "Regional Average" }, name: { ko: "동남권 평균", en: "Southeast Average" }, price: 3.48, note: { ko: "2025.04-2026.03 KB부동산 자료 기준 1년 평균 거래가격입니다.", en: "One-year average transaction price based on KB Real Estate data, Apr. 2025 to Mar. 2026." } },
+  { id: "daeguGyeongbuk", color: "#c77b9a", cluster: { ko: "권역 평균", en: "Regional Average" }, name: { ko: "대구/경북권 평균", en: "Daegu/Gyeongbuk Average" }, price: 2.98, note: { ko: "2025.04-2026.03 KB부동산 자료 기준 1년 평균 거래가격입니다.", en: "One-year average transaction price based on KB Real Estate data, Apr. 2025 to Mar. 2026." } }
+);
+
 const seoulMapData = [
-  { id: "seoul", cluster: { ko: "서울 전체", en: "Seoul Average" }, name: { ko: "서울 평균", en: "Seoul Average" }, price: 14.04, note: { ko: "서울 전체 2025.04-2026.03 실제 1년 평균 거래가격입니다.", en: "Actual one-year Seoul average transaction price from Apr. 2025 to Mar. 2026." } },
-  { id: "gangnam", cluster: { ko: "강남권", en: "Southeast Seoul" }, name: { ko: "강남구", en: "Gangnam-gu" }, price: 30.28, note: { ko: "2025.04-2026.03 실제 1년 평균 거래가격입니다.", en: "Actual one-year average transaction price from Apr. 2025 to Mar. 2026." } },
-  { id: "gangdong", cluster: { ko: "강동권", en: "Eastern Seoul" }, name: { ko: "강동구", en: "Gangdong-gu" }, price: 14.11, note: { ko: "2025.04-2026.03 실제 1년 평균 거래가격입니다.", en: "Actual one-year average transaction price from Apr. 2025 to Mar. 2026." } },
-  { id: "gangbuk", cluster: { ko: "강북권", en: "Northern Seoul" }, name: { ko: "강북구", en: "Gangbuk-gu" }, price: 6.94, note: { ko: "2025.04-2026.03 실제 1년 평균 거래가격입니다.", en: "Actual one-year average transaction price from Apr. 2025 to Mar. 2026." } },
-  { id: "gangseo", cluster: { ko: "서남권", en: "Western Seoul" }, name: { ko: "강서구", en: "Gangseo-gu" }, price: 9.96, note: { ko: "2025.04-2026.03 실제 1년 평균 거래가격입니다.", en: "Actual one-year average transaction price from Apr. 2025 to Mar. 2026." } },
-  { id: "gwanak", cluster: { ko: "서남권", en: "Southwest Seoul" }, name: { ko: "관악구", en: "Gwanak-gu" }, price: 8.55, note: { ko: "2025.04-2026.03 실제 1년 평균 거래가격입니다.", en: "Actual one-year average transaction price from Apr. 2025 to Mar. 2026." } },
-  { id: "gwangjin", cluster: { ko: "동북권", en: "Northeast Seoul" }, name: { ko: "광진구", en: "Gwangjin-gu" }, price: 15.72, note: { ko: "2025.04-2026.03 실제 1년 평균 거래가격입니다.", en: "Actual one-year average transaction price from Apr. 2025 to Mar. 2026." } },
-  { id: "guro", cluster: { ko: "서남권", en: "Southwest Seoul" }, name: { ko: "구로구", en: "Guro-gu" }, price: 7.91, note: { ko: "2025.04-2026.03 실제 1년 평균 거래가격입니다.", en: "Actual one-year average transaction price from Apr. 2025 to Mar. 2026." } },
-  { id: "geumcheon", cluster: { ko: "서남권", en: "Southwest Seoul" }, name: { ko: "금천구", en: "Geumcheon-gu" }, price: 7.33, note: { ko: "2025.04-2026.03 실제 1년 평균 거래가격입니다.", en: "Actual one-year average transaction price from Apr. 2025 to Mar. 2026." } },
-  { id: "nowon", cluster: { ko: "동북권", en: "Northeast Seoul" }, name: { ko: "노원구", en: "Nowon-gu" }, price: 7.67, note: { ko: "2025.04-2026.03 실제 1년 평균 거래가격입니다.", en: "Actual one-year average transaction price from Apr. 2025 to Mar. 2026." } },
-  { id: "dobong", cluster: { ko: "동북권", en: "Northeast Seoul" }, name: { ko: "도봉구", en: "Dobong-gu" }, price: 6.29, note: { ko: "2025.04-2026.03 실제 1년 평균 거래가격입니다.", en: "Actual one-year average transaction price from Apr. 2025 to Mar. 2026." } },
-  { id: "dongdaemun", cluster: { ko: "동북권", en: "Northeast Seoul" }, name: { ko: "동대문구", en: "Dongdaemun-gu" }, price: 10.31, note: { ko: "2025.04-2026.03 실제 1년 평균 거래가격입니다.", en: "Actual one-year average transaction price from Apr. 2025 to Mar. 2026." } },
-  { id: "dongjak", cluster: { ko: "서남권", en: "Southwest Seoul" }, name: { ko: "동작구", en: "Dongjak-gu" }, price: 13.9, note: { ko: "2025.04-2026.03 실제 1년 평균 거래가격입니다.", en: "Actual one-year average transaction price from Apr. 2025 to Mar. 2026." } },
-  { id: "mapo", cluster: { ko: "서북권", en: "Northwest Seoul" }, name: { ko: "마포구", en: "Mapo-gu" }, price: 15.72, note: { ko: "2025.04-2026.03 실제 1년 평균 거래가격입니다.", en: "Actual one-year average transaction price from Apr. 2025 to Mar. 2026." } },
-  { id: "seodaemun", cluster: { ko: "서북권", en: "Northwest Seoul" }, name: { ko: "서대문구", en: "Seodaemun-gu" }, price: 10.81, note: { ko: "2025.04-2026.03 실제 1년 평균 거래가격입니다.", en: "Actual one-year average transaction price from Apr. 2025 to Mar. 2026." } },
-  { id: "seocho", cluster: { ko: "강남권", en: "Southeast Seoul" }, name: { ko: "서초구", en: "Seocho-gu" }, price: 30.35, note: { ko: "2025.04-2026.03 실제 1년 평균 거래가격입니다.", en: "Actual one-year average transaction price from Apr. 2025 to Mar. 2026." } },
-  { id: "seongdong", cluster: { ko: "도심권", en: "Central Seoul" }, name: { ko: "성동구", en: "Seongdong-gu" }, price: 16.65, note: { ko: "2025.04-2026.03 실제 1년 평균 거래가격입니다.", en: "Actual one-year average transaction price from Apr. 2025 to Mar. 2026." } },
-  { id: "seongbuk", cluster: { ko: "동북권", en: "Northeast Seoul" }, name: { ko: "성북구", en: "Seongbuk-gu" }, price: 9.04, note: { ko: "2025.04-2026.03 실제 1년 평균 거래가격입니다.", en: "Actual one-year average transaction price from Apr. 2025 to Mar. 2026." } },
-  { id: "songpa", cluster: { ko: "강남권", en: "Southeast Seoul" }, name: { ko: "송파구", en: "Songpa-gu" }, price: 23.25, note: { ko: "2025.04-2026.03 실제 1년 평균 거래가격입니다.", en: "Actual one-year average transaction price from Apr. 2025 to Mar. 2026." } },
-  { id: "yangcheon", cluster: { ko: "서남권", en: "Southwest Seoul" }, name: { ko: "양천구", en: "Yangcheon-gu" }, price: 14.03, note: { ko: "2025.04-2026.03 실제 1년 평균 거래가격입니다.", en: "Actual one-year average transaction price from Apr. 2025 to Mar. 2026." } },
-  { id: "yeongdeungpo", cluster: { ko: "서남권", en: "Southwest Seoul" }, name: { ko: "영등포구", en: "Yeongdeungpo-gu" }, price: 12.39, note: { ko: "2025.04-2026.03 실제 1년 평균 거래가격입니다.", en: "Actual one-year average transaction price from Apr. 2025 to Mar. 2026." } },
-  { id: "yongsan", cluster: { ko: "도심권", en: "Central Seoul" }, name: { ko: "용산구", en: "Yongsan-gu" }, price: 18.23, note: { ko: "2025.04-2026.03 실제 1년 평균 거래가격입니다.", en: "Actual one-year average transaction price from Apr. 2025 to Mar. 2026." } },
-  { id: "eunpyeong", cluster: { ko: "서북권", en: "Northwest Seoul" }, name: { ko: "은평구", en: "Eunpyeong-gu" }, price: 8.77, note: { ko: "2025.04-2026.03 실제 1년 평균 거래가격입니다.", en: "Actual one-year average transaction price from Apr. 2025 to Mar. 2026." } },
-  { id: "jongno", cluster: { ko: "도심권", en: "Central Seoul" }, name: { ko: "종로구", en: "Jongno-gu" }, price: 13.75, note: { ko: "2025.04-2026.03 실제 1년 평균 거래가격입니다.", en: "Actual one-year average transaction price from Apr. 2025 to Mar. 2026." } },
-  { id: "jung", cluster: { ko: "도심권", en: "Central Seoul" }, name: { ko: "중구", en: "Jung-gu" }, price: 13.18, note: { ko: "2025.04-2026.03 실제 1년 평균 거래가격입니다.", en: "Actual one-year average transaction price from Apr. 2025 to Mar. 2026." } },
-  { id: "jungnang", cluster: { ko: "동북권", en: "Northeast Seoul" }, name: { ko: "중랑구", en: "Jungnang-gu" }, price: 7.34, note: { ko: "2025.04-2026.03 실제 1년 평균 거래가격입니다.", en: "Actual one-year average transaction price from Apr. 2025 to Mar. 2026." } }
+  { id: "seoul", cluster: { ko: "서울 전체", en: "Seoul Average" }, name: { ko: "서울 평균", en: "Seoul Average" }, price: 14.04, note: { ko: "2025.04-2026.03 KB부동산 자료 기준 서울시 전체 및 행정구역별 1년 평균 거래가격입니다.", en: "One-year average transaction price for all Seoul and each administrative district based on KB Real Estate data, Apr. 2025 to Mar. 2026." } },
+  { id: "gangnam", cluster: { ko: "강남권", en: "Southeast Seoul" }, name: { ko: "강남구", en: "Gangnam-gu" }, price: 30.28, note: { ko: "2025.04-2026.03 KB부동산 자료 기준 서울시 전체 및 행정구역별 1년 평균 거래가격입니다.", en: "One-year average transaction price for all Seoul and each administrative district based on KB Real Estate data, Apr. 2025 to Mar. 2026." } },
+  { id: "gangdong", cluster: { ko: "강동권", en: "Eastern Seoul" }, name: { ko: "강동구", en: "Gangdong-gu" }, price: 14.11, note: { ko: "2025.04-2026.03 KB부동산 자료 기준 서울시 전체 및 행정구역별 1년 평균 거래가격입니다.", en: "One-year average transaction price for all Seoul and each administrative district based on KB Real Estate data, Apr. 2025 to Mar. 2026." } },
+  { id: "gangbuk", cluster: { ko: "강북권", en: "Northern Seoul" }, name: { ko: "강북구", en: "Gangbuk-gu" }, price: 6.94, note: { ko: "2025.04-2026.03 KB부동산 자료 기준 서울시 전체 및 행정구역별 1년 평균 거래가격입니다.", en: "One-year average transaction price for all Seoul and each administrative district based on KB Real Estate data, Apr. 2025 to Mar. 2026." } },
+  { id: "gangseo", cluster: { ko: "서남권", en: "Western Seoul" }, name: { ko: "강서구", en: "Gangseo-gu" }, price: 9.96, note: { ko: "2025.04-2026.03 KB부동산 자료 기준 서울시 전체 및 행정구역별 1년 평균 거래가격입니다.", en: "One-year average transaction price for all Seoul and each administrative district based on KB Real Estate data, Apr. 2025 to Mar. 2026." } },
+  { id: "gwanak", cluster: { ko: "서남권", en: "Southwest Seoul" }, name: { ko: "관악구", en: "Gwanak-gu" }, price: 8.55, note: { ko: "2025.04-2026.03 KB부동산 자료 기준 서울시 전체 및 행정구역별 1년 평균 거래가격입니다.", en: "One-year average transaction price for all Seoul and each administrative district based on KB Real Estate data, Apr. 2025 to Mar. 2026." } },
+  { id: "gwangjin", cluster: { ko: "동북권", en: "Northeast Seoul" }, name: { ko: "광진구", en: "Gwangjin-gu" }, price: 15.72, note: { ko: "2025.04-2026.03 KB부동산 자료 기준 서울시 전체 및 행정구역별 1년 평균 거래가격입니다.", en: "One-year average transaction price for all Seoul and each administrative district based on KB Real Estate data, Apr. 2025 to Mar. 2026." } },
+  { id: "guro", cluster: { ko: "서남권", en: "Southwest Seoul" }, name: { ko: "구로구", en: "Guro-gu" }, price: 7.91, note: { ko: "2025.04-2026.03 KB부동산 자료 기준 서울시 전체 및 행정구역별 1년 평균 거래가격입니다.", en: "One-year average transaction price for all Seoul and each administrative district based on KB Real Estate data, Apr. 2025 to Mar. 2026." } },
+  { id: "geumcheon", cluster: { ko: "서남권", en: "Southwest Seoul" }, name: { ko: "금천구", en: "Geumcheon-gu" }, price: 7.33, note: { ko: "2025.04-2026.03 KB부동산 자료 기준 서울시 전체 및 행정구역별 1년 평균 거래가격입니다.", en: "One-year average transaction price for all Seoul and each administrative district based on KB Real Estate data, Apr. 2025 to Mar. 2026." } },
+  { id: "nowon", cluster: { ko: "동북권", en: "Northeast Seoul" }, name: { ko: "노원구", en: "Nowon-gu" }, price: 7.67, note: { ko: "2025.04-2026.03 KB부동산 자료 기준 서울시 전체 및 행정구역별 1년 평균 거래가격입니다.", en: "One-year average transaction price for all Seoul and each administrative district based on KB Real Estate data, Apr. 2025 to Mar. 2026." } },
+  { id: "dobong", cluster: { ko: "동북권", en: "Northeast Seoul" }, name: { ko: "도봉구", en: "Dobong-gu" }, price: 6.29, note: { ko: "2025.04-2026.03 KB부동산 자료 기준 서울시 전체 및 행정구역별 1년 평균 거래가격입니다.", en: "One-year average transaction price for all Seoul and each administrative district based on KB Real Estate data, Apr. 2025 to Mar. 2026." } },
+  { id: "dongdaemun", cluster: { ko: "동북권", en: "Northeast Seoul" }, name: { ko: "동대문구", en: "Dongdaemun-gu" }, price: 10.31, note: { ko: "2025.04-2026.03 KB부동산 자료 기준 서울시 전체 및 행정구역별 1년 평균 거래가격입니다.", en: "One-year average transaction price for all Seoul and each administrative district based on KB Real Estate data, Apr. 2025 to Mar. 2026." } },
+  { id: "dongjak", cluster: { ko: "서남권", en: "Southwest Seoul" }, name: { ko: "동작구", en: "Dongjak-gu" }, price: 13.9, note: { ko: "2025.04-2026.03 KB부동산 자료 기준 서울시 전체 및 행정구역별 1년 평균 거래가격입니다.", en: "One-year average transaction price for all Seoul and each administrative district based on KB Real Estate data, Apr. 2025 to Mar. 2026." } },
+  { id: "mapo", cluster: { ko: "서북권", en: "Northwest Seoul" }, name: { ko: "마포구", en: "Mapo-gu" }, price: 15.72, note: { ko: "2025.04-2026.03 KB부동산 자료 기준 서울시 전체 및 행정구역별 1년 평균 거래가격입니다.", en: "One-year average transaction price for all Seoul and each administrative district based on KB Real Estate data, Apr. 2025 to Mar. 2026." } },
+  { id: "seodaemun", cluster: { ko: "서북권", en: "Northwest Seoul" }, name: { ko: "서대문구", en: "Seodaemun-gu" }, price: 10.81, note: { ko: "2025.04-2026.03 KB부동산 자료 기준 서울시 전체 및 행정구역별 1년 평균 거래가격입니다.", en: "One-year average transaction price for all Seoul and each administrative district based on KB Real Estate data, Apr. 2025 to Mar. 2026." } },
+  { id: "seocho", cluster: { ko: "강남권", en: "Southeast Seoul" }, name: { ko: "서초구", en: "Seocho-gu" }, price: 30.35, note: { ko: "2025.04-2026.03 KB부동산 자료 기준 서울시 전체 및 행정구역별 1년 평균 거래가격입니다.", en: "One-year average transaction price for all Seoul and each administrative district based on KB Real Estate data, Apr. 2025 to Mar. 2026." } },
+  { id: "seongdong", cluster: { ko: "도심권", en: "Central Seoul" }, name: { ko: "성동구", en: "Seongdong-gu" }, price: 16.65, note: { ko: "2025.04-2026.03 KB부동산 자료 기준 서울시 전체 및 행정구역별 1년 평균 거래가격입니다.", en: "One-year average transaction price for all Seoul and each administrative district based on KB Real Estate data, Apr. 2025 to Mar. 2026." } },
+  { id: "seongbuk", cluster: { ko: "동북권", en: "Northeast Seoul" }, name: { ko: "성북구", en: "Seongbuk-gu" }, price: 9.04, note: { ko: "2025.04-2026.03 KB부동산 자료 기준 서울시 전체 및 행정구역별 1년 평균 거래가격입니다.", en: "One-year average transaction price for all Seoul and each administrative district based on KB Real Estate data, Apr. 2025 to Mar. 2026." } },
+  { id: "songpa", cluster: { ko: "강남권", en: "Southeast Seoul" }, name: { ko: "송파구", en: "Songpa-gu" }, price: 23.25, note: { ko: "2025.04-2026.03 KB부동산 자료 기준 서울시 전체 및 행정구역별 1년 평균 거래가격입니다.", en: "One-year average transaction price for all Seoul and each administrative district based on KB Real Estate data, Apr. 2025 to Mar. 2026." } },
+  { id: "yangcheon", cluster: { ko: "서남권", en: "Southwest Seoul" }, name: { ko: "양천구", en: "Yangcheon-gu" }, price: 14.03, note: { ko: "2025.04-2026.03 KB부동산 자료 기준 서울시 전체 및 행정구역별 1년 평균 거래가격입니다.", en: "One-year average transaction price for all Seoul and each administrative district based on KB Real Estate data, Apr. 2025 to Mar. 2026." } },
+  { id: "yeongdeungpo", cluster: { ko: "서남권", en: "Southwest Seoul" }, name: { ko: "영등포구", en: "Yeongdeungpo-gu" }, price: 12.39, note: { ko: "2025.04-2026.03 KB부동산 자료 기준 서울시 전체 및 행정구역별 1년 평균 거래가격입니다.", en: "One-year average transaction price for all Seoul and each administrative district based on KB Real Estate data, Apr. 2025 to Mar. 2026." } },
+  { id: "yongsan", cluster: { ko: "도심권", en: "Central Seoul" }, name: { ko: "용산구", en: "Yongsan-gu" }, price: 18.23, note: { ko: "2025.04-2026.03 KB부동산 자료 기준 서울시 전체 및 행정구역별 1년 평균 거래가격입니다.", en: "One-year average transaction price for all Seoul and each administrative district based on KB Real Estate data, Apr. 2025 to Mar. 2026." } },
+  { id: "eunpyeong", cluster: { ko: "서북권", en: "Northwest Seoul" }, name: { ko: "은평구", en: "Eunpyeong-gu" }, price: 8.77, note: { ko: "2025.04-2026.03 KB부동산 자료 기준 서울시 전체 및 행정구역별 1년 평균 거래가격입니다.", en: "One-year average transaction price for all Seoul and each administrative district based on KB Real Estate data, Apr. 2025 to Mar. 2026." } },
+  { id: "jongno", cluster: { ko: "도심권", en: "Central Seoul" }, name: { ko: "종로구", en: "Jongno-gu" }, price: 13.75, note: { ko: "2025.04-2026.03 KB부동산 자료 기준 서울시 전체 및 행정구역별 1년 평균 거래가격입니다.", en: "One-year average transaction price for all Seoul and each administrative district based on KB Real Estate data, Apr. 2025 to Mar. 2026." } },
+  { id: "jung", cluster: { ko: "도심권", en: "Central Seoul" }, name: { ko: "중구", en: "Jung-gu" }, price: 13.18, note: { ko: "2025.04-2026.03 KB부동산 자료 기준 서울시 전체 및 행정구역별 1년 평균 거래가격입니다.", en: "One-year average transaction price for all Seoul and each administrative district based on KB Real Estate data, Apr. 2025 to Mar. 2026." } },
+  { id: "jungnang", cluster: { ko: "동북권", en: "Northeast Seoul" }, name: { ko: "중랑구", en: "Jungnang-gu" }, price: 7.34, note: { ko: "2025.04-2026.03 KB부동산 자료 기준 서울시 전체 및 행정구역별 1년 평균 거래가격입니다.", en: "One-year average transaction price for all Seoul and each administrative district based on KB Real Estate data, Apr. 2025 to Mar. 2026." } }
 ];
 
 const seoulSvgIds = {
@@ -372,6 +383,32 @@ function getTrendType(trend) {
   return "trendFlat";
 }
 
+function getTrendSummary(trend, lang) {
+  const labels = chartText[lang] || chartText.en;
+  const first = trend[0];
+  const last = trend[trend.length - 1];
+  const changeRate = ((last - first) / first) * 100;
+  if (changeRate >= 15) return labels.trendSteep;
+
+  let jumpIndex = -1;
+  let jumpAmount = 0;
+  for (let index = 1; index < trend.length; index += 1) {
+    const amount = trend[index] - trend[index - 1];
+    if (amount > jumpAmount) {
+      jumpAmount = amount;
+      jumpIndex = index;
+    }
+  }
+
+  if (jumpAmount >= 0.7 && jumpIndex > 0) {
+    const from = trendMonths[jumpIndex - 1];
+    const to = trendMonths[jumpIndex];
+    return lang === "ko" ? `${from}에서 ${to} 사이에 가파른 상승세를 보였습니다.` : `${labels.trendJump} ${from} and ${to}.`;
+  }
+
+  return labels.trendFlat;
+}
+
 function drawSparkline(container, trend) {
   const width = 320;
   const height = 118;
@@ -428,6 +465,7 @@ function drawLineChart(container, selected, lang) {
   const pointNodes = points.map((point, index) => `
     <g class="line-point" style="--point-delay: ${(260 + index * 42).toFixed(0)}ms">
       <circle cx="${point.x.toFixed(1)}" cy="${point.y.toFixed(1)}" r="4"></circle>
+      <rect class="line-value-bg" x="${(point.x - 31).toFixed(1)}" y="${(point.y - 25).toFixed(1)}" width="62" height="18" rx="7"></rect>
       <text x="${point.x.toFixed(1)}" y="${(point.y - 10).toFixed(1)}">${formatPrice(point.value, lang)}</text>
       <text class="line-month" x="${point.x.toFixed(1)}" y="${height - 22}">${trendMonths[index]}</text>
     </g>
@@ -459,7 +497,7 @@ function updateInteractiveChart(chart, selectedId) {
   chart.querySelector("[data-detail-cluster]").textContent = selected.cluster[lang];
   chart.querySelector("[data-detail-name]").textContent = selected.name[lang];
   chart.querySelector("[data-detail-value]").textContent = formatPrice(selected.value, lang);
-  chart.querySelector("[data-detail-note]").textContent = `${labels.average}: ${formatPrice(selected.value, lang)} | ${labels.rank}: ${rank}/${graphData.length}. ${labels[getTrendType(selected.trend)]}`;
+  chart.querySelector("[data-detail-note]").textContent = `${labels.average}: ${formatPrice(selected.value, lang)} | ${labels.rank}: ${rank}/${graphData.length}. ${getTrendSummary(selected.trend, lang)}`;
   drawLineChart(lineChart, selected, lang);
 }
 
@@ -486,6 +524,102 @@ function initInteractiveCharts() {
   });
 }
 
+const comparisonChartData = {
+  capital: {
+    label: { ko: "Price Comparison Visualization", en: "Price Comparison Visualization" },
+    title: { ko: "수도권 주요 지역의 거래 평균 가격과 지방 평균가격 간의 가격 격차 그래프", en: "Price Gap Between Major Capital-Area Regions and the Local Average" },
+    description: { ko: "행정구역별 버튼을 선택하면 해당 구역의 최근 12개월 간 아파트 평균 거래가격을 확인할 수 있습니다.", en: "Select an administrative-region button to view the recent 12-month average apartment transaction price." },
+    baseline: { ko: "지방 평균", en: "Local Average" },
+    baselineValue: 3.06,
+    items: [
+      { id: "incheonYeonsu", name: { ko: "인천 연수", en: "Incheon Yeonsu" }, value: 5.71 },
+      { id: "incheonSeo", name: { ko: "인천 서", en: "Incheon Seo" }, value: 4.86 },
+      { id: "goyangIlsandong", name: { ko: "고양 일산동", en: "Goyang Ilsandong" }, value: 5.75 },
+      { id: "goyangIlsanseo", name: { ko: "고양 일산서", en: "Goyang Ilsanseo" }, value: 4.37 },
+      { id: "gwacheon", name: { ko: "과천", en: "Gwacheon" }, value: 21.45 },
+      { id: "gunpo", name: { ko: "군포", en: "Gunpo" }, value: 5.75 },
+      { id: "bucheonWonmi", name: { ko: "부천 원미", en: "Bucheon Wonmi" }, value: 6.46 },
+      { id: "bundang", name: { ko: "성남 분당", en: "Seongnam Bundang" }, value: 14.56 },
+      { id: "suwonYeongtong", name: { ko: "수원 영통", en: "Suwon Yeongtong" }, value: 7.78 },
+      { id: "anyangDongan", name: { ko: "안양 동안", en: "Anyang Dongan" }, value: 8.32 },
+      { id: "yonginSuji", name: { ko: "용인 수지", en: "Yongin Suji" }, value: 8.78 },
+      { id: "hwaseongDongtan", name: { ko: "화성 동탄", en: "Hwaseong Dongtan" }, value: 7.54 }
+    ]
+  },
+  local: {
+    label: { ko: "Price Comparison Visualization", en: "Price Comparison Visualization" },
+    title: { ko: "지방 주요 지역의 거래 평균 가격과 지방 평균가격 간의 가격 격차 그래프", en: "Price Gap Between Major Local Regions and the Local Average" },
+    description: { ko: "행정구역별 버튼을 선택하면 해당 구역의 최근 12개월 간 아파트 평균 거래가격을 확인할 수 있습니다.", en: "Select an administrative-region button to view the recent 12-month average apartment transaction price." },
+    baseline: { ko: "지방 평균", en: "Local Average" },
+    baselineValue: 3.85,
+    items: [
+      { id: "daeguSuseong", name: { ko: "대구 수성", en: "Daegu Suseong" }, value: 5.3 },
+      { id: "daejeonYuseong", name: { ko: "대전 유성", en: "Daejeon Yuseong" }, value: 4.56 },
+      { id: "daejeonSeo", name: { ko: "대전 서", en: "Daejeon Seo" }, value: 3.91 },
+      { id: "ulsanNam", name: { ko: "울산 남", en: "Ulsan Nam" }, value: 4.39 },
+      { id: "sejongMajor", name: { ko: "세종", en: "Sejong" }, value: 5.52 },
+      { id: "cheongjuHeungdeok", name: { ko: "청주 흥덕", en: "Cheongju Heungdeok" }, value: 3.77 },
+      { id: "changwonSeongsan", name: { ko: "창원 성산", en: "Changwon Seongsan" }, value: 4.12 },
+      { id: "changwonUichang", name: { ko: "창원 의창", en: "Changwon Uichang" }, value: 3.73 },
+      { id: "busanHaeundae", name: { ko: "부산 해운대", en: "Busan Haeundae" }, value: 5.57 }
+    ]
+  }
+};
+
+function renderComparisonChart(chart, selectedId) {
+  const lang = chart.dataset.lang || "en";
+  const config = comparisonChartData[chart.dataset.comparisonType] || comparisonChartData.capital;
+  const selected = config.items.find((item) => item.id === selectedId) || config.items[0];
+  const maxValue = Math.max(config.baselineValue, ...config.items.map((item) => item.value));
+  const gap = selected.value - config.baselineValue;
+  const gapText = lang === "ko" ? `지방 평균 대비 ${formatPrice(Math.abs(gap), lang)} ${gap >= 0 ? "높습니다" : "낮습니다"}.` : `${formatPrice(Math.abs(gap), lang)} ${gap >= 0 ? "above" : "below"} the local average.`;
+
+  chart.innerHTML = `
+    <div class="chart-head">
+      <div>
+        <p class="chart-label">${config.label[lang]}</p>
+        <h3>${config.title[lang]}</h3>
+      </div>
+      <p>${config.description[lang]}</p>
+    </div>
+    <div class="chart-layout">
+      <div class="chart-selector" data-comparison-selector>
+        ${config.items.map((item) => `<button class="chart-choice ${item.id === selected.id ? "is-active" : ""}" type="button" data-region="${item.id}" aria-pressed="${item.id === selected.id}"><span>${item.name[lang]}</span></button>`).join("")}
+      </div>
+      <div class="bar-chart comparison-bars" style="--bar-count: 2">
+        <div class="chart-bar month-bar">
+          <span class="chart-bar-value">${formatPrice(config.baselineValue, lang)}</span>
+          <span class="chart-bar-fill" style="--bar-color: #9fb4c9; height: ${(config.baselineValue / maxValue * 100).toFixed(1)}%"></span>
+          <span class="chart-bar-label">${config.baseline[lang]}</span>
+        </div>
+        <div class="chart-bar month-bar">
+          <span class="chart-bar-value">${formatPrice(selected.value, lang)}</span>
+          <span class="chart-bar-fill" style="--bar-color: #1f5eff; height: ${(selected.value / maxValue * 100).toFixed(1)}%"></span>
+          <span class="chart-bar-label">${selected.name[lang]}</span>
+        </div>
+      </div>
+      <aside class="chart-detail" aria-live="polite">
+        <span>${config.baseline[lang]}</span>
+        <h4>${selected.name[lang]}</h4>
+        <strong>${formatPrice(selected.value, lang)}</strong>
+        <p>${gapText}</p>
+      </aside>
+    </div>
+  `;
+}
+
+function initComparisonCharts() {
+  document.querySelectorAll("[data-comparison-chart]").forEach((chart) => {
+    const config = comparisonChartData[chart.dataset.comparisonType] || comparisonChartData.capital;
+    renderComparisonChart(chart, config.items[0].id);
+    chart.addEventListener("click", (event) => {
+      const button = event.target.closest(".chart-choice");
+      if (!button) return;
+      renderComparisonChart(chart, button.dataset.region);
+    });
+  });
+}
+
 function getMapData(map) {
   return map.dataset.mapType === "seoul" ? seoulMapData : koreaMapData;
 }
@@ -500,7 +634,9 @@ function getSvgFill(element) {
 
 function getPriceMapData(map) {
   const data = getMapData(map);
-  return map.dataset.mapType === "seoul" ? data.filter((item) => item.id !== "seoul") : data;
+  if (map.dataset.mapType === "seoul") return data.filter((item) => item.id !== "seoul");
+  const ids = getMapSvgIds(map);
+  return data.filter((item) => ids[item.id]);
 }
 
 function getPriceBucketIndex(value, data) {
@@ -596,7 +732,7 @@ function colorMapSvg(map, selectedId) {
 
     if (isSeoulMap) {
       const graphItem = getGraphItem(dataId);
-      region.style.fill = graphItem.color;
+      region.style.fill = selectedId === "seoul" ? "#b65f5b" : graphItem.color;
       region.style.opacity = isSelected || selectedId === "seoul" ? "0.88" : "0.32";
       return;
     }
@@ -770,6 +906,7 @@ function initPage() {
   maybeStartCounters();
   initRevealSections();
   initInteractiveCharts();
+  initComparisonCharts();
   initMapWidgets();
   initScrollDots();
 }

@@ -10,7 +10,7 @@
   <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans:400,500,700,800|Castoro" rel="stylesheet">
   <link rel="stylesheet" href="./static/css/bulma.min.css">
   <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
-  <link rel="stylesheet" href="./static/css/index.css?v=20260518-12">
+  <link rel="stylesheet" href="./static/css/index.css?v=20260518-13">
   <link rel="icon" href="./static/images/favicon.png">
 </head>
 <body>
@@ -59,27 +59,27 @@
         <p class="hero-copy">In Seoul, the economic center of South Korea, owning a home is becoming a dream that is no longer realistic.</p>
       </div>
       <div class="hero-panel" data-stage-panel>
-        <p class="eyebrow">Complex Problem: Price, Policy, and Structural Issue.</p>
+        <p class="eyebrow">Complex Problem: Price, Policy, and Structural Issue</p>
         <h2>From prices to policy, and then to structural problems</h2>
         <p class="hero-copy">The dream of owning a home in Seoul is not only a matter of prices or regulation. Beneath it are structural issues, flawed regulatory approaches, and many other hidden problems.</p>
       </div>
       <div class="hero-panel" data-stage-panel>
-        <p class="eyebrow">Into the Origin of Problem.</p>
+        <p class="eyebrow">Into the Origin of Problem</p>
         <h2>Digging into the essence of the problem</h2>
         <p class="hero-copy">Regulation alone is not the path to making homeownership in Seoul possible. We dig into the origin of the problem and propose solutions from there.</p>
       </div>
       <div class="hero-metrics" aria-label="Key metrics">
         <div>
-          <strong data-count="240">0</strong>
-          <span>tracked frames</span>
+          <strong></strong>
+          <span></span>
         </div>
         <div>
-          <strong data-count="3">0</strong>
-          <span>core visuals</span>
+          <strong></strong>
+          <span></span>
         </div>
         <div>
-          <strong data-count="2">0</strong>
-          <span>language sites</span>
+          <strong></strong>
+          <span></span>
         </div>
       </div>
       <a class="scroll-cue" href="#overview" aria-label="Skip to content">Scroll</a>
@@ -155,13 +155,23 @@
         </nav>
         <h3 id="analysis-intro" class="analysis-subtitle"><span>1.</span> Before We Begin</h3>
         <p>
-          The real estate price data used on this site is based on the March 2026 dataset from KB Real Estate Data Hub. Future updates may be made.
+          The real estate price data used on this site and in the analysis is based on the dataset published by KB Real Estate Data Hub for March 2026. Because apartment supply area can vary in many ways, the average prices are calculated using small-to-medium units with exclusive areas of at least 60㎡ and less than 85㎡. Future releases may lead to revisions of the data used in this material.
+        </p>
+        <p>
+          This content addresses topics that may be politically sensitive, including real estate prices and government policy. The research team does not wish for this work to be used as a political controversy inside or outside the university, and has made every effort to approach the data academically while excluding political variables such as each team member's political orientation or party affiliation.
         </p>
 
         <h3 id="analysis-map" class="analysis-subtitle"><span>2.</span> Korea Housing Prices on a Map</h3>
         <p>
           This map uses dummy regional average prices to show how housing prices differ across Korea. Click a region to view its sample average market price.
         </p>
+        <div class="chart-head">
+          <div>
+            <p class="chart-label">Heatmap Visualization</p>
+            <h3>Average Housing Price Heatmap by Korean Administrative Region</h3>
+          </div>
+          <p>Select an administrative-region button to view the recent 12-month average apartment transaction price. Switching to the price-highlight map emphasizes each region's price level by color.</p>
+        </div>
         <div class="map-widget korea-map-widget" data-map-widget data-map-type="korea" data-lang="en" data-map-view="region">
           <div class="map-view-toggle" role="group" aria-label="Korea map view mode">
             <button class="map-view-button is-active" type="button" data-map-view-option="region" aria-pressed="true">Administrative / Regional View</button>
@@ -169,7 +179,7 @@
           </div>
           <div class="map-panel korea-map-panel">
             <div class="korea-map" role="img" aria-label="Clickable map of South Korea by administrative region">
-              <img src="./static/images/southKoreaLow.svg?v=20260518-12" alt="" aria-hidden="true" data-map-svg>
+              <img src="./static/images/southKoreaLow.svg?v=20260518-13" alt="" aria-hidden="true" data-map-svg>
             </div>
             <div class="map-price-legend" data-map-legend aria-label="Price color legend"></div>
             <div class="map-region-list" aria-label="Korea region buttons">
@@ -190,6 +200,12 @@
               <button class="map-region" data-region="gyeongbuk">Gyeongbuk</button>
               <button class="map-region" data-region="gyeongnam">Gyeongnam</button>
               <button class="map-region" data-region="jeju">Jeju</button>
+              <button class="map-region" data-region="capitalArea">Capital Area Avg.</button>
+              <button class="map-region" data-region="gangwonJeju">Gangwon/Jeju Avg.</button>
+              <button class="map-region" data-region="chungcheong">Chungcheong Avg.</button>
+              <button class="map-region" data-region="honam">Honam Avg.</button>
+              <button class="map-region" data-region="southeast">Southeast Avg.</button>
+              <button class="map-region" data-region="daeguGyeongbuk">Daegu/Gyeongbuk Avg.</button>
             </div>
           </div>
           <aside class="map-detail" aria-live="polite">
@@ -204,6 +220,13 @@
         <p>
           The Seoul map starts from the citywide average, while each district is softly colored by its one-year average price from the attached dataset.
         </p>
+        <div class="chart-head">
+          <div>
+            <p class="chart-label">Heatmap Visualization</p>
+            <h3>Average Housing Price Heatmap by Seoul Administrative District</h3>
+          </div>
+          <p>Select an administrative-district button to view the recent 12-month average apartment transaction price. Switching to the price-highlight map emphasizes each district's price level by color.</p>
+        </div>
         <div class="map-widget seoul-map-widget" data-map-widget data-map-type="seoul" data-lang="en" data-default-region="seoul" data-map-view="region">
           <div class="map-view-toggle" role="group" aria-label="Seoul map view mode">
             <button class="map-view-button is-active" type="button" data-map-view-option="region" aria-pressed="true">Administrative View</button>
@@ -211,7 +234,7 @@
           </div>
           <div class="map-panel">
             <div class="seoul-map" role="img" aria-label="Clickable map of Seoul by district">
-              <img src="./static/images/Seoul_districts.svg?v=20260518-12" alt="" aria-hidden="true" data-map-svg>
+              <img src="./static/images/Seoul_districts.svg?v=20260518-13" alt="" aria-hidden="true" data-map-svg>
             </div>
             <div class="map-price-legend" data-map-legend aria-label="Price color legend"></div>
             <div class="map-region-list" aria-label="Seoul district buttons">
@@ -253,7 +276,7 @@
         <div class="interactive-chart" data-interactive-chart data-lang="en">
           <div class="chart-head">
             <div>
-              <p class="chart-label">Click Response Graph</p>
+              <p class="chart-label">Trend Tracking Visualization</p>
               <h3>Recent 12-Month Housing Price Trend by Seoul District</h3>
             </div>
             <p>Choose Seoul Average or a district button to show the recent 12-month apartment transaction price trend as a line chart.</p>
@@ -275,10 +298,12 @@
           </p>
         </div>
 
-        <h3 id="analysis-gap" class="analysis-subtitle"><span>4.</span> Price Gap Between the Capital Area and Other Regions</h3>
+        <h3 id="analysis-gap" class="analysis-subtitle"><span>4.</span> Price Gap Between Seoul, the Capital Area, and Other Regions</h3>
         <p>
           This section compares the capital area and non-capital regions to explain how regional inequality appears in housing prices.
         </p>
+        <div class="interactive-chart" data-comparison-chart data-comparison-type="capital" data-lang="en"></div>
+        <div class="interactive-chart" data-comparison-chart data-comparison-type="local" data-lang="en"></div>
 
         <h3 id="analysis-regulations" class="analysis-subtitle"><span>5.</span> Barriers Created by Regulations</h3>
         <p>
@@ -311,7 +336,7 @@
           </p>
           <p>
             Current progress is as follows:<br>
-            (To be added)
+            Trend analysis of real-estate transaction activity under current government regulations, housing price growth relative to household debt, and the possibility of expanding supply in the capital area are currently in progress. Additional supporting material on regional price trends will be added after collecting corporate-headquarters distribution data and further information on local school-district areas.
           </p>
           <h3>Reference Data and Sites</h3>
           <p>KB Real Estate Data Hub, provided by KB Kookmin Bank: <a href="https://data.kbland.kr/" target="_blank" rel="noopener">https://data.kbland.kr/</a></p>
@@ -335,6 +360,6 @@
     </div>
   </footer>
 
-  <script src="./static/js/index.js?v=20260518-12"></script>
+  <script src="./static/js/index.js?v=20260518-13"></script>
 </body>
 </html>

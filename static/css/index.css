@@ -1022,11 +1022,21 @@ figcaption {
   stroke-width: 3;
 }
 
+.line-value-bg {
+  fill: rgba(255, 255, 255, 0.92);
+  stroke: rgba(17, 19, 24, 0.12);
+  stroke-width: 1;
+}
+
 .line-point text {
   fill: #26313c;
   font-size: 11px;
   font-weight: 800;
   text-anchor: middle;
+}
+
+.comparison-bars {
+  min-height: 360px;
 }
 
 .line-point .line-month {
