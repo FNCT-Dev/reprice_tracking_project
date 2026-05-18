@@ -1294,16 +1294,23 @@ figcaption {
   }
 
   .language-strip {
-    position: absolute;
-    top: 12px;
-    right: 72px;
-    z-index: 2;
-    gap: 7px;
-    width: auto;
+    position: fixed;
+    top: 58px;
+    right: 0;
+    left: 0;
+    z-index: 51;
+    justify-content: flex-start;
+    gap: 9px;
     height: auto;
-    padding: 0;
+    padding: 14px 18px 8px;
     border-bottom: 0;
-    font-size: 10px;
+    background: rgba(255, 255, 255, 0.98);
+    color: var(--ink);
+    font-size: 12px;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(-10px);
+    transition: opacity 180ms ease, transform 180ms ease;
   }
 
   .global-nav {
@@ -1317,12 +1324,12 @@ figcaption {
 
   .nav-menu {
     position: fixed;
-    top: 58px;
+    top: 96px;
     right: 0;
     left: 0;
     display: grid;
     gap: 0;
-    padding: 12px 18px 22px;
+    padding: 8px 18px 22px;
     background: rgba(255, 255, 255, 0.98);
     border-bottom: 1px solid var(--line);
     color: var(--ink);
@@ -1334,6 +1341,12 @@ figcaption {
 
   .brand-mark small {
     display: none;
+  }
+
+  .site-header.is-open .language-strip {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
   }
 
   .nav-menu.is-active {
