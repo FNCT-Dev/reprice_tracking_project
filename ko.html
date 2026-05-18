@@ -10,7 +10,7 @@
   <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans:400,500,700,800|Castoro" rel="stylesheet">
   <link rel="stylesheet" href="./static/css/bulma.min.css">
   <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
-  <link rel="stylesheet" href="./static/css/index.css?v=20260518-15">
+  <link rel="stylesheet" href="./static/css/index.css?v=20260518-16">
   <link rel="icon" href="./static/images/favicon.png">
 </head>
 <body>
@@ -180,7 +180,7 @@
           </div>
           <div class="map-panel korea-map-panel">
             <div class="korea-map" role="img" aria-label="대한민국 시도 단위 클릭형 지도">
-              <img src="./static/images/southKoreaLow.svg?v=20260518-15" alt="" aria-hidden="true" data-map-svg>
+              <img src="./static/images/southKoreaLow.svg?v=20260518-16" alt="" aria-hidden="true" data-map-svg>
             </div>
             <div class="map-price-legend" data-map-legend aria-label="시세 색상 범례"></div>
             <div class="map-region-list" aria-label="대한민국 지역 버튼">
@@ -240,7 +240,7 @@
           </div>
           <div class="map-panel">
             <div class="seoul-map" role="img" aria-label="서울 구 단위 클릭형 지도">
-              <img src="./static/images/Seoul_districts.svg?v=20260518-15" alt="" aria-hidden="true" data-map-svg>
+              <img src="./static/images/Seoul_districts.svg?v=20260518-16" alt="" aria-hidden="true" data-map-svg>
             </div>
             <div class="map-price-legend" data-map-legend aria-label="시세 색상 범례"></div>
             <div class="map-region-list" aria-label="서울 지역 버튼">
@@ -278,9 +278,9 @@
             <strong data-map-price>0.0</strong>
             <p data-map-note>구를 클릭하면 해당 지역 색상이 선명해지고 평균 가격이 표시됩니다.</p>
           </aside>
+          <p class="chart-footnote">* 양천구와 서울시 평균이 표기 상으로는 14억으로 동일하나, 서울시 평균 거래가는 반올림을 적용한 소숫점 3단위까지 표기할 경우 14.041억원으로 집계되며, 양천구의 경우는 14.033억원으로 집계됨.</p>
         </div>
         </div>
-        <p class="chart-footnote">* 양천구와 서울시 평균이 표기 상으로는 14억으로 동일하나, 서울시 평균 거래가는 반올림을 적용한 소숫점 3단위까지 표기할 경우 14.041억원으로 집계되며, 양천구의 경우는 14.033억원으로 집계됨.</p>
         <p>
           저희가 선정한 상급지와 하급지가 명확히 나뉘는 기준은 최근 1년간의 KB부동산 데이터 기반 서울시 실거래가 평균이 기준입니다. 하지만, 상급지와 하급지를 나눈다고 해서 단순히 모든 것이 설명되는 것은 아니기에, 이번에는 해당 지역의 최근 12개월 간 거래가 변동 추이도 짚고 넘어가려고 합니다.
         </p>
@@ -315,9 +315,20 @@
           다만, 서울시의 집값이 너무 높다는 것을 짚기에는 왜 수도권의 집값도 똑같이 높은 것인가라는 반박이 있을 수 있습니다. 이에 대한 데이터도 짚고 넘어가고자 합니다.
         </p>
         <div class="interactive-chart" data-comparison-chart data-comparison-type="capital" data-lang="ko"></div>
-        <p>
-          수도권 주요 지역의 선정 근거에는 다음과 같은 내용이 있습니다. 인천광역시 연수구: 송도국제도시, 인천광역시 서구: 청라국제도시, 고양시 일산동구/일산서구: 일산신도시, 과천시: (구) 정부과천청사 소재지, 군포시: 산본신도시, 부천시 원미구: 중동신도시, 성남시 분당구: 분당신도시, 판교신도시, 수원시 영통구: 광교신도시, 안양시 동안구: 평촌신도시, 용인시 수지구: 분당신도시 연계 수지지구 개발구역 및 광교신도시 일부 구역 배속, 화성시 동탄구: 동탄신도시입니다.
-        </p>
+        <p>수도권 주요 지역의 선정 근거에는 다음과 같은 내용이 있습니다.</p>
+        <div class="reason-box">
+          <p>인천광역시 연수구: 송도국제도시</p>
+          <p>인천광역시 서구: 청라국제도시</p>
+          <p>고양시 일산동구/일산서구: 일산신도시</p>
+          <p>과천시: (구) 정부과천청사 소재지</p>
+          <p>군포시: 산본신도시</p>
+          <p>부천시 원미구: 중동신도시</p>
+          <p>성남시 분당구: 분당신도시, 판교신도시</p>
+          <p>수원시 영통구: 광교신도시</p>
+          <p>안양시 동안구: 평촌신도시</p>
+          <p>용인시 수지구: 분당신도시 연계 수지지구 개발구역, 광교신도시 일부 구역 배속</p>
+          <p>화성시 동탄구: 동탄신도시</p>
+        </div>
         <p>(향후 추가 예정)</p>
         <p>
           그러면, 이러한 질문도 나올 수 있습니다. "왜 굳이, 서울 혹은 수도권에 살려고 모두가 아우성인 것인가?" 그래서, 하단에 이러한 질문에 대한 답변을 준비했습니다.
@@ -390,6 +401,6 @@
     </div>
   </footer>
 
-  <script src="./static/js/index.js?v=20260518-15"></script>
+  <script src="./static/js/index.js?v=20260518-16"></script>
 </body>
 </html>

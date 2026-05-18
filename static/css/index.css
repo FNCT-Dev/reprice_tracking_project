@@ -1060,6 +1060,27 @@ figcaption {
   line-height: 1.65;
 }
 
+.reason-box {
+  display: grid;
+  gap: 0;
+  margin: 18px 0 24px;
+  border: 1px solid var(--line);
+  background: #ffffff;
+}
+
+.reason-box p {
+  margin: 0;
+  padding: 11px 14px;
+  border-bottom: 1px solid var(--line);
+  color: #26313c;
+  font-size: 14px;
+  line-height: 1.55;
+}
+
+.reason-box p:last-child {
+  border-bottom: 0;
+}
+
 .line-point .line-month {
   fill: #5f6872;
   font-size: 10px;
