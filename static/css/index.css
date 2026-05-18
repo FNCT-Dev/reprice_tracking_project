@@ -1083,11 +1083,6 @@ figcaption {
 
 .question-callout {
   margin: 22px 0 28px;
-  padding: clamp(20px, 3vw, 28px);
-  border: 1px solid rgba(31, 94, 255, 0.22);
-  background:
-    linear-gradient(135deg, rgba(31, 94, 255, 0.09), rgba(11, 127, 114, 0.07)),
-    #ffffff;
 }
 
 .question-callout p {
@@ -1095,12 +1090,19 @@ figcaption {
 }
 
 .question-callout strong {
-  display: block;
-  margin: 12px 0;
-  color: var(--blue);
-  font-size: clamp(20px, 2.5vw, 30px);
+  display: inline;
+  color: #1f2c36;
+  background: linear-gradient(transparent 44%, rgba(222, 205, 126, 0.56) 44%);
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+  padding: 0 0.18em;
+  font-size: clamp(19px, 2.2vw, 28px);
   font-weight: 900;
-  line-height: 1.35;
+  line-height: 1.5;
+}
+
+.question-callout .question-line {
+  margin: 12px 0;
 }
 
 .line-point .line-month {
