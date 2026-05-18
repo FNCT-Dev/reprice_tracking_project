@@ -568,6 +568,13 @@ a {
   background: #ffffff;
 }
 
+.heatmap-chart .map-widget,
+.heatmap-chart .korea-map-widget {
+  margin: 0;
+  border: 0;
+  border-top: 1px solid var(--line);
+}
+
 .map-view-toggle {
   display: flex;
   flex-wrap: wrap;
@@ -1099,6 +1106,12 @@ figcaption {
 .chart-bar.is-active .chart-bar-fill {
   filter: saturate(1.2) brightness(0.94);
   transform: scaleY(1.04);
+}
+
+.chart-bar.is-muted .chart-bar-fill,
+.chart-bar.is-muted .chart-bar-value,
+.chart-bar.is-muted .chart-bar-label {
+  opacity: 0.45;
 }
 
 .chart-bar.is-active .chart-bar-fill {

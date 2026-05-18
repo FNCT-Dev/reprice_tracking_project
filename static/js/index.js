@@ -527,7 +527,7 @@ function initInteractiveCharts() {
 const comparisonChartData = {
   capital: {
     label: { ko: "Price Comparison Visualization", en: "Price Comparison Visualization" },
-    title: { ko: "수도권 주요 지역의 거래 평균 가격과 지방 평균가격 간의 가격 격차 그래프", en: "Price Gap Between Major Capital-Area Regions and the Local Average" },
+    title: { ko: "수도권 주요 지역 대비 지방 전체 거래 평균가 간 비교", en: "Comparison Between Major Capital-Area Regions and the Overall Local Average" },
     description: { ko: "행정구역별 버튼을 선택하면 해당 구역의 최근 12개월 간 아파트 평균 거래가격을 확인할 수 있습니다.", en: "Select an administrative-region button to view the recent 12-month average apartment transaction price." },
     baseline: { ko: "지방 평균", en: "Local Average" },
     baselineValue: 3.06,
@@ -548,7 +548,7 @@ const comparisonChartData = {
   },
   local: {
     label: { ko: "Price Comparison Visualization", en: "Price Comparison Visualization" },
-    title: { ko: "지방 주요 지역의 거래 평균 가격과 지방 평균가격 간의 가격 격차 그래프", en: "Price Gap Between Major Local Regions and the Local Average" },
+    title: { ko: "지방 주요 지역 대비 지방 전체 평균가 간 비교", en: "Comparison Between Major Local Regions and the Overall Local Average" },
     description: { ko: "행정구역별 버튼을 선택하면 해당 구역의 최근 12개월 간 아파트 평균 거래가격을 확인할 수 있습니다.", en: "Select an administrative-region button to view the recent 12-month average apartment transaction price." },
     baseline: { ko: "지방 평균", en: "Local Average" },
     baselineValue: 3.85,
@@ -573,6 +573,10 @@ function renderComparisonChart(chart, selectedId) {
   const maxValue = Math.max(config.baselineValue, ...config.items.map((item) => item.value));
   const gap = selected.value - config.baselineValue;
   const gapText = lang === "ko" ? `지방 평균 대비 ${formatPrice(Math.abs(gap), lang)} ${gap >= 0 ? "높습니다" : "낮습니다"}.` : `${formatPrice(Math.abs(gap), lang)} ${gap >= 0 ? "above" : "below"} the local average.`;
+  const bars = [
+    { id: "baseline", name: config.baseline, value: config.baselineValue, color: "#9fb4c9" },
+    ...config.items.map((item) => ({ ...item, color: "#1f5eff" }))
+  ];
 
   chart.innerHTML = `
     <div class="chart-head">
@@ -586,17 +590,14 @@ function renderComparisonChart(chart, selectedId) {
       <div class="chart-selector" data-comparison-selector>
         ${config.items.map((item) => `<button class="chart-choice ${item.id === selected.id ? "is-active" : ""}" type="button" data-region="${item.id}" aria-pressed="${item.id === selected.id}"><span>${item.name[lang]}</span></button>`).join("")}
       </div>
-      <div class="bar-chart comparison-bars" style="--bar-count: 2">
-        <div class="chart-bar month-bar">
-          <span class="chart-bar-value">${formatPrice(config.baselineValue, lang)}</span>
-          <span class="chart-bar-fill" style="--bar-color: #9fb4c9; height: ${(config.baselineValue / maxValue * 100).toFixed(1)}%"></span>
-          <span class="chart-bar-label">${config.baseline[lang]}</span>
-        </div>
-        <div class="chart-bar month-bar">
-          <span class="chart-bar-value">${formatPrice(selected.value, lang)}</span>
-          <span class="chart-bar-fill" style="--bar-color: #1f5eff; height: ${(selected.value / maxValue * 100).toFixed(1)}%"></span>
-          <span class="chart-bar-label">${selected.name[lang]}</span>
-        </div>
+      <div class="bar-chart comparison-bars" style="--bar-count: ${bars.length}">
+        ${bars.map((bar) => `
+          <div class="chart-bar month-bar ${bar.id === selected.id ? "is-active" : ""} ${bar.id !== "baseline" && bar.id !== selected.id ? "is-muted" : ""}">
+            <span class="chart-bar-value">${formatPrice(bar.value, lang)}</span>
+            <span class="chart-bar-fill" style="--bar-color: ${bar.color}; height: ${(bar.value / maxValue * 100).toFixed(1)}%"></span>
+            <span class="chart-bar-label">${bar.name[lang]}</span>
+          </div>
+        `).join("")}
       </div>
       <aside class="chart-detail" aria-live="polite">
         <span>${config.baseline[lang]}</span>
