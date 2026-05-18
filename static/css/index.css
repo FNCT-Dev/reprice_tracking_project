@@ -1081,6 +1081,28 @@ figcaption {
   border-bottom: 0;
 }
 
+.question-callout {
+  margin: 22px 0 28px;
+  padding: clamp(20px, 3vw, 28px);
+  border: 1px solid rgba(31, 94, 255, 0.22);
+  background:
+    linear-gradient(135deg, rgba(31, 94, 255, 0.09), rgba(11, 127, 114, 0.07)),
+    #ffffff;
+}
+
+.question-callout p {
+  margin: 0;
+}
+
+.question-callout strong {
+  display: block;
+  margin: 12px 0;
+  color: var(--blue);
+  font-size: clamp(20px, 2.5vw, 30px);
+  font-weight: 900;
+  line-height: 1.35;
+}
+
 .line-point .line-month {
   fill: #5f6872;
   font-size: 10px;
