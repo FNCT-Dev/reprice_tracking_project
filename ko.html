@@ -10,7 +10,7 @@
   <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans:400,500,700,800|Castoro" rel="stylesheet">
   <link rel="stylesheet" href="./static/css/bulma.min.css">
   <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
-  <link rel="stylesheet" href="./static/css/index.css?v=20260518-14">
+  <link rel="stylesheet" href="./static/css/index.css?v=20260518-15">
   <link rel="icon" href="./static/images/favicon.png">
 </head>
 <body>
@@ -146,7 +146,7 @@
             <li><a href="#analysis-intro"><span>1.</span> 시작하기에 앞서</a></li>
             <li><a href="#analysis-map"><span>2.</span> 지도로 보는 대한민국의 집값</a></li>
             <li><a href="#analysis-seoul-growth"><span>3.</span> 서울시 집값의 상승률</a></li>
-            <li><a href="#analysis-gap"><span>4.</span> 수도권과 지방의 가격 차이</a></li>
+            <li><a href="#analysis-gap"><span>4.</span> 서울, 수도권과 지방의 가격 차이</a></li>
             <li><a href="#analysis-regulations"><span>5.</span> 여러 가지 규제들의 장벽</a></li>
             <li><a href="#analysis-debt"><span>6.</span> 가계부채 대비 정권별 집값 상승률</a></li>
             <li><a href="#analysis-supply"><span>7.</span> 공급 확대의 가능성</a></li>
@@ -163,7 +163,7 @@
 
         <h3 id="analysis-map" class="analysis-subtitle"><span>2.</span> 지도로 보는 대한민국의 집값</h3>
         <p>
-          아래 지도는 더미 평균 시세를 활용해 대한민국 주요 권역별 집값 차이를 보여줍니다. 지역을 클릭하면 해당 지역의 예시 평균 시세를 확인할 수 있습니다.
+          본격적으로 시작하기에 앞서, 아래의 히트맵은 2025년 04월부터 2026년 03월까지의 KB부동산 데이터를 기반으로 대한민국 주요 권역 간의 집값 차이를 보여줍니다. 히트맵에 위치한 버튼을 눌러보며 해당 지역의 시세를 확인하고, 권역별 시세도 확인할 수 있습니다.
         </p>
         <div class="interactive-chart heatmap-chart">
           <div class="chart-head">
@@ -180,7 +180,7 @@
           </div>
           <div class="map-panel korea-map-panel">
             <div class="korea-map" role="img" aria-label="대한민국 시도 단위 클릭형 지도">
-              <img src="./static/images/southKoreaLow.svg?v=20260518-14" alt="" aria-hidden="true" data-map-svg>
+              <img src="./static/images/southKoreaLow.svg?v=20260518-15" alt="" aria-hidden="true" data-map-svg>
             </div>
             <div class="map-price-legend" data-map-legend aria-label="시세 색상 범례"></div>
             <div class="map-region-list" aria-label="대한민국 지역 버튼">
@@ -201,7 +201,7 @@
               <button class="map-region" data-region="gyeongbuk">경상북도</button>
               <button class="map-region" data-region="gyeongnam">경상남도</button>
               <button class="map-region" data-region="jeju">제주도</button>
-              <button class="map-region" data-region="capitalArea">수도권 평균</button>
+              <button class="map-region map-region-divider" data-region="capitalArea">수도권 평균</button>
               <button class="map-region" data-region="gangwonJeju">강원/제주권 평균</button>
               <button class="map-region" data-region="chungcheong">충청권 평균</button>
               <button class="map-region" data-region="honam">호남권 평균</button>
@@ -217,10 +217,13 @@
           </aside>
         </div>
         </div>
+        <p>
+          본 히트맵은 현재 대한민국의 부동산 시세가 가지는 현황을 짚어주는 목적에서 등장합니다. 보이다시피, 서울 지역이 타 지역 대비 압도적으로 높은 시세를 형성한 것을 보여주고 있습니다. 이제, 본격적으로 왜 서울이 타 지역 대비 시세가 높은 것인가에 대해 분석을 진행해 보겠습니다.
+        </p>
 
         <h3 id="analysis-seoul-growth" class="analysis-subtitle"><span>3.</span> 서울시 집값의 상승률</h3>
         <p>
-          아래 서울 지도는 서울 전체 평균에서 시작하며, 첨부된 데이터의 구 단위 1년 평균 거래가격을 색상으로 옅게 표시합니다.
+          서울시의 집값이 타 지역 대비 높다는 점이 앞에서 짚어드린 히트맵에서도 확연히 드러납니다. 그렇다면, 상세한 서울 권역별 거래 가격은 어떨까에 대한 의문점을 짚고 넘어갈 필요도 있다고 생각됩니다. 본 히트맵은, 서울 권역별 거래 가격을 상세하게 짚어주는 히트맵입니다.
         </p>
         <div class="interactive-chart heatmap-chart">
           <div class="chart-head">
@@ -237,7 +240,7 @@
           </div>
           <div class="map-panel">
             <div class="seoul-map" role="img" aria-label="서울 구 단위 클릭형 지도">
-              <img src="./static/images/Seoul_districts.svg?v=20260518-14" alt="" aria-hidden="true" data-map-svg>
+              <img src="./static/images/Seoul_districts.svg?v=20260518-15" alt="" aria-hidden="true" data-map-svg>
             </div>
             <div class="map-price-legend" data-map-legend aria-label="시세 색상 범례"></div>
             <div class="map-region-list" aria-label="서울 지역 버튼">
@@ -277,6 +280,10 @@
           </aside>
         </div>
         </div>
+        <p class="chart-footnote">* 양천구와 서울시 평균이 표기 상으로는 14억으로 동일하나, 서울시 평균 거래가는 반올림을 적용한 소숫점 3단위까지 표기할 경우 14.041억원으로 집계되며, 양천구의 경우는 14.033억원으로 집계됨.</p>
+        <p>
+          저희가 선정한 상급지와 하급지가 명확히 나뉘는 기준은 최근 1년간의 KB부동산 데이터 기반 서울시 실거래가 평균이 기준입니다. 하지만, 상급지와 하급지를 나눈다고 해서 단순히 모든 것이 설명되는 것은 아니기에, 이번에는 해당 지역의 최근 12개월 간 거래가 변동 추이도 짚고 넘어가려고 합니다.
+        </p>
         <div class="interactive-chart" data-interactive-chart data-lang="ko">
           <div class="chart-head">
             <div>
@@ -298,16 +305,35 @@
         </div>
         <div class="content">
           <p>
-            아래 그래프는 서울 전체 평균과 각 구를 한 번에 하나씩 보여주도록 바꿔 월별 변화 흐름을 더 읽기 쉽게 구성했습니다.
+            그래프를 잘 보시면, 특정 지역의 가격 상승폭이 다소 높은 점을 확인할 수 있습니다. 이에 대한 분석은, 기업의 소재지 분포도를 기반으로 분석하여 보여드리고자 합니다.
           </p>
+          <p>(향후 추가 예정)</p>
         </div>
 
         <h3 id="analysis-gap" class="analysis-subtitle"><span>4.</span> 서울, 수도권과 지방의 가격 차이</h3>
         <p>
-          수도권과 지방의 집값 차이를 비교하여 주거 비용의 지역 불균형이 어떤 방식으로 나타나는지 설명합니다.
+          다만, 서울시의 집값이 너무 높다는 것을 짚기에는 왜 수도권의 집값도 똑같이 높은 것인가라는 반박이 있을 수 있습니다. 이에 대한 데이터도 짚고 넘어가고자 합니다.
         </p>
         <div class="interactive-chart" data-comparison-chart data-comparison-type="capital" data-lang="ko"></div>
+        <p>
+          수도권 주요 지역의 선정 근거에는 다음과 같은 내용이 있습니다. 인천광역시 연수구: 송도국제도시, 인천광역시 서구: 청라국제도시, 고양시 일산동구/일산서구: 일산신도시, 과천시: (구) 정부과천청사 소재지, 군포시: 산본신도시, 부천시 원미구: 중동신도시, 성남시 분당구: 분당신도시, 판교신도시, 수원시 영통구: 광교신도시, 안양시 동안구: 평촌신도시, 용인시 수지구: 분당신도시 연계 수지지구 개발구역 및 광교신도시 일부 구역 배속, 화성시 동탄구: 동탄신도시입니다.
+        </p>
+        <p>(향후 추가 예정)</p>
+        <p>
+          그러면, 이러한 질문도 나올 수 있습니다. "왜 굳이, 서울 혹은 수도권에 살려고 모두가 아우성인 것인가?" 그래서, 하단에 이러한 질문에 대한 답변을 준비했습니다.
+        </p>
         <div class="interactive-chart" data-comparison-chart data-comparison-type="local" data-lang="ko"></div>
+        <p>
+          저희가 선정한 지방 주요 지역은 대구 수성구, 대전 유성구, 대전 서구, 울산 남구, 세종시, 충북 청주 흥덕구, 경남 창원 성산구, 경남 창원 의창구, 부산 해운대구로 총 9개 지역입니다. 본 9개 지역은 대체로 해당 지역 및 인근 지역 대비 집값이 상대적으로 높게 집계되는 지역들입니다. 이러한 지역들에 대해 저희가 분석을 진행한 결과, 크게 2가지의 경우로 나눌 수 있었습니다.
+        </p>
+        <p>
+          첫 번째는, 바로 교육과 연관된 경우입니다. 대구 수성구, 대전 유성구, 대전 서구, 울산 남구, 부산 해운대구가 이에 해당하는 지역입니다. 이들 지역의 공통점으로는, 교육열이 상당히 높은 지역이라는 점입니다. 이러한 점은, 해당 지역 내에 소재한 학원의 갯수로도 직관적으로 연결됩니다.
+        </p>
+        <p>(향후 추가 예정)</p>
+        <p>
+          두 번째는, 특정 산업과 연관된 경우입니다. 세종시, 충북 청주 흥덕구, 경남 창원 성산구, 경남 창원 의창구가 그 예시입니다.
+        </p>
+        <p>(향후 추가 예정)</p>
 
         <h3 id="analysis-regulations" class="analysis-subtitle"><span>5.</span> 여러 가지 규제들의 장벽</h3>
         <p>
@@ -364,6 +390,6 @@
     </div>
   </footer>
 
-  <script src="./static/js/index.js?v=20260518-14"></script>
+  <script src="./static/js/index.js?v=20260518-15"></script>
 </body>
 </html>

@@ -10,7 +10,7 @@
   <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans:400,500,700,800|Castoro" rel="stylesheet">
   <link rel="stylesheet" href="./static/css/bulma.min.css">
   <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
-  <link rel="stylesheet" href="./static/css/index.css?v=20260518-14">
+  <link rel="stylesheet" href="./static/css/index.css?v=20260518-15">
   <link rel="icon" href="./static/images/favicon.png">
 </head>
 <body>
@@ -146,7 +146,7 @@
             <li><a href="#analysis-intro"><span>1.</span> Before We Begin</a></li>
             <li><a href="#analysis-map"><span>2.</span> Korea Housing Prices on a Map</a></li>
             <li><a href="#analysis-seoul-growth"><span>3.</span> Seoul Housing Price Growth Rate</a></li>
-            <li><a href="#analysis-gap"><span>4.</span> Price Gap Between the Capital Area and Other Regions</a></li>
+            <li><a href="#analysis-gap"><span>4.</span> Price Gap Between Seoul, the Capital Area, and Other Regions</a></li>
             <li><a href="#analysis-regulations"><span>5.</span> Barriers Created by Regulations</a></li>
             <li><a href="#analysis-debt"><span>6.</span> Housing Price Growth by Administration vs. Household Debt</a></li>
             <li><a href="#analysis-supply"><span>7.</span> Possibility of Supply Expansion</a></li>
@@ -163,7 +163,7 @@
 
         <h3 id="analysis-map" class="analysis-subtitle"><span>2.</span> Korea Housing Prices on a Map</h3>
         <p>
-          This map uses dummy regional average prices to show how housing prices differ across Korea. Click a region to view its sample average market price.
+          Before moving into the full analysis, the heatmap below uses KB Real Estate data from April 2025 to March 2026 to show housing-price differences among major Korean regions. Try selecting buttons on the heatmap to check each region's price level and compare regional averages.
         </p>
         <div class="interactive-chart heatmap-chart">
           <div class="chart-head">
@@ -180,7 +180,7 @@
           </div>
           <div class="map-panel korea-map-panel">
             <div class="korea-map" role="img" aria-label="Clickable map of South Korea by administrative region">
-              <img src="./static/images/southKoreaLow.svg?v=20260518-14" alt="" aria-hidden="true" data-map-svg>
+              <img src="./static/images/southKoreaLow.svg?v=20260518-15" alt="" aria-hidden="true" data-map-svg>
             </div>
             <div class="map-price-legend" data-map-legend aria-label="Price color legend"></div>
             <div class="map-region-list" aria-label="Korea region buttons">
@@ -201,7 +201,7 @@
               <button class="map-region" data-region="gyeongbuk">Gyeongbuk</button>
               <button class="map-region" data-region="gyeongnam">Gyeongnam</button>
               <button class="map-region" data-region="jeju">Jeju</button>
-              <button class="map-region" data-region="capitalArea">Capital Area Avg.</button>
+              <button class="map-region map-region-divider" data-region="capitalArea">Capital Area Avg.</button>
               <button class="map-region" data-region="gangwonJeju">Gangwon/Jeju Avg.</button>
               <button class="map-region" data-region="chungcheong">Chungcheong Avg.</button>
               <button class="map-region" data-region="honam">Honam Avg.</button>
@@ -217,10 +217,13 @@
           </aside>
         </div>
         </div>
+        <p>
+          This heatmap is included to frame the current state of real estate prices in Korea. As shown, Seoul forms a price level that is overwhelmingly higher than other regions. We now move into an analysis of why Seoul prices are higher than those of other regions.
+        </p>
 
         <h3 id="analysis-seoul-growth" class="analysis-subtitle"><span>3.</span> Seoul Housing Price Growth Rate</h3>
         <p>
-          The Seoul map starts from the citywide average, while each district is softly colored by its one-year average price from the attached dataset.
+          The previous heatmap clearly shows that Seoul's housing prices are higher than those of other regions. This raises a more detailed question: how do transaction prices differ within Seoul itself? The following heatmap examines transaction prices by Seoul administrative district.
         </p>
         <div class="interactive-chart heatmap-chart">
           <div class="chart-head">
@@ -237,7 +240,7 @@
           </div>
           <div class="map-panel">
             <div class="seoul-map" role="img" aria-label="Clickable map of Seoul by district">
-              <img src="./static/images/Seoul_districts.svg?v=20260518-14" alt="" aria-hidden="true" data-map-svg>
+              <img src="./static/images/Seoul_districts.svg?v=20260518-15" alt="" aria-hidden="true" data-map-svg>
             </div>
             <div class="map-price-legend" data-map-legend aria-label="Price color legend"></div>
             <div class="map-region-list" aria-label="Seoul district buttons">
@@ -277,6 +280,10 @@
           </aside>
         </div>
         </div>
+        <p class="chart-footnote">* Yangcheon-gu and the Seoul average both appear as ₩1.40B when rounded for display. At three decimal places, the Seoul average is 14.041 hundred million KRW, while Yangcheon-gu is 14.033 hundred million KRW.</p>
+        <p>
+          The distinction between the upper-tier and lower-tier areas selected here is based on Seoul's average transaction prices from KB Real Estate data over the past year. However, simply separating upper-tier and lower-tier districts does not explain everything, so we also examine the recent 12-month transaction-price trend for each area.
+        </p>
         <div class="interactive-chart" data-interactive-chart data-lang="en">
           <div class="chart-head">
             <div>
@@ -298,16 +305,35 @@
         </div>
         <div class="content">
           <p>
-            The line chart focuses on one selected area at a time, including Seoul Average, so the monthly movement is easier to read.
+            Looking closely at the graph, some regions show noticeably larger price increases. This will be analyzed later using the distribution of corporate locations.
           </p>
+          <p>(To be added)</p>
         </div>
 
         <h3 id="analysis-gap" class="analysis-subtitle"><span>4.</span> Price Gap Between Seoul, the Capital Area, and Other Regions</h3>
         <p>
-          This section compares the capital area and non-capital regions to explain how regional inequality appears in housing prices.
+          However, one could argue that if Seoul prices are high, prices in the broader capital area are also high. We therefore examine that data as well.
         </p>
         <div class="interactive-chart" data-comparison-chart data-comparison-type="capital" data-lang="en"></div>
+        <p>
+          The major capital-area regions were selected based on the following contexts: Incheon Yeonsu-gu for Songdo International City; Incheon Seo-gu for Cheongna International City; Goyang Ilsandong-gu and Ilsanseo-gu for Ilsan New Town; Gwacheon for the former Government Complex Gwacheon; Gunpo for Sanbon New Town; Bucheon Wonmi-gu for Jungdong New Town; Seongnam Bundang-gu for Bundang and Pangyo New Towns; Suwon Yeongtong-gu for Gwanggyo New Town; Anyang Dongan-gu for Pyeongchon New Town; Yongin Suji-gu for the Suji development area linked to Bundang and parts of Gwanggyo New Town; and Hwaseong Dongtan-gu for Dongtan New Town.
+        </p>
+        <p>(To be added)</p>
+        <p>
+          This leads to another question: "Why are so many people determined to live in Seoul or the capital area?" The following section prepares an answer to that question.
+        </p>
         <div class="interactive-chart" data-comparison-chart data-comparison-type="local" data-lang="en"></div>
+        <p>
+          The major local regions selected here are Daegu Suseong-gu, Daejeon Yuseong-gu, Daejeon Seo-gu, Ulsan Nam-gu, Sejong, Cheongju Heungdeok-gu, Changwon Seongsan-gu, Changwon Uichang-gu, and Busan Haeundae-gu. These nine regions generally record relatively high housing prices compared with their surrounding areas. Our analysis suggests that they can be broadly divided into two cases.
+        </p>
+        <p>
+          The first case is related to education. Daegu Suseong-gu, Daejeon Yuseong-gu, Daejeon Seo-gu, Ulsan Nam-gu, and Busan Haeundae-gu fall into this category. A common feature of these regions is their strong educational demand, which is also intuitively connected to the number of private academies located there.
+        </p>
+        <p>(To be added)</p>
+        <p>
+          The second case is related to specific industries. Sejong, Cheongju Heungdeok-gu, Changwon Seongsan-gu, and Changwon Uichang-gu are examples.
+        </p>
+        <p>(To be added)</p>
 
         <h3 id="analysis-regulations" class="analysis-subtitle"><span>5.</span> Barriers Created by Regulations</h3>
         <p>
@@ -364,6 +390,6 @@
     </div>
   </footer>
 
-  <script src="./static/js/index.js?v=20260518-14"></script>
+  <script src="./static/js/index.js?v=20260518-15"></script>
 </body>
 </html>

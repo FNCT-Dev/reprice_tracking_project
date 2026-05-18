@@ -64,6 +64,15 @@ const seoulRegionLegend = [
   { color: "#6f9b78", label: { ko: "서울 평균보다 낮음", en: "Below Seoul Average" } }
 ];
 
+const koreaRegionMembers = {
+  capitalArea: ["seoul", "incheon", "gyeonggi"],
+  gangwonJeju: ["gangwon", "jeju"],
+  chungcheong: ["daejeon", "sejong", "chungbuk", "chungnam"],
+  honam: ["gwangju", "jeonnam", "jeonbuk"],
+  southeast: ["busan", "ulsan", "gyeongnam"],
+  daeguGyeongbuk: ["daegu", "gyeongbuk"]
+};
+
 const graphData = [
   { id: "seoul", color: "#b65f5b", cluster: { ko: "서울 평균", en: "Seoul Average" }, name: { ko: "서울 전체", en: "All Seoul" }, value: 14.04, trend: [12.85, 12.98, 13.37, 13.61, 13.77, 13.9, 14.16, 14.44, 14.62, 14.76, 14.93, 15.1] },
   { id: "gangnam", color: "#5f83ad", cluster: { ko: "상급지", en: "Upper Tier" }, name: { ko: "강남구", en: "Gangnam-gu" }, value: 30.28, trend: [27.06, 27.68, 29.27, 29.75, 30.13, 30.39, 30.73, 31.15, 31.58, 31.85, 31.95, 31.8] },
@@ -531,6 +540,7 @@ const comparisonChartData = {
     description: { ko: "행정구역별 버튼을 선택하면 해당 구역의 최근 12개월 간 아파트 평균 거래가격을 확인할 수 있습니다.", en: "Select an administrative-region button to view the recent 12-month average apartment transaction price." },
     baseline: { ko: "지방 평균", en: "Local Average" },
     baselineValue: 3.06,
+    footnote: { ko: "* 화성시 동탄구의 경우, 화성시의 행정구역 개편이 2026년 02월에 이루어진 관계로 KB부동산 시세 데이터가 2026년 02월과 03월 총 2달간의 데이터만 집계되어 있음. 데이터의 부정확성에 대해 일부 감안 필요.", en: "* For Hwaseong Dongtan-gu, KB Real Estate price data is available only for February and March 2026 because Hwaseong's administrative-district reorganization took place in February 2026. Some caution is needed regarding data accuracy." },
     items: [
       { id: "incheonYeonsu", name: { ko: "인천 연수", en: "Incheon Yeonsu" }, value: 5.71 },
       { id: "incheonSeo", name: { ko: "인천 서", en: "Incheon Seo" }, value: 4.86 },
@@ -606,6 +616,7 @@ function renderComparisonChart(chart, selectedId) {
         <p>${gapText}</p>
       </aside>
     </div>
+    ${config.footnote ? `<p class="chart-footnote">${config.footnote[lang]}</p>` : ""}
   `;
 }
 
@@ -711,6 +722,7 @@ function colorMapSvg(map, selectedId) {
   const isSeoulMap = map.dataset.mapType === "seoul";
   const isPriceView = map.dataset.mapView === "price";
   const priceData = getPriceMapData(map);
+  const selectedMembers = koreaRegionMembers[selectedId] || [];
 
   Object.values(ids).forEach((svgId) => {
     const region = svg.querySelector(`#${svgId}`);
@@ -720,7 +732,7 @@ function colorMapSvg(map, selectedId) {
     }
     const dataId = Object.keys(ids).find((id) => ids[id] === svgId);
     const item = getMapData(map).find((entry) => entry.id === dataId);
-    const isSelected = selectedId === dataId;
+    const isSelected = selectedId === dataId || selectedMembers.includes(dataId);
 
     region.style.stroke = isSelected ? "#0d355a" : "";
     region.style.strokeWidth = isSelected ? "2.4" : "";
@@ -759,7 +771,8 @@ function updateMapWidget(map, selectedId) {
   map.dataset.selectedRegion = selected.id;
 
   map.querySelectorAll(".map-region").forEach((button) => {
-    const isActive = button.dataset.region === selected.id;
+    const members = koreaRegionMembers[selected.id] || [];
+    const isActive = button.dataset.region === selected.id || members.includes(button.dataset.region);
     button.classList.toggle("is-active", isActive);
     button.setAttribute("aria-pressed", String(isActive));
   });

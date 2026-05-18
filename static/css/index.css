@@ -721,6 +721,13 @@ a {
   text-align: left;
 }
 
+.map-region-list .map-region-divider {
+  margin-top: 10px;
+  padding-top: 12px;
+  border-top-color: rgba(17, 19, 24, 0.34);
+  box-shadow: 0 -9px 0 -8px rgba(17, 19, 24, 0.24), 0 10px 24px rgba(17, 19, 24, 0.08);
+}
+
 .seoul-map-widget .map-region-list .map-region {
   padding-inline: 8px;
   font-size: 10px;
@@ -1044,6 +1051,13 @@ figcaption {
 
 .comparison-bars {
   min-height: 360px;
+}
+
+.chart-footnote {
+  margin: 14px clamp(18px, 3vw, 28px) 24px;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.65;
 }
 
 .line-point .line-month {
