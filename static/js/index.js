@@ -409,7 +409,7 @@ function drawLineChart(container, selected, lang) {
 
   const path = points.map((point, index) => `${index === 0 ? "M" : "L"} ${point.x.toFixed(1)} ${point.y.toFixed(1)}`).join(" ");
   const pointNodes = points.map((point, index) => `
-    <g class="line-point">
+    <g class="line-point" style="--point-delay: ${(260 + index * 42).toFixed(0)}ms">
       <circle cx="${point.x.toFixed(1)}" cy="${point.y.toFixed(1)}" r="4"></circle>
       <text x="${point.x.toFixed(1)}" y="${(point.y - 10).toFixed(1)}">${formatPrice(point.value, lang)}</text>
       <text class="line-month" x="${point.x.toFixed(1)}" y="${height - 22}">${trendMonths[index]}</text>
@@ -420,7 +420,7 @@ function drawLineChart(container, selected, lang) {
     <svg viewBox="0 0 ${width} ${height}" role="img" focusable="false" aria-label="${selected.name[lang]} 12-month trend" style="--line-color: ${selected.color}">
       <line class="line-axis" x1="${padding.left}" y1="${height - padding.bottom}" x2="${width - padding.right}" y2="${height - padding.bottom}"></line>
       <line class="line-axis" x1="${padding.left}" y1="${padding.top}" x2="${padding.left}" y2="${height - padding.bottom}"></line>
-      <path class="line-path" d="${path}"></path>
+      <path class="line-path" pathLength="1" d="${path}"></path>
       ${pointNodes}
     </svg>
   `;
