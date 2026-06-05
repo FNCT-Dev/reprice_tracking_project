@@ -805,6 +805,8 @@ function updateMapWidget(map, selectedId) {
   const lang = map.dataset.lang || "en";
   const data = getMapData(map);
   const selected = data.find((item) => item.id === selectedId) || data[0];
+  const detailRoot = map.closest(".heatmap-chart") || map;
+  const detail = detailRoot.querySelector(".map-detail");
   map.dataset.selectedRegion = selected.id;
 
   map.querySelectorAll(".map-region").forEach((button) => {
@@ -814,10 +816,12 @@ function updateMapWidget(map, selectedId) {
     button.setAttribute("aria-pressed", String(isActive));
   });
 
-  map.querySelector("[data-map-cluster]").textContent = selected.cluster[lang];
-  map.querySelector("[data-map-name]").textContent = selected.name[lang];
-  map.querySelector("[data-map-price]").textContent = formatPrice(selected.price, lang);
-  map.querySelector("[data-map-note]").textContent = selected.note[lang];
+  if (detail) {
+    detail.querySelector("[data-map-cluster]").textContent = selected.cluster[lang];
+    detail.querySelector("[data-map-name]").textContent = selected.name[lang];
+    detail.querySelector("[data-map-price]").textContent = formatPrice(selected.price, lang);
+    detail.querySelector("[data-map-note]").textContent = selected.note[lang];
+  }
   renderMapLegend(map);
   colorMapSvg(map, selected.id);
 }
