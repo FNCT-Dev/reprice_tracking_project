@@ -725,10 +725,16 @@ a {
 }
 
 .map-region-list .map-region-divider {
+  grid-column: 1 / -1;
+  position: relative;
   margin-top: 10px;
-  padding-top: 12px;
+  padding-top: 10px;
   border-top-color: rgba(17, 19, 24, 0.34);
   box-shadow: 0 -9px 0 -8px rgba(17, 19, 24, 0.24), 0 10px 24px rgba(17, 19, 24, 0.08);
+}
+
+.korea-map-widget .map-region-list .map-region[data-region="jeju"] {
+  grid-column: 1 / -1;
 }
 
 .seoul-map-widget .map-region-list .map-region {
@@ -773,7 +779,7 @@ a {
 
 .map-detail {
   display: grid;
-  grid-template-columns: auto minmax(140px, 1fr) auto;
+  grid-template-columns: auto minmax(140px, 1fr) minmax(132px, auto);
   align-items: center;
   gap: 12px 18px;
   min-width: 0;
@@ -810,8 +816,12 @@ a {
 .map-detail strong {
   display: block;
   margin-bottom: 0;
+  padding: 12px 16px;
+  border: 1px solid rgba(17, 19, 24, 0.1);
+  border-radius: 10px;
+  background: #ffffff;
   color: var(--blue);
-  font-size: clamp(28px, 3.7vw, 46px);
+  font-size: clamp(24px, 3vw, 38px);
   line-height: 1;
   overflow: hidden;
   text-overflow: ellipsis;
