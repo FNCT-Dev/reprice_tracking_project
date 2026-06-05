@@ -744,9 +744,15 @@ a {
 }
 
 .map-region-list .map-region-divider {
-  grid-column: 1 / -1;
   position: relative;
-  margin-top: 10px;
+  margin-top: 16px;
+  padding-top: 10px;
+  border-top-color: rgba(17, 19, 24, 0.34);
+  box-shadow: 0 -9px 0 -8px rgba(17, 19, 24, 0.24), 0 10px 24px rgba(17, 19, 24, 0.08);
+}
+
+.map-region-list .map-region-divider + .map-region {
+  margin-top: 16px;
   padding-top: 10px;
   border-top-color: rgba(17, 19, 24, 0.34);
   box-shadow: 0 -9px 0 -8px rgba(17, 19, 24, 0.24), 0 10px 24px rgba(17, 19, 24, 0.08);
@@ -861,7 +867,7 @@ a {
 .map-source-note,
 .content-section .map-source-note {
   margin: 0;
-  padding: 0 clamp(20px, 4vw, 34px) 14px;
+  padding: 16px clamp(20px, 4vw, 34px) 18px;
   color: #66707a;
   font-size: 11px;
   line-height: 1.45;
@@ -871,7 +877,7 @@ a {
 
 .chart-intro-text,
 .content-section .chart-intro-text {
-  margin: 10px 0 22px;
+  margin: 18px 0 30px;
   color: #323943;
   font-size: 16px;
   line-height: 1.75;
@@ -1165,7 +1171,7 @@ figcaption {
 }
 
 .chart-footnote {
-  margin: 14px clamp(18px, 3vw, 28px) 24px;
+  margin: 24px clamp(18px, 3vw, 28px) 28px;
   color: var(--muted);
   font-size: 12px;
   line-height: 1.65;
@@ -1309,6 +1315,34 @@ figcaption {
   min-width: 0;
   padding: clamp(24px, 4vw, 36px);
   background: #f4f6f2;
+}
+
+[data-interactive-chart] .chart-head {
+  align-items: stretch;
+}
+
+[data-interactive-chart] .chart-head > div:first-child {
+  align-self: center;
+  min-width: 0;
+}
+
+[data-interactive-chart] .chart-head .chart-detail {
+  flex: 0 1 420px;
+  min-width: min(100%, 360px);
+  margin-left: auto;
+  padding: 18px;
+  border: 1px solid rgba(17, 19, 24, 0.12);
+  background: #ffffff;
+}
+
+[data-interactive-chart] .chart-head .chart-detail strong {
+  min-width: 160px;
+  padding: 12px 16px;
+  border: 1px solid rgba(17, 19, 24, 0.1);
+  border-radius: 10px;
+  background: #ffffff;
+  font-size: clamp(24px, 2.7vw, 36px);
+  text-align: center;
 }
 
 .chart-detail span {
