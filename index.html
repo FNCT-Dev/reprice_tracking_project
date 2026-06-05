@@ -32,18 +32,18 @@
       </button>
       <div class="nav-menu" data-nav-menu>
         <a href="#overview">Project Overview</a>
-        <a href="#features">Core Features</a>
-        <a href="#analysis">Analysis Content</a>
+        <a href="#analysis">Analysis</a>
         <a href="#notes">Notes</a>
+        <a href="#contact">Project Join Inquiry</a>
       </div>
     </nav>
   </header>
 
   <nav class="scroll-dots" aria-label="Section shortcuts" data-scroll-dots>
     <a href="#overview" aria-label="Project Overview"></a>
-    <a href="#features" aria-label="Core Features"></a>
-    <a href="#analysis" aria-label="Analysis Content"></a>
+    <a href="#analysis" aria-label="Analysis"></a>
     <a href="#notes" aria-label="Notes"></a>
+    <a href="#contact" aria-label="Project Join Inquiry"></a>
   </nav>
 
   <main id="top">
@@ -112,35 +112,11 @@
       </div>
     </section>
 
-    <section id="features" class="section feature-band reveal-on-scroll">
-      <div class="container is-max-desktop">
-        <p class="section-kicker">Features</p>
-        <h2 class="title is-3">Core Features and Characteristics</h2>
-        <div class="feature-grid">
-          <article>
-            <span>01</span>
-            <h3>Visualization of Massive Data</h3>
-            <p>Large datasets are processed into intuitive visual forms so that users can understand complex information at a glance.</p>
-          </article>
-          <article>
-            <span>02</span>
-            <h3>Responsive User Design</h3>
-            <p>The site introduces responsive interactions so users can focus on the graphs and data they want to explore.</p>
-          </article>
-          <article>
-            <span>03</span>
-            <h3>Multilingual Support</h3>
-            <p>The content is provided in both Korean and English.</p>
-          </article>
-        </div>
-      </div>
-    </section>
-
     <section id="analysis" class="section content-section reveal-on-scroll">
       <div class="container is-max-desktop">
         <p class="section-kicker">Analysis</p>
-        <h2 class="title is-3">Analysis Content</h2>
-        <nav class="doc-toc" aria-label="Analysis content table of contents">
+        <h2 class="title is-3">Contents</h2>
+        <nav class="doc-toc" aria-label="Contents table of contents">
           <strong>Contents</strong>
           <ol>
             <li><a href="#analysis-intro"><span>1.</span> Before We Begin</a></li>
@@ -165,13 +141,13 @@
         <p>
           Before moving into the full analysis, the heatmap below uses KB Real Estate data from April 2025 to March 2026 to show housing-price differences among major Korean regions. Try selecting buttons on the heatmap to check each region's price level and compare regional averages.
         </p>
+        <p class="chart-intro-text">Select an administrative-region button to view the recent 12-month average apartment transaction price. Switching to the price-highlight map emphasizes each region's price level by color.</p>
         <div class="interactive-chart heatmap-chart">
           <div class="chart-head">
             <div>
               <p class="chart-label">Heatmap Visualization</p>
             <h3>Average Housing Price Heatmap by Korean Administrative Region</h3>
           </div>
-          <p>Select an administrative-region button to view the recent 12-month average apartment transaction price. Switching to the price-highlight map emphasizes each region's price level by color.</p>
         </div>
         <div class="map-widget korea-map-widget" data-map-widget data-map-type="korea" data-lang="en" data-map-view="region">
           <div class="map-view-toggle" role="group" aria-label="Korea map view mode">
@@ -215,6 +191,7 @@
             <strong data-map-price>0.0</strong>
             <p data-map-note>Click a region to view the sample average market price.</p>
           </aside>
+          <p class="map-source-note">* Based on the one-year average transaction price from KB Real Estate data, 2025.04-2026.03.</p>
         </div>
         </div>
         <p>
@@ -225,13 +202,13 @@
         <p>
           The previous heatmap clearly shows that Seoul's housing prices are higher than those of other regions. This raises a more detailed question: how do transaction prices differ within Seoul itself? The following heatmap examines transaction prices by Seoul administrative district.
         </p>
+        <p class="chart-intro-text">Select an administrative-district button to view the recent 12-month average apartment transaction price. Switching to the price-highlight map emphasizes each district's price level by color.</p>
         <div class="interactive-chart heatmap-chart">
           <div class="chart-head">
             <div>
               <p class="chart-label">Heatmap Visualization</p>
             <h3>Average Housing Price Heatmap by Seoul Administrative District</h3>
           </div>
-          <p>Select an administrative-district button to view the recent 12-month average apartment transaction price. Switching to the price-highlight map emphasizes each district's price level by color.</p>
         </div>
         <div class="map-widget seoul-map-widget" data-map-widget data-map-type="seoul" data-lang="en" data-default-region="seoul" data-map-view="region">
           <div class="map-view-toggle" role="group" aria-label="Seoul map view mode">
@@ -278,7 +255,8 @@
             <strong data-map-price>0.0</strong>
             <p data-map-note>Click a district to sharpen its color and view its average price.</p>
           </aside>
-          <p class="chart-footnote">* Yangcheon-gu and the Seoul average both appear as ₩1.40B when rounded for display. At three decimal places, the Seoul average is 14.041 hundred million KRW, while Yangcheon-gu is 14.033 hundred million KRW.</p>
+          <p class="map-source-note">* Based on the one-year average transaction price for Seoul overall and each administrative district from KB Real Estate data, 2025.04-2026.03.</p>
+          <p class="map-source-note">** Yangcheon-gu and the Seoul average both appear as ₩1.40B when rounded for display. At three decimal places, the Seoul average is 14.041 hundred million KRW, while Yangcheon-gu is 14.033 hundred million KRW.</p>
         </div>
         </div>
         <p>
@@ -392,6 +370,16 @@
           <h3>Reference Interviews</h3>
           <p>Mr. Dia Sung, Senior Manager, Sage Marketing Team, Mirae Asset Securities</p>
           <p>Ms. Sukhee Jeong, Senior Real Estate Consultant, Sage Consulting Team, Mirae Asset Securities</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" class="section content-section reveal-on-scroll">
+      <div class="container is-max-desktop">
+        <p class="section-kicker">Contact</p>
+        <h2 class="title is-3">Project Join Inquiry</h2>
+        <div class="content">
+          <p>Please contact the author team for project participation or data visualization collaboration inquiries.</p>
         </div>
       </div>
     </section>

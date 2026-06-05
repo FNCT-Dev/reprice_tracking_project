@@ -449,6 +449,10 @@ function formatPrice(value, lang) {
   return lang === "ko" ? `${value.toFixed(1)}억 원` : `₩${(value / 10).toFixed(2)}B`;
 }
 
+function formatAxisPrice(value, lang) {
+  return lang === "ko" ? `${value.toFixed(1)}억` : `₩${(value / 10).toFixed(2)}B`;
+}
+
 function getGraphItem(id) {
   return graphData.find((item) => item.id === id) || graphData[0];
 }
@@ -458,11 +462,20 @@ function drawLineChart(container, selected, lang) {
   const height = 300;
   const padding = { top: 26, right: 28, bottom: 56, left: 58 };
   const values = selected.trend;
-  const min = Math.min(...values);
-  const max = Math.max(...values);
+  const rawMin = Math.min(...values);
+  const rawMax = Math.max(...values);
+  const paddingValue = Math.max((rawMax - rawMin) * 0.12, 0.08);
+  const min = Math.max(0, rawMin - paddingValue);
+  const max = rawMax + paddingValue;
   const range = Math.max(max - min, 0.01);
   const plotWidth = width - padding.left - padding.right;
   const plotHeight = height - padding.top - padding.bottom;
+  const yTicks = Array.from({ length: 5 }, (_, index) => {
+    const ratio = index / 4;
+    const value = max - ratio * range;
+    const y = padding.top + ratio * plotHeight;
+    return { value, y };
+  });
 
   const points = values.map((value, index) => {
     const x = padding.left + (index / (values.length - 1)) * plotWidth;
@@ -479,9 +492,16 @@ function drawLineChart(container, selected, lang) {
       <text class="line-month" x="${point.x.toFixed(1)}" y="${height - 22}">${trendMonths[index]}</text>
     </g>
   `).join("");
+  const yAxisNodes = yTicks.map((tick) => `
+    <g class="line-y-tick">
+      <line x1="${padding.left}" y1="${tick.y.toFixed(1)}" x2="${width - padding.right}" y2="${tick.y.toFixed(1)}"></line>
+      <text x="${padding.left - 10}" y="${(tick.y + 4).toFixed(1)}">${formatAxisPrice(tick.value, lang)}</text>
+    </g>
+  `).join("");
 
   container.innerHTML = `
     <svg viewBox="0 0 ${width} ${height}" role="img" focusable="false" aria-label="${selected.name[lang]} 12-month trend" style="--line-color: ${selected.color}">
+      ${yAxisNodes}
       <line class="line-axis" x1="${padding.left}" y1="${height - padding.bottom}" x2="${width - padding.right}" y2="${height - padding.bottom}"></line>
       <line class="line-axis" x1="${padding.left}" y1="${padding.top}" x2="${padding.left}" y2="${height - padding.bottom}"></line>
       <path class="line-path" pathLength="1" d="${path}"></path>
@@ -588,27 +608,42 @@ function renderComparisonChart(chart, selectedId) {
     { id: "baseline", name: config.baseline, value: config.baselineValue, color: "#9fb4c9" },
     ...sortedBars.map((item) => ({ ...item, color: "#1f5eff" }))
   ];
+  const barAxisMax = Math.ceil(maxValue * 1.08 * 10) / 10;
+  const barAxisTicks = Array.from({ length: 5 }, (_, index) => {
+    const value = barAxisMax - (barAxisMax / 4) * index;
+    const position = 100 - (value / barAxisMax) * 100;
+    return { value, position };
+  });
 
   chart.innerHTML = `
+    <p class="chart-intro-text">${config.description[lang]}</p>
     <div class="chart-head">
       <div>
         <p class="chart-label">${config.label[lang]}</p>
         <h3>${config.title[lang]}</h3>
       </div>
-      <p>${config.description[lang]}</p>
     </div>
     <div class="chart-layout">
       <div class="chart-selector" data-comparison-selector>
         ${config.items.map((item) => `<button class="chart-choice ${item.id === selected.id ? "is-active" : ""}" type="button" data-region="${item.id}" aria-pressed="${item.id === selected.id}"><span>${item.name[lang]}</span></button>`).join("")}
       </div>
-      <div class="bar-chart comparison-bars" style="--bar-count: ${bars.length}">
-        ${bars.map((bar) => `
-          <button class="chart-bar month-bar ${bar.id === selected.id ? "is-active" : ""} ${bar.id !== "baseline" && bar.id !== selected.id ? "is-muted" : ""}" type="button" data-region="${bar.id}" ${bar.id === "baseline" ? "disabled" : ""}>
-            <span class="chart-bar-value">${formatPrice(bar.value, lang)}</span>
-            <span class="chart-bar-fill" style="--bar-color: ${bar.color}; height: ${(bar.value / maxValue * 100).toFixed(1)}%"></span>
-            <span class="chart-bar-label">${bar.name[lang]}</span>
-          </button>
-        `).join("")}
+      <div class="bar-chart-shell">
+        <div class="bar-y-axis" aria-hidden="true">
+          ${barAxisTicks.map((tick) => `
+            <span class="bar-y-tick" style="top: ${tick.position.toFixed(1)}%">
+              <span>${formatAxisPrice(tick.value, lang)}</span>
+            </span>
+          `).join("")}
+        </div>
+        <div class="bar-chart comparison-bars" style="--bar-count: ${bars.length}">
+          ${bars.map((bar) => `
+            <button class="chart-bar month-bar ${bar.id === selected.id ? "is-active" : ""} ${bar.id !== "baseline" && bar.id !== selected.id ? "is-muted" : ""}" type="button" data-region="${bar.id}" ${bar.id === "baseline" ? "disabled" : ""}>
+              <span class="chart-bar-value">${formatPrice(bar.value, lang)}</span>
+              <span class="chart-bar-fill" style="--bar-color: ${bar.color}; height: ${(bar.value / barAxisMax * 100).toFixed(1)}%"></span>
+              <span class="chart-bar-label">${bar.name[lang]}</span>
+            </button>
+          `).join("")}
+        </div>
       </div>
       <aside class="chart-detail" aria-live="polite">
         <span>${config.baseline[lang]}</span>

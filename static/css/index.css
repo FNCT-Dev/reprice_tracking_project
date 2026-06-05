@@ -620,7 +620,7 @@ a {
 
 .map-panel {
   display: grid;
-  grid-template-columns: minmax(280px, 1fr) minmax(150px, 0.46fr);
+  grid-template-columns: minmax(280px, 1fr) minmax(230px, 0.56fr);
   gap: 18px;
   align-items: center;
 }
@@ -696,19 +696,20 @@ a {
 
 .map-region-list {
   display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   order: 2;
   align-content: center;
-  gap: 7px;
+  gap: 6px;
   min-width: 0;
 }
 
 .seoul-map-widget .map-panel {
-  grid-template-columns: minmax(280px, 1fr) minmax(240px, 0.7fr);
+  grid-template-columns: minmax(280px, 1fr) minmax(310px, 0.78fr);
 }
 
 .seoul-map-widget .map-region-list {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 6px;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 5px;
 }
 
 .map-region-list .map-region {
@@ -717,7 +718,9 @@ a {
   width: 100%;
   min-width: 0;
   justify-content: start;
-  padding: 7px 10px;
+  min-height: 24px;
+  padding: 5px 7px;
+  font-size: 10px;
   text-align: left;
 }
 
@@ -729,8 +732,8 @@ a {
 }
 
 .seoul-map-widget .map-region-list .map-region {
-  padding-inline: 8px;
-  font-size: 10px;
+  padding-inline: 6px;
+  font-size: 9px;
 }
 
 .map-region-list .map-region:hover,
@@ -769,18 +772,19 @@ a {
 }
 
 .map-detail {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+  display: grid;
+  grid-template-columns: auto minmax(140px, 1fr) auto;
+  align-items: center;
+  gap: 12px 18px;
   min-width: 0;
-  padding: clamp(24px, 4vw, 36px);
+  padding: clamp(18px, 3vw, 26px) clamp(20px, 4vw, 34px);
   background: #f4f6f2;
 }
 
 .map-detail span {
   max-width: 100%;
   width: fit-content;
-  margin-bottom: 18px;
+  margin-bottom: 0;
   padding: 6px 10px;
   background: #ffffff;
   color: var(--green);
@@ -793,7 +797,7 @@ a {
 }
 
 .map-detail h4 {
-  margin: 0 0 12px;
+  margin: 0;
   color: var(--ink);
   font-size: clamp(20px, 2.3vw, 30px);
   font-weight: 800;
@@ -805,7 +809,7 @@ a {
 
 .map-detail strong {
   display: block;
-  margin-bottom: 16px;
+  margin-bottom: 0;
   color: var(--blue);
   font-size: clamp(28px, 3.7vw, 46px);
   line-height: 1;
@@ -815,12 +819,38 @@ a {
 }
 
 .map-detail p {
+  position: absolute;
+  width: 1px;
+  height: 1px;
   margin: 0;
-  color: #323943;
-  font-size: clamp(12px, 1.1vw, 14px);
-  line-height: 1.55;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+}
+
+.map-source-note,
+.content-section .map-source-note {
+  margin: 0;
+  padding: 0 clamp(20px, 4vw, 34px) 14px;
+  color: #66707a;
+  font-size: 11px;
+  line-height: 1.45;
   overflow-wrap: break-word;
   word-break: keep-all;
+}
+
+.chart-intro-text,
+.content-section .chart-intro-text {
+  margin: 10px 0 22px;
+  color: #323943;
+  font-size: 16px;
+  line-height: 1.75;
+}
+
+.interactive-chart > .chart-intro-text,
+.content-section .interactive-chart > .chart-intro-text {
+  margin: 0;
+  padding: clamp(18px, 3vw, 26px) clamp(22px, 4vw, 34px) 0;
 }
 
 .feature-band {
@@ -1010,6 +1040,18 @@ figcaption {
   stroke-width: 1.5;
 }
 
+.line-y-tick line {
+  stroke: rgba(17, 19, 24, 0.08);
+  stroke-width: 1;
+}
+
+.line-y-tick text {
+  fill: #5f6872;
+  font-size: 10px;
+  font-weight: 800;
+  text-anchor: end;
+}
+
 .line-path {
   fill: none;
   stroke: var(--line-color, var(--blue));
@@ -1051,6 +1093,45 @@ figcaption {
 
 .comparison-bars {
   min-height: 360px;
+}
+
+.bar-chart-shell {
+  position: relative;
+  min-width: 0;
+  border-right: 1px solid var(--line);
+}
+
+.bar-chart-shell .bar-chart {
+  border-right: 0;
+  padding-left: clamp(52px, 6vw, 72px);
+}
+
+.bar-y-axis {
+  position: absolute;
+  top: 34px;
+  bottom: 74px;
+  left: clamp(12px, 2vw, 24px);
+  width: clamp(38px, 5vw, 54px);
+  pointer-events: none;
+  z-index: 2;
+}
+
+.bar-y-tick {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  border-top: 1px solid rgba(17, 19, 24, 0.1);
+}
+
+.bar-y-tick span {
+  position: absolute;
+  top: -8px;
+  left: 0;
+  color: #5f6872;
+  font-size: 10px;
+  font-weight: 800;
+  line-height: 1;
+  white-space: nowrap;
 }
 
 .chart-footnote {
@@ -1473,6 +1554,16 @@ figcaption {
 
   .map-panel {
     grid-template-columns: 1fr;
+  }
+
+  .seoul-map-widget .map-region-list,
+  .map-region-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .map-detail {
+    grid-template-columns: 1fr;
+    align-items: start;
   }
 
   .korea-map,

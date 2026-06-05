@@ -32,18 +32,18 @@
       </button>
       <div class="nav-menu" data-nav-menu>
         <a href="#overview">프로젝트 개요</a>
-        <a href="#features">핵심 기능 및 특징</a>
         <a href="#analysis">분석 내용</a>
         <a href="#notes">참고사항</a>
+        <a href="#contact">프로젝트 합류 문의</a>
       </div>
     </nav>
   </header>
 
   <nav class="scroll-dots" aria-label="섹션 바로가기" data-scroll-dots>
     <a href="#overview" aria-label="프로젝트 개요"></a>
-    <a href="#features" aria-label="핵심 기능 및 특징"></a>
     <a href="#analysis" aria-label="분석 내용"></a>
     <a href="#notes" aria-label="참고사항"></a>
+    <a href="#contact" aria-label="프로젝트 합류 문의"></a>
   </nav>
 
   <main id="top">
@@ -112,30 +112,6 @@
       </div>
     </section>
 
-    <section id="features" class="section feature-band reveal-on-scroll">
-      <div class="container is-max-desktop">
-        <p class="section-kicker">Features</p>
-        <h2 class="title is-3">핵심 기능 및 특징</h2>
-        <div class="feature-grid">
-          <article>
-            <span>01</span>
-            <h3>방대한 데이터의 시각화</h3>
-            <p>방대한 데이터들을 간편하게 시각적으로 확인할 수 있도록 직관적으로 데이터를 가공했습니다.</p>
-          </article>
-          <article>
-            <span>02</span>
-            <h3>사용자 반응형 설계</h3>
-            <p>수많은 그래프들을 사용자가 보고 싶은 데이터로 직관적으로 볼 수 있게, 사용자 반응형 설계를 도입했습니다.</p>
-          </article>
-          <article>
-            <span>03</span>
-            <h3>다중 언어 지원</h3>
-            <p>컨텐츠의 내용은 한/영으로 동시 제공됩니다.</p>
-          </article>
-        </div>
-      </div>
-    </section>
-
     <section id="analysis" class="section content-section reveal-on-scroll">
       <div class="container is-max-desktop">
         <p class="section-kicker">Analysis</p>
@@ -165,13 +141,13 @@
         <p>
           본격적으로 시작하기에 앞서, 아래의 히트맵은 2025년 04월부터 2026년 03월까지의 KB부동산 데이터를 기반으로 대한민국 주요 권역 간의 집값 차이를 보여줍니다. 히트맵에 위치한 버튼을 눌러보며 해당 지역의 시세를 확인하고, 권역별 시세도 확인할 수 있습니다.
         </p>
+        <p class="chart-intro-text">행정구역별 버튼을 선택하면 해당 구역의 최근 12개월 간 아파트 평균 거래가격을 확인할 수 있습니다. 시세 강조 지도로 전환 시, 지역별 시세가 색깔별로 강조된 지도로 변합니다.</p>
         <div class="interactive-chart heatmap-chart">
           <div class="chart-head">
             <div>
               <p class="chart-label">Heatmap Visualization</p>
             <h3>대한민국 행정구역별 평균 시세 히트맵</h3>
           </div>
-          <p>행정구역별 버튼을 선택하면 해당 구역의 최근 12개월 간 아파트 평균 거래가격을 확인할 수 있습니다. 시세 강조 지도로 전환 시, 지역별 시세가 색깔별로 강조된 지도로 변합니다.</p>
         </div>
         <div class="map-widget korea-map-widget" data-map-widget data-map-type="korea" data-lang="ko" data-map-view="region">
           <div class="map-view-toggle" role="group" aria-label="대한민국 지도 보기 방식">
@@ -215,6 +191,7 @@
             <strong data-map-price>0.0</strong>
             <p data-map-note>지역을 클릭하면 예시 평균 시세가 표시됩니다.</p>
           </aside>
+          <p class="map-source-note">* 2025.04-2026.03 KB부동산 자료 기준 1년 평균 거래가격에 기반함.</p>
         </div>
         </div>
         <p>
@@ -225,13 +202,13 @@
         <p>
           서울시의 집값이 타 지역 대비 높다는 점이 앞에서 짚어드린 히트맵에서도 확연히 드러납니다. 그렇다면, 상세한 서울 권역별 거래 가격은 어떨까에 대한 의문점을 짚고 넘어갈 필요도 있다고 생각됩니다. 본 히트맵은, 서울 권역별 거래 가격을 상세하게 짚어주는 히트맵입니다.
         </p>
+        <p class="chart-intro-text">행정구역별 버튼을 선택하면 해당 구역의 최근 12개월 간 아파트 평균 거래가격을 확인할 수 있습니다. 시세 강조 지도로 전환 시, 지역별 시세가 색깔별로 강조된 지도로 변합니다.</p>
         <div class="interactive-chart heatmap-chart">
           <div class="chart-head">
             <div>
               <p class="chart-label">Heatmap Visualization</p>
             <h3>서울시 행정구역별 평균 시세 히트맵</h3>
           </div>
-          <p>행정구역별 버튼을 선택하면 해당 구역의 최근 12개월 간 아파트 평균 거래가격을 확인할 수 있습니다. 시세 강조 지도로 전환 시, 지역별 시세가 색깔별로 강조된 지도로 변합니다.</p>
         </div>
         <div class="map-widget seoul-map-widget" data-map-widget data-map-type="seoul" data-lang="ko" data-default-region="seoul" data-map-view="region">
           <div class="map-view-toggle" role="group" aria-label="서울 지도 보기 방식">
@@ -278,7 +255,8 @@
             <strong data-map-price>0.0</strong>
             <p data-map-note>구를 클릭하면 해당 지역 색상이 선명해지고 평균 가격이 표시됩니다.</p>
           </aside>
-          <p class="chart-footnote">* 양천구와 서울시 평균이 표기 상으로는 14억으로 동일하나, 서울시 평균 거래가는 반올림을 적용한 소숫점 3단위까지 표기할 경우 14.041억원으로 집계되며, 양천구의 경우는 14.033억원으로 집계됨.</p>
+          <p class="map-source-note">* 2025.04-2026.03 KB부동산 자료 기준 서울시 전체 및 행정구역별 1년 평균 거래가격에 기반함.</p>
+          <p class="map-source-note">** 양천구와 서울시 평균이 표기 상으로는 14억으로 동일하나, 서울시 평균 거래가는 반올림을 적용한 소숫점 3단위까지 표기할 경우 14.041억원으로 집계되며, 양천구의 경우는 14.033억원으로 집계됨.</p>
         </div>
         </div>
         <p>
@@ -392,6 +370,16 @@
           <h3>참고 인터뷰</h3>
           <p>미래에셋증권 Sage마케팅팀 성다야 수석매니저님</p>
           <p>미래에셋증권 Sage컨설팅팀 정숙희 부동산 수석컨설턴트님</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" class="section content-section reveal-on-scroll">
+      <div class="container is-max-desktop">
+        <p class="section-kicker">Contact</p>
+        <h2 class="title is-3">프로젝트 합류 문의</h2>
+        <div class="content">
+          <p>프로젝트 합류 또는 데이터 시각화 협업 문의는 저자 팀을 통해 전달해 주세요.</p>
         </div>
       </div>
     </section>
