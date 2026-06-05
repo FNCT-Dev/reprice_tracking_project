@@ -460,7 +460,7 @@ function getGraphItem(id) {
 function drawLineChart(container, selected, lang) {
   const width = 760;
   const height = 300;
-  const padding = { top: 26, right: 28, bottom: 56, left: 58 };
+  const padding = { top: 26, right: 52, bottom: 56, left: 58 };
   const values = selected.trend;
   const rawMin = Math.min(...values);
   const rawMax = Math.max(...values);
@@ -487,7 +487,6 @@ function drawLineChart(container, selected, lang) {
   const pointNodes = points.map((point, index) => `
     <g class="line-point" style="--point-delay: ${(260 + index * 42).toFixed(0)}ms">
       <circle cx="${point.x.toFixed(1)}" cy="${point.y.toFixed(1)}" r="4"></circle>
-      <rect class="line-value-bg" x="${(point.x - 31).toFixed(1)}" y="${(point.y - 25).toFixed(1)}" width="62" height="18" rx="7"></rect>
       <text x="${point.x.toFixed(1)}" y="${(point.y - 10).toFixed(1)}">${formatPrice(point.value, lang)}</text>
       <text class="line-month" x="${point.x.toFixed(1)}" y="${height - 22}">${trendMonths[index]}</text>
     </g>

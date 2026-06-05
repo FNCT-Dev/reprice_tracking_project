@@ -647,13 +647,13 @@ a {
 .korea-map,
 .seoul-map {
   position: relative;
-  width: min(100%, 360px);
+  width: min(100%, 410px);
   height: 500px;
   margin: 0 auto;
 }
 
 .seoul-map {
-  width: min(100%, 420px);
+  width: min(100%, 470px);
   height: 500px;
 }
 
@@ -840,16 +840,10 @@ a {
 
 .map-detail strong {
   display: block;
-  min-width: 160px;
   margin-bottom: 0;
-  padding: 12px 16px;
-  border: 1px solid rgba(17, 19, 24, 0.1);
-  border-radius: 10px;
-  background: #ffffff;
   color: var(--blue);
   font-size: clamp(24px, 2.7vw, 36px);
   line-height: 1;
-  text-align: center;
   overflow: visible;
   white-space: nowrap;
 }
@@ -991,9 +985,9 @@ figcaption {
   align-content: start;
   gap: 7px;
   min-width: 0;
-  max-height: 520px;
+  min-height: 520px;
   padding: 24px 18px;
-  overflow: auto;
+  overflow: visible;
   border-right: 1px solid var(--line);
   background: #fbfcfa;
 }
@@ -1112,12 +1106,6 @@ figcaption {
   fill: #ffffff;
   stroke: var(--line-color, var(--blue));
   stroke-width: 3;
-}
-
-.line-value-bg {
-  fill: rgba(255, 255, 255, 0.92);
-  stroke: rgba(17, 19, 24, 0.12);
-  stroke-width: 1;
 }
 
 .line-point text {
@@ -1327,8 +1315,13 @@ figcaption {
 }
 
 [data-interactive-chart] .chart-head .chart-detail {
-  flex: 0 1 420px;
-  min-width: min(100%, 360px);
+  position: relative;
+  display: grid;
+  grid-template-columns: auto minmax(90px, 1fr) auto;
+  align-items: center;
+  gap: 12px 16px;
+  flex: 0 1 360px;
+  min-width: min(100%, 320px);
   margin-left: auto;
   padding: 18px;
   border: 1px solid rgba(17, 19, 24, 0.12);
@@ -1336,13 +1329,23 @@ figcaption {
 }
 
 [data-interactive-chart] .chart-head .chart-detail strong {
-  min-width: 160px;
-  padding: 12px 16px;
-  border: 1px solid rgba(17, 19, 24, 0.1);
-  border-radius: 10px;
-  background: #ffffff;
   font-size: clamp(24px, 2.7vw, 36px);
-  text-align: center;
+}
+
+[data-interactive-chart] .chart-head .chart-detail span,
+[data-interactive-chart] .chart-head .chart-detail h4,
+[data-interactive-chart] .chart-head .chart-detail strong {
+  margin: 0;
+}
+
+[data-interactive-chart] .chart-head .chart-detail p {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
 }
 
 .chart-detail span {
@@ -1365,9 +1368,10 @@ figcaption {
   font-size: clamp(24px, 3vw, 34px);
   font-weight: 800;
   line-height: 1.18;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  overflow: visible;
+  overflow-wrap: anywhere;
+  word-break: keep-all;
+  white-space: normal;
 }
 
 .chart-detail strong {
@@ -1376,8 +1380,7 @@ figcaption {
   color: var(--red);
   font-size: clamp(36px, 5vw, 56px);
   line-height: 1;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  overflow: visible;
   white-space: nowrap;
 }
 
@@ -1596,7 +1599,7 @@ figcaption {
 
   .chart-selector {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    max-height: 280px;
+    min-height: 0;
     border-right: 0;
     border-bottom: 1px solid var(--line);
   }
