@@ -805,15 +805,16 @@ a {
 
 .map-detail {
   display: grid;
-  grid-template-columns: auto minmax(120px, 1fr) minmax(160px, auto);
+  grid-template-columns: minmax(0, 1fr) max-content;
   align-items: center;
-  gap: 12px 18px;
+  gap: 10px 16px;
   min-width: 0;
   padding: clamp(18px, 3vw, 26px) clamp(20px, 4vw, 34px);
   background: #f4f6f2;
 }
 
 .map-detail span {
+  grid-column: 1;
   max-width: 100%;
   width: fit-content;
   margin-bottom: 0;
@@ -829,6 +830,7 @@ a {
 }
 
 .map-detail h4 {
+  grid-column: 1;
   margin: 0;
   color: var(--ink);
   font-size: clamp(20px, 2.3vw, 30px);
@@ -840,9 +842,11 @@ a {
 }
 
 .map-detail strong {
+  grid-column: 2;
+  grid-row: 1 / span 2;
   display: block;
   margin-bottom: 0;
-  color: var(--blue);
+  color: var(--red);
   font-size: clamp(24px, 2.7vw, 36px);
   line-height: 1;
   overflow: visible;
@@ -1197,7 +1201,7 @@ figcaption {
   transform: scaleY(0);
   transform-box: fill-box;
   transform-origin: bottom;
-  animation: comparison-bar-rise 560ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  animation: comparison-bar-rise 860ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }
 
 .comparison-bar.is-active rect {
@@ -1432,6 +1436,10 @@ figcaption {
   min-height: 36px;
   padding: 10px 12px;
   font-size: 11px;
+}
+
+[data-comparison-selector] {
+  align-content: center;
 }
 
 .chart-detail {
@@ -1795,6 +1803,11 @@ figcaption {
   .map-detail {
     grid-template-columns: 1fr;
     align-items: start;
+  }
+
+  .map-detail strong {
+    grid-column: 1;
+    grid-row: auto;
   }
 
   .korea-map,
