@@ -608,6 +608,10 @@ const comparisonChartData = {
 const grdpDonutData = {
   label: { ko: "GRDP Concentration Visualization", en: "GRDP Concentration Visualization" },
   title: { ko: "2024년 권역별 지역내총생산 비중", en: "Regional GRDP Share by Area, 2024" },
+  description: {
+    ko: "권역별 버튼을 선택하면 해당 권역의 2024년 지역내총생산(GRDP)을 확인할 수 있습니다.",
+    en: "Select an area button to view that area's 2024 gross regional domestic product (GRDP)."
+  },
   totalLabel: { ko: "2024년 총생산", en: "2024 Total GRDP" },
   selectedLabel: { ko: "선택 권역 총생산", en: "Selected Area GRDP" },
   totalName: { ko: "대한민국", en: "South Korea" },
@@ -627,7 +631,21 @@ const grdpDonutData = {
     { id: "honam", color: "#5f83ad", name: { ko: "호남권", en: "Honam Region" }, value: 224600 },
     { id: "daeguGyeongbuk", color: "#c77b9a", name: { ko: "대구·경북권", en: "Daegu-Gyeongbuk Region" }, value: 209222 },
     { id: "gangwonJeju", color: "#c48755", name: { ko: "강원·제주권", en: "Gangwon-Jeju Region" }, value: 91544 }
-  ]
+  ],
+  analysis: {
+    ko: [
+      "GRDP는 지역별 경제 집중도를 보여주는 대리 지표로 활용할 수 있는 지표입니다. 일반적으로 GRDP가 높다는 것은 해당 지역에 일자리, 기업, 소득, 인프라가 집중되어 있음을 의미합니다. 이는 왜 주택 수요가 수도권에 자연스럽게 몰리는지를 설명하게 되는데, 상기한 원형 그래프는 서울, 인천, 경기 지역이 한국 누적 GRDP의 52.7%를 차지한다는 점을 보여주며, 이는 곧 주택 수요가 무작위로 발생하는 것이 아니라 명확한 경제적 유인에 의해 움직인다는 점을 시사합니다. 따라서 부동산 가격 상승 압력은 단순한 주택 시장의 문제가 아닌 지역 경제 집중의 결과로도 이해할 수 있게 됩니다.",
+      "다만, 이러한 내용들에 대해서 의문을 제기하실 수 있습니다.",
+      "\"그러면 지방에서도 집값이 수도권 일부 지역에 맞먹을만큼 비싼 곳이 있지 않은가?\"",
+      "이러한 의문에 대해서 아래의 내용을 통해 설명드리겠습니다."
+    ],
+    en: [
+      "GRDP can be used as a proxy indicator for regional economic concentration. In general, a higher GRDP means that jobs, companies, income, and infrastructure are concentrated in that area. This helps explain why housing demand naturally gravitates toward the capital area. The pie chart above shows that Seoul, Incheon, and Gyeonggi account for 52.7% of Korea's aggregate GRDP, suggesting that housing demand does not arise randomly but moves in response to clear economic incentives. Therefore, upward pressure on real estate prices can be understood not only as a housing-market issue, but also as a result of regional economic concentration.",
+      "However, you may still raise a question about this point.",
+      "\"Then are there not also places outside the capital area where home prices are as expensive as some capital-area districts?\"",
+      "The following section explains that question."
+    ]
+  }
 };
 
 function getBarAxisMax(value) {
@@ -672,9 +690,36 @@ function getDonutSegmentPath(startAngle, endAngle, outerRadius = 50, innerRadius
   ].join(" ");
 }
 
+function syncGrdpDonutCopy(chart, lang) {
+  let intro = chart.previousElementSibling;
+  if (!intro || !intro.matches(".chart-intro-text[data-grdp-donut-intro]")) {
+    intro = document.createElement("p");
+    intro.className = "chart-intro-text";
+    intro.dataset.grdpDonutIntro = "";
+    chart.before(intro);
+  }
+  intro.textContent = grdpDonutData.description[lang];
+
+  let analysis = chart.nextElementSibling;
+  if (!analysis || !analysis.matches(".grdp-donut-analysis[data-grdp-donut-analysis]")) {
+    analysis = document.createElement("div");
+    analysis.className = "grdp-donut-analysis";
+    analysis.dataset.grdpDonutAnalysis = "";
+    chart.after(analysis);
+  }
+  const [main, lead, question, close] = grdpDonutData.analysis[lang];
+  analysis.innerHTML = `
+    <p>${main}</p>
+    <p>${lead}</p>
+    <blockquote>${question}</blockquote>
+    <p>${close}</p>
+  `;
+}
+
 function renderGrdpDonutCharts() {
   document.querySelectorAll("[data-grdp-donut-chart]").forEach((chart) => {
     const lang = chart.dataset.lang || "en";
+    syncGrdpDonutCopy(chart, lang);
     const sectorTotal = grdpDonutData.items.reduce((sum, item) => sum + item.value, 0);
     const total = grdpDonutData.totalValue;
     let cursor = 0;

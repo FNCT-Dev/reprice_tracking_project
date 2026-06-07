@@ -898,6 +898,32 @@ a {
   padding: clamp(18px, 3vw, 26px) clamp(22px, 4vw, 34px) 0;
 }
 
+.grdp-donut-analysis,
+.content-section .grdp-donut-analysis {
+  margin: 30px 0;
+  color: #323943;
+  font-size: 16px;
+  line-height: 1.75;
+}
+
+.grdp-donut-analysis p {
+  margin: 0 0 14px;
+}
+
+.grdp-donut-analysis p:last-child {
+  margin-bottom: 0;
+}
+
+.grdp-donut-analysis blockquote {
+  margin: 8px 0 14px;
+  padding: 12px 16px;
+  border-left: 3px solid var(--green);
+  background: #f7f4ee;
+  color: var(--ink);
+  font-weight: 800;
+  word-break: keep-all;
+}
+
 .feature-band {
   background: #ffffff;
 }
