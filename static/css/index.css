@@ -1246,18 +1246,22 @@ figcaption {
 
 .grdp-donut-body {
   display: grid;
-  grid-template-columns: minmax(220px, 0.72fr) minmax(300px, 1fr);
+  grid-template-columns: minmax(220px, 0.62fr) minmax(320px, 1fr);
   align-items: center;
-  gap: clamp(24px, 5vw, 64px);
-  min-height: 420px;
+  gap: clamp(22px, 4vw, 56px);
+  min-height: 390px;
   padding: clamp(28px, 5vw, 52px);
+}
+
+.grdp-donut-control-panel {
+  display: grid;
+  align-self: center;
+  gap: 14px;
 }
 
 .grdp-donut-controls {
   display: grid;
   gap: 0;
-  align-self: stretch;
-  align-content: center;
   border: 1px solid var(--line);
   background: #ffffff;
 }
@@ -1266,15 +1270,15 @@ figcaption {
   display: grid;
   grid-template-columns: 14px minmax(0, 1fr) max-content;
   align-items: center;
-  gap: 10px;
-  min-height: 48px;
-  padding: 10px 14px;
+  gap: 8px;
+  min-height: 38px;
+  padding: 7px 12px;
   border: 0;
   border-bottom: 1px solid var(--line);
   background: transparent;
   color: #26313c;
   font: inherit;
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 800;
   text-align: left;
   cursor: pointer;
@@ -1304,6 +1308,14 @@ figcaption {
   box-shadow: inset 4px 0 0 var(--green);
 }
 
+.grdp-donut-region-note {
+  margin: 0;
+  color: #5f6974;
+  font-size: 11px;
+  line-height: 1.55;
+  word-break: keep-all;
+}
+
 .grdp-donut-visual {
   position: relative;
   display: grid;
@@ -1324,9 +1336,15 @@ figcaption {
 }
 
 .grdp-donut-svg path {
+  cursor: pointer;
   transition: opacity 180ms ease, filter 180ms ease, transform 180ms ease;
   transform-box: fill-box;
   transform-origin: center;
+}
+
+.grdp-donut-svg path:focus-visible {
+  outline: 2px solid #111318;
+  outline-offset: 2px;
 }
 
 .grdp-donut-svg path.is-active {
@@ -1335,8 +1353,8 @@ figcaption {
 }
 
 .grdp-donut-svg path.is-muted {
-  opacity: 0.22;
-  filter: grayscale(0.25) blur(0.6px);
+  opacity: 0.46;
+  filter: grayscale(0.12) blur(0.2px);
 }
 
 .grdp-donut-hole {
@@ -1422,6 +1440,10 @@ figcaption {
   width: 14px;
   height: 14px;
   border-radius: 50%;
+}
+
+.grdp-donut-swatch.is-total {
+  background: linear-gradient(135deg, #b65f5b 0 18%, #8b6f5a 18% 34%, #6f9b78 34% 52%, #5f83ad 52% 68%, #c77b9a 68% 84%, #c48755 84% 100%);
 }
 
 [data-comparison-chart] .chart-head {

@@ -616,6 +616,10 @@ const grdpDonutData = {
   selectedLabel: { ko: "선택 권역 총생산", en: "Selected Area GRDP" },
   totalName: { ko: "대한민국", en: "South Korea" },
   totalValue: 2560811,
+  regionDescription: {
+    ko: "수도권: 서울, 경기, 인천 / 동남권: 부산, 울산, 경남 / 충청권: 충북, 충남, 세종, 대전 / 호남권: 전북, 전남, 광주 / 대구, 경북권: 대구, 경북 / 강원, 제주권: 강원, 제주",
+    en: "Capital area: Seoul, Gyeonggi, Incheon / Southeast: Busan, Ulsan, Gyeongnam / Chungcheong: Chungbuk, Chungnam, Sejong, Daejeon / Honam: Jeonbuk, Jeonnam, Gwangju / Daegu-Gyeongbuk: Daegu, Gyeongbuk / Gangwon-Jeju: Gangwon, Jeju"
+  },
   note: {
     ko: "* 국가데이터처 「지역소득」 시도별 지역내총생산(2020년 기준), 당해년가격 기준 2024년 자료를 권역별로 합산함. 단위: 10억원.",
     en: "* Based on Statistics Korea regional income data, GRDP by province/city at current prices, 2024 values. Unit: billion KRW."
@@ -750,22 +754,30 @@ function renderGrdpDonutCharts() {
         </aside>
       </div>
       <div class="grdp-donut-body">
-        <div class="grdp-donut-controls" aria-label="${lang === "ko" ? "권역 선택" : "Select area"}">
-          ${grdpDonutData.items.map((item) => {
-            const share = (item.value / total) * 100;
-            return `
-              <button class="grdp-donut-toggle" type="button" data-grdp-region="${item.id}" aria-pressed="false">
-                <span class="grdp-donut-swatch" style="background: ${item.color}"></span>
-                <span>${item.name[lang]}</span>
-                <strong>${share.toFixed(1)}%</strong>
-              </button>
-            `;
-          }).join("")}
+        <div class="grdp-donut-control-panel">
+          <div class="grdp-donut-controls" aria-label="${lang === "ko" ? "권역 선택" : "Select area"}">
+            <button class="grdp-donut-toggle is-active" type="button" data-grdp-region="total" aria-pressed="true">
+              <span class="grdp-donut-swatch is-total"></span>
+              <span>${grdpDonutData.totalName[lang]}</span>
+              <strong>100.0%</strong>
+            </button>
+            ${grdpDonutData.items.map((item) => {
+              const share = (item.value / total) * 100;
+              return `
+                <button class="grdp-donut-toggle" type="button" data-grdp-region="${item.id}" aria-pressed="false">
+                  <span class="grdp-donut-swatch" style="background: ${item.color}"></span>
+                  <span>${item.name[lang]}</span>
+                  <strong>${share.toFixed(1)}%</strong>
+                </button>
+              `;
+            }).join("")}
+          </div>
+          <p class="grdp-donut-region-note">${grdpDonutData.regionDescription[lang]}</p>
         </div>
         <div class="grdp-donut-visual">
           <svg class="grdp-donut-svg" viewBox="0 0 100 100" role="img" aria-label="${grdpDonutData.title[lang]}">
             ${segments.map(({ item, path }) => `
-              <path d="${path}" fill="${item.color}" data-grdp-segment="${item.id}"></path>
+              <path d="${path}" fill="${item.color}" data-grdp-segment="${item.id}" tabindex="0" role="button" aria-label="${item.name[lang]}"></path>
             `).join("")}
           </svg>
           <span class="grdp-donut-share-badge" data-grdp-share-badge></span>
@@ -787,39 +799,66 @@ function renderGrdpDonutCharts() {
     const holeValue = chart.querySelector("[data-grdp-hole-value]");
     const badge = chart.querySelector("[data-grdp-share-badge]");
 
-    chart.querySelectorAll("[data-grdp-region]").forEach((button) => {
-      button.addEventListener("click", () => {
-        const item = grdpDonutData.items.find((entry) => entry.id === button.dataset.grdpRegion);
-        if (!item) return;
+    const selectGrdpRegion = (regionId) => {
+      const isTotal = regionId === "total";
+      const item = grdpDonutData.items.find((entry) => entry.id === regionId);
+      if (!isTotal && !item) return;
 
-        chart.querySelectorAll("[data-grdp-region]").forEach((control) => {
-          const isSelected = control === button;
-          control.classList.toggle("is-active", isSelected);
-          control.setAttribute("aria-pressed", String(isSelected));
-        });
+      chart.querySelectorAll("[data-grdp-region]").forEach((control) => {
+        const isSelected = control.dataset.grdpRegion === regionId;
+        control.classList.toggle("is-active", isSelected);
+        control.setAttribute("aria-pressed", String(isSelected));
+      });
 
-        const itemIndex = grdpDonutData.items.indexOf(item);
-        const totalShare = (item.value / total) * 100;
-        const segment = segments[itemIndex];
-        const badgePoint = getDonutPoint(50, 50, 39.5, segment.midpoint);
-
-        detailLabel.textContent = grdpDonutData.selectedLabel[lang];
-        detailName.textContent = item.name[lang];
-        detailValue.textContent = formatGrdpValue(item.value, lang);
-        detailMeta.textContent = lang === "ko" ? `전체 대비 ${totalShare.toFixed(1)}%` : `${totalShare.toFixed(1)}% of total`;
-        holeLabel.textContent = item.name[lang];
-        holeValue.textContent = formatGrdpValue(item.value, lang);
-        badge.textContent = `${totalShare.toFixed(1)}%`;
-        badge.style.setProperty("--badge-x", `${badgePoint.x.toFixed(2)}%`);
-        badge.style.setProperty("--badge-y", `${badgePoint.y.toFixed(2)}%`);
-        badge.style.setProperty("--badge-color", item.color);
-        badge.classList.add("is-visible");
-
+      if (isTotal) {
+        detailLabel.textContent = grdpDonutData.totalLabel[lang];
+        detailName.textContent = grdpDonutData.totalName[lang];
+        detailValue.textContent = formatGrdpValue(total, lang);
+        detailMeta.textContent = lang === "ko" ? "전체 기준 100.0%" : "100.0% of total";
+        holeLabel.textContent = grdpDonutData.totalLabel[lang];
+        holeValue.textContent = formatGrdpValue(total, lang);
+        badge.classList.remove("is-visible");
         chart.querySelectorAll("[data-grdp-segment]").forEach((segmentPath) => {
-          const isSelected = segmentPath.dataset.grdpSegment === item.id;
-          segmentPath.classList.toggle("is-active", isSelected);
-          segmentPath.classList.toggle("is-muted", !isSelected);
+          segmentPath.classList.remove("is-active", "is-muted");
         });
+        return;
+      }
+
+      const itemIndex = grdpDonutData.items.indexOf(item);
+      const totalShare = (item.value / total) * 100;
+      const segment = segments[itemIndex];
+      const badgePoint = getDonutPoint(50, 50, 39.5, segment.midpoint);
+
+      detailLabel.textContent = grdpDonutData.selectedLabel[lang];
+      detailName.textContent = item.name[lang];
+      detailValue.textContent = formatGrdpValue(item.value, lang);
+      detailMeta.textContent = lang === "ko" ? `전체 대비 ${totalShare.toFixed(1)}%` : `${totalShare.toFixed(1)}% of total`;
+      holeLabel.textContent = item.name[lang];
+      holeValue.textContent = formatGrdpValue(item.value, lang);
+      badge.textContent = `${totalShare.toFixed(1)}%`;
+      badge.style.setProperty("--badge-x", `${badgePoint.x.toFixed(2)}%`);
+      badge.style.setProperty("--badge-y", `${badgePoint.y.toFixed(2)}%`);
+      badge.style.setProperty("--badge-color", item.color);
+      badge.classList.add("is-visible");
+
+      chart.querySelectorAll("[data-grdp-segment]").forEach((segmentPath) => {
+        const isSelected = segmentPath.dataset.grdpSegment === item.id;
+        segmentPath.classList.toggle("is-active", isSelected);
+        segmentPath.classList.toggle("is-muted", !isSelected);
+      });
+    };
+
+    chart.querySelectorAll("[data-grdp-region]").forEach((button) => {
+      button.addEventListener("click", () => selectGrdpRegion(button.dataset.grdpRegion));
+    });
+
+    chart.querySelectorAll("[data-grdp-segment]").forEach((segmentPath) => {
+      const activateSegment = () => selectGrdpRegion(segmentPath.dataset.grdpSegment);
+      segmentPath.addEventListener("click", activateSegment);
+      segmentPath.addEventListener("keydown", (event) => {
+        if (event.key !== "Enter" && event.key !== " ") return;
+        event.preventDefault();
+        activateSegment();
       });
     });
   });
