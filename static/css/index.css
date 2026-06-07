@@ -1058,6 +1058,8 @@ figcaption {
 }
 
 .line-chart {
+  display: grid;
+  align-items: center;
   min-width: 0;
   min-height: 360px;
   padding: 28px clamp(12px, 2vw, 24px);
@@ -1137,7 +1139,7 @@ figcaption {
 }
 
 .comparison-bars {
-  min-height: 360px;
+  min-height: 430px;
   grid-template-columns: repeat(var(--bar-count, 2), minmax(110px, 180px));
   justify-content: center;
   gap: clamp(24px, 5vw, 44px);
@@ -1151,13 +1153,13 @@ figcaption {
 
 .bar-chart-shell .bar-chart {
   border-right: 0;
-  padding: 70px clamp(36px, 8vw, 88px) 82px clamp(64px, 9vw, 92px);
+  padding: 54px clamp(36px, 8vw, 88px) 76px clamp(64px, 9vw, 92px);
 }
 
 .bar-y-axis {
   position: absolute;
-  top: 70px;
-  bottom: 82px;
+  top: 54px;
+  bottom: 76px;
   left: clamp(12px, 2vw, 24px);
   width: clamp(38px, 5vw, 54px);
   pointer-events: none;
@@ -1204,11 +1206,11 @@ figcaption {
 [data-comparison-chart] .chart-head .chart-detail {
   position: relative;
   display: grid;
-  grid-template-columns: auto minmax(max-content, 1fr) auto;
+  grid-template-columns: auto minmax(120px, 1fr) minmax(160px, auto);
   align-items: center;
-  gap: 12px 16px;
+  gap: 12px 18px;
   flex: 0 1 430px;
-  min-width: min(100%, 360px);
+  min-width: min(100%, 380px);
   margin-left: auto;
   padding: 18px;
   border: 1px solid rgba(17, 19, 24, 0.12);
@@ -1230,11 +1232,13 @@ figcaption {
 }
 
 [data-comparison-chart] .chart-head .chart-detail p {
-  grid-column: 1 / -1;
+  position: absolute;
+  width: 1px;
+  height: 1px;
   margin: 0;
-  color: #323943;
-  font-size: 12px;
-  line-height: 1.5;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
 }
 
 .reason-box {
@@ -1409,11 +1413,11 @@ figcaption {
 [data-interactive-chart] .chart-head .chart-detail {
   position: relative;
   display: grid;
-  grid-template-columns: auto minmax(max-content, 1fr) auto;
+  grid-template-columns: auto minmax(120px, 1fr) minmax(160px, auto);
   align-items: center;
-  gap: 12px 16px;
-  flex: 0 1 420px;
-  min-width: min(100%, 350px);
+  gap: 12px 18px;
+  flex: 0 1 430px;
+  min-width: min(100%, 380px);
   margin-left: auto;
   padding: 18px;
   border: 1px solid rgba(17, 19, 24, 0.12);
