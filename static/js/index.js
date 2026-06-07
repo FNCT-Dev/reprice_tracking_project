@@ -457,6 +457,14 @@ function getGraphItem(id) {
   return graphData.find((item) => item.id === id) || graphData[0];
 }
 
+function updateOverflowingChoices(root = document) {
+  root.querySelectorAll(".chart-choice").forEach((button) => {
+    const label = button.querySelector("span");
+    if (!label) return;
+    button.classList.toggle("is-overflowing", label.scrollWidth > label.clientWidth + 1);
+  });
+}
+
 function drawLineChart(container, selected, lang) {
   const width = 760;
   const height = 300;
@@ -541,6 +549,8 @@ function initInteractiveCharts() {
         </button>
       `;
     }).join("");
+
+    updateOverflowingChoices(selector);
 
     selector.addEventListener("click", (event) => {
       const button = event.target.closest(".chart-choice");
@@ -650,8 +660,9 @@ function drawComparisonBars(bars, axisMax, lang) {
     const barHeight = (bar.value / axisMax) * plotHeight;
     const x = centers[index] - barWidth / 2;
     const y = padding.top + plotHeight - barHeight;
+    const stateClass = bar.id === "baseline" ? "is-baseline" : "is-active";
     return `
-      <g class="comparison-bar ${bar.id !== "baseline" ? "is-active" : ""}" style="--bar-color: ${bar.color}">
+      <g class="comparison-bar ${stateClass}" style="--bar-color: ${bar.color}">
         <text class="comparison-bar-value" x="${centers[index].toFixed(1)}" y="${(y - 12).toFixed(1)}">${formatPrice(bar.value, lang)}</text>
         <rect x="${x.toFixed(1)}" y="${y.toFixed(1)}" width="${barWidth}" height="${barHeight.toFixed(1)}" rx="0"></rect>
         <text class="comparison-bar-label" x="${centers[index].toFixed(1)}" y="${(padding.top + plotHeight + 24).toFixed(1)}">${bar.name[lang]}</text>
@@ -706,6 +717,7 @@ function renderComparisonChart(chart, selectedId) {
     </div>
     ${config.footnote ? `<p class="chart-footnote">${config.footnote[lang]}</p>` : ""}
   `;
+  updateOverflowingChoices(chart);
 }
 
 function initComparisonCharts() {
@@ -719,6 +731,10 @@ function initComparisonCharts() {
     });
   });
 }
+
+window.addEventListener("resize", () => {
+  window.requestAnimationFrame(() => updateOverflowingChoices());
+});
 
 function getMapData(map) {
   return map.dataset.mapType === "seoul" ? seoulMapData : koreaMapData;
@@ -1026,3 +1042,7 @@ window.addEventListener("scroll", () => {
 window.addEventListener("resize", updateStage);
 
 initPage();
+
+if (document.fonts && document.fonts.ready) {
+  document.fonts.ready.then(() => updateOverflowingChoices());
+}
