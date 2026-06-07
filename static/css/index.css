@@ -1224,13 +1224,13 @@ figcaption {
 
 .comparison-bar rect {
   fill: var(--bar-color, var(--green));
-}
-
-.comparison-bar.is-active rect {
   transform: scaleY(0);
   transform-box: fill-box;
   transform-origin: bottom;
   animation: comparison-bar-rise 1000ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.comparison-bar.is-active rect {
   filter: saturate(1.2) brightness(0.96);
   stroke: rgba(17, 19, 24, 0.18);
   stroke-width: 6;
@@ -1277,7 +1277,7 @@ figcaption {
   background: transparent;
   color: #26313c;
   font: inherit;
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 600;
   text-align: left;
   cursor: pointer;
@@ -1306,7 +1306,7 @@ figcaption {
 
 .grdp-donut-toggle-areas {
   color: #68727c;
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 600;
   line-height: 1.25;
   word-break: keep-all;

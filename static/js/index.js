@@ -648,6 +648,17 @@ const grdpDonutData = {
   }
 };
 
+const seoulGrowthSectionCopy = {
+  ko: {
+    intro: "저희가 선정한 상급지와 하급지가 명확히 나뉘는 기준은 최근 1년간의 KB부동산 데이터 기반 서울시 실거래가 평균이 기준입니다. 이러한 기준에서 확인해보면, 강남구, 서초구, 송파구, 마포구, 용산구, 성동구, 강동구, 광진구가 상급지로 분류되며, 그 외 지역은 하급지로 분류됩니다. 해당 지역의 거래 시세를 조금 더 살펴보기 위해, 아래에서 각 지역별 최근 12개월 간 거래가 변동 추이 그래프를 보여드리고자 합니다.",
+    afterTrend: "상급지와 하급지의 거래 금액에는 차이가 꽤 있는 편입니다. 다만, 근본적으로 왜 해당 지역이 상급지가 되었는가와 왜 해당 지역이 하급지가 되었는가에 대해서 따져보게 되면, 크게 짚어봐야 할 내용은 두 가지입니다. 그 중 첫 번째인 서울특별시 2040 도시기본계획에 대해서 짚고 넘어가고자 합니다."
+  },
+  en: {
+    intro: "The distinction between the upper-tier and lower-tier areas selected here is based on Seoul's average transaction prices from KB Real Estate data over the past year. Under this standard, Gangnam-gu, Seocho-gu, Songpa-gu, Mapo-gu, Yongsan-gu, Seongdong-gu, Gangdong-gu, and Gwangjin-gu are classified as upper-tier areas, while the other districts are classified as lower-tier areas. To examine transaction prices in these areas more closely, the graph below shows the recent 12-month transaction-price trend for each district.",
+    afterTrend: "There is a fairly clear gap in transaction prices between upper-tier and lower-tier areas. However, if we ask why certain areas became upper-tier and why others became lower-tier, there are two major points that need to be examined. The first is Seoul's 2040 Comprehensive Urban Plan, which we will address here."
+  }
+};
+
 function getBarAxisMax(value) {
   const padded = value * 1.14;
   if (padded <= 4) return 4;
@@ -1271,12 +1282,47 @@ function initRevealSections() {
   });
 }
 
+function syncSeoulGrowthSection() {
+  const heading = document.getElementById("analysis-seoul-growth");
+  if (!heading) return;
+
+  const section = heading.closest(".content-section") || heading.parentElement;
+  if (!section) return;
+
+  const lineChart = section.querySelector("[data-interactive-chart]");
+  const sourceHeatmap = section.querySelector(".interactive-chart.heatmap-chart:not([data-seoul-growth-clone])");
+  if (!lineChart || !sourceHeatmap) return;
+
+  const lang = lineChart.dataset.lang || "en";
+  const copy = seoulGrowthSectionCopy[lang] || seoulGrowthSectionCopy.en;
+  const lineIntro = lineChart.previousElementSibling;
+  const setupParagraph = lineIntro && lineIntro.previousElementSibling;
+  if (setupParagraph && setupParagraph.tagName === "P") {
+    setupParagraph.textContent = copy.intro;
+  }
+
+  let followup = lineChart.nextElementSibling;
+  if (!followup || !followup.matches(".content")) {
+    followup = document.createElement("div");
+    followup.className = "content";
+    lineChart.after(followup);
+  }
+  followup.innerHTML = `<p>${copy.afterTrend}</p>`;
+
+  if (!followup.nextElementSibling || !followup.nextElementSibling.matches("[data-seoul-growth-clone]")) {
+    const clonedHeatmap = sourceHeatmap.cloneNode(true);
+    clonedHeatmap.dataset.seoulGrowthClone = "";
+    followup.after(clonedHeatmap);
+  }
+}
+
 function initPage() {
   updateHeader();
   updateStage();
   maybeStartCounters();
   initRevealSections();
   initInteractiveCharts();
+  syncSeoulGrowthSection();
   renderGrdpDonutCharts();
   initComparisonCharts();
   initMapWidgets();
