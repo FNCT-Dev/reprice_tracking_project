@@ -1227,6 +1227,9 @@ function setupSeoulGrowthPlanMap(clonedHeatmap, lang) {
   const regionList = clonedHeatmap.querySelector(".map-region-list");
   if (!map || !seoulMap || !regionList) return;
 
+  clonedHeatmap.querySelector(".map-detail")?.remove();
+  clonedHeatmap.querySelectorAll(".map-source-note").forEach((note) => note.remove());
+
   map.dataset.growthPlanMap = "true";
   map.dataset.mapView = "region";
   map.dataset.defaultRegion = "seoul";
