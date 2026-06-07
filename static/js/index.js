@@ -618,6 +618,57 @@ function syncComparisonIntro(chart, text) {
   intro.textContent = text;
 }
 
+function getComparisonDetailLabel(lang) {
+  return lang === "ko" ? "특정 지역 평균" : "Selected Region Average";
+}
+
+function drawComparisonBars(bars, axisMax, lang) {
+  const width = 760;
+  const height = 330;
+  const padding = { top: 34, right: 52, bottom: 58, left: 62 };
+  const plotWidth = width - padding.left - padding.right;
+  const plotHeight = height - padding.top - padding.bottom;
+  const barWidth = 150;
+  const centers = bars.map((_, index) => {
+    const ratio = bars.length === 1 ? 0.5 : (index + 1) / (bars.length + 1);
+    return padding.left + plotWidth * ratio;
+  });
+  const yTicks = Array.from({ length: 5 }, (_, index) => {
+    const value = axisMax - (axisMax / 4) * index;
+    const y = padding.top + (index / 4) * plotHeight;
+    return { value, y };
+  });
+
+  const tickNodes = yTicks.map((tick) => `
+    <g class="comparison-y-tick">
+      <line x1="${padding.left}" y1="${tick.y.toFixed(1)}" x2="${width - padding.right}" y2="${tick.y.toFixed(1)}"></line>
+      <text x="${padding.left - 10}" y="${(tick.y + 4).toFixed(1)}">${formatAxisPrice(tick.value, lang)}</text>
+    </g>
+  `).join("");
+
+  const barNodes = bars.map((bar, index) => {
+    const barHeight = (bar.value / axisMax) * plotHeight;
+    const x = centers[index] - barWidth / 2;
+    const y = padding.top + plotHeight - barHeight;
+    return `
+      <g class="comparison-bar ${bar.id !== "baseline" ? "is-active" : ""}" style="--bar-color: ${bar.color}">
+        <text class="comparison-bar-value" x="${centers[index].toFixed(1)}" y="${(y - 12).toFixed(1)}">${formatPrice(bar.value, lang)}</text>
+        <rect x="${x.toFixed(1)}" y="${y.toFixed(1)}" width="${barWidth}" height="${barHeight.toFixed(1)}" rx="0"></rect>
+        <text class="comparison-bar-label" x="${centers[index].toFixed(1)}" y="${(padding.top + plotHeight + 24).toFixed(1)}">${bar.name[lang]}</text>
+      </g>
+    `;
+  }).join("");
+
+  return `
+    <svg viewBox="0 0 ${width} ${height}" role="img" focusable="false" aria-label="${bars.map((bar) => bar.name[lang]).join(" and ")} price comparison">
+      ${tickNodes}
+      <line class="comparison-axis" x1="${padding.left}" y1="${padding.top}" x2="${padding.left}" y2="${padding.top + plotHeight}"></line>
+      <line class="comparison-axis" x1="${padding.left}" y1="${padding.top + plotHeight}" x2="${width - padding.right}" y2="${padding.top + plotHeight}"></line>
+      ${barNodes}
+    </svg>
+  `;
+}
+
 function renderComparisonChart(chart, selectedId) {
   const lang = chart.dataset.lang || "en";
   const config = comparisonChartData[chart.dataset.comparisonType] || comparisonChartData.capital;
@@ -630,11 +681,6 @@ function renderComparisonChart(chart, selectedId) {
     { ...selected, color: "#1f5eff" }
   ];
   const barAxisMax = getBarAxisMax(maxValue);
-  const barAxisTicks = Array.from({ length: 5 }, (_, index) => {
-    const value = barAxisMax - (barAxisMax / 4) * index;
-    const position = 100 - (value / barAxisMax) * 100;
-    return { value, position };
-  });
 
   syncComparisonIntro(chart, config.description[lang]);
   chart.innerHTML = `
@@ -644,7 +690,7 @@ function renderComparisonChart(chart, selectedId) {
         <h3>${config.title[lang]}</h3>
       </div>
       <aside class="chart-detail" aria-live="polite">
-        <span>${config.baseline[lang]}</span>
+        <span>${getComparisonDetailLabel(lang)}</span>
         <h4>${selected.name[lang]}</h4>
         <strong>${formatPrice(selected.value, lang)}</strong>
         <p>${gapText}</p>
@@ -654,25 +700,8 @@ function renderComparisonChart(chart, selectedId) {
       <div class="chart-selector" data-comparison-selector>
         ${config.items.map((item) => `<button class="chart-choice ${item.id === selected.id ? "is-active" : ""}" type="button" data-region="${item.id}" aria-pressed="${item.id === selected.id}"><span>${item.name[lang]}</span></button>`).join("")}
       </div>
-      <div class="bar-chart-shell">
-        <div class="bar-y-axis" aria-hidden="true">
-          ${barAxisTicks.map((tick) => `
-            <span class="bar-y-tick" style="top: ${tick.position.toFixed(1)}%">
-              <span>${formatAxisPrice(tick.value, lang)}</span>
-            </span>
-          `).join("")}
-        </div>
-        <div class="bar-chart comparison-bars" style="--bar-count: ${bars.length}">
-          ${bars.map((bar) => `
-            <button class="chart-bar month-bar ${bar.id === selected.id ? "is-active" : ""}" type="button" data-region="${bar.id}" ${bar.id === "baseline" ? "disabled" : ""}>
-              <span class="chart-bar-value">${formatPrice(bar.value, lang)}</span>
-              <span class="chart-bar-plot">
-                <span class="chart-bar-fill" style="--bar-color: ${bar.color}; height: ${(bar.value / barAxisMax * 100).toFixed(1)}%"></span>
-              </span>
-              <span class="chart-bar-label">${bar.name[lang]}</span>
-            </button>
-          `).join("")}
-        </div>
+      <div class="comparison-chart-plot">
+        ${drawComparisonBars(bars, barAxisMax, lang)}
       </div>
     </div>
     ${config.footnote ? `<p class="chart-footnote">${config.footnote[lang]}</p>` : ""}
@@ -684,9 +713,8 @@ function initComparisonCharts() {
     const config = comparisonChartData[chart.dataset.comparisonType] || comparisonChartData.capital;
     renderComparisonChart(chart, config.items[0].id);
     chart.addEventListener("click", (event) => {
-      const button = event.target.closest(".chart-choice, .comparison-bars .chart-bar");
+      const button = event.target.closest(".chart-choice");
       if (!button) return;
-      if (button.dataset.region === "baseline") return;
       renderComparisonChart(chart, button.dataset.region);
     });
   });

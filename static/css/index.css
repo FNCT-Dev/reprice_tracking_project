@@ -1007,6 +1007,7 @@ figcaption {
   display: block;
   min-width: 0;
   padding: 8px 10px;
+  overflow: hidden;
   border: 1px solid rgba(17, 19, 24, 0.14);
   border-radius: 999px;
   background: #ffffff;
@@ -1021,10 +1022,19 @@ figcaption {
 
 .chart-choice span,
 .chart-choice strong {
+  display: block;
   min-width: 0;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+.chart-choice:hover span,
+.chart-choice:focus-visible span {
+  width: max-content;
+  min-width: 100%;
+  text-overflow: clip;
+  animation: choice-marquee 4.2s linear infinite;
 }
 
 .chart-choice strong {
@@ -1149,76 +1159,59 @@ figcaption {
   transform: none;
 }
 
-.comparison-bars {
-  align-items: stretch;
-  min-height: 430px;
-  grid-template-columns: repeat(var(--bar-count, 2), minmax(110px, 180px));
-  justify-content: center;
-  gap: clamp(24px, 5vw, 44px);
-}
-
-.bar-chart-shell {
-  --bar-pad-top: 54px;
-  --bar-pad-right: clamp(36px, 8vw, 88px);
-  --bar-pad-bottom: 76px;
-  --bar-pad-left: clamp(64px, 9vw, 92px);
-  --bar-value-height: 28px;
-  --bar-label-height: 52px;
-  --bar-gap: 8px;
-  --bar-axis-label-width: clamp(46px, 6vw, 62px);
-  position: relative;
+.comparison-chart-plot {
+  display: grid;
+  align-items: center;
   min-width: 0;
+  min-height: 520px;
+  padding: 32px clamp(18px, 3vw, 34px);
+  overflow-x: auto;
 }
 
-.bar-chart-shell::after {
-  content: "";
-  position: absolute;
-  right: var(--bar-pad-right, clamp(36px, 8vw, 88px));
-  bottom: calc(var(--bar-pad-bottom, 76px) + var(--bar-label-height, 52px) + var(--bar-gap, 8px));
-  left: var(--bar-pad-left, clamp(64px, 9vw, 92px));
-  border-bottom: 1px solid var(--line);
-  pointer-events: none;
-  z-index: 1;
-}
-
-.bar-chart-shell .bar-chart {
-  --bar-pad-top: 54px;
-  --bar-pad-right: clamp(36px, 8vw, 88px);
-  --bar-pad-bottom: 76px;
-  --bar-pad-left: clamp(64px, 9vw, 92px);
-  position: relative;
-  border-right: 0;
-  z-index: 2;
-}
-
-.bar-y-axis {
-  position: absolute;
-  top: calc(var(--bar-pad-top, 54px) + var(--bar-value-height, 28px) + var(--bar-gap, 8px));
-  bottom: calc(var(--bar-pad-bottom, 76px) + var(--bar-label-height, 52px) + var(--bar-gap, 8px));
-  right: var(--bar-pad-right, clamp(36px, 8vw, 88px));
-  left: var(--bar-pad-left, clamp(64px, 9vw, 92px));
-  pointer-events: none;
-  z-index: 1;
-}
-
-.bar-y-tick {
-  position: absolute;
-  left: 0;
+.comparison-chart-plot svg {
+  display: block;
   width: 100%;
-  border-top: 1px solid rgba(17, 19, 24, 0.1);
+  min-width: 700px;
+  height: auto;
 }
 
-.bar-y-tick span {
-  position: absolute;
-  top: -8px;
-  left: calc(-1 * var(--bar-axis-label-width, clamp(46px, 6vw, 62px)));
-  width: calc(var(--bar-axis-label-width, clamp(46px, 6vw, 62px)) - 10px);
-  color: #5f6872;
+.comparison-axis {
+  stroke: rgba(17, 19, 24, 0.2);
+  stroke-width: 1.5;
+}
+
+.comparison-y-tick line {
+  stroke: rgba(17, 19, 24, 0.1);
+  stroke-width: 1;
+}
+
+.comparison-y-tick text {
+  fill: #5f6872;
   font-size: 10px;
   font-weight: 800;
-  line-height: 1;
-  text-align: right;
-  white-space: nowrap;
+  text-anchor: end;
+}
+
+.comparison-bar rect {
+  fill: var(--bar-color, var(--green));
+  transform: scaleY(0);
+  transform-box: fill-box;
+  transform-origin: bottom;
+  animation: comparison-bar-rise 560ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.comparison-bar.is-active rect {
+  filter: saturate(1.2) brightness(0.96);
+  stroke: rgba(17, 19, 24, 0.18);
+  stroke-width: 6;
+}
+
+.comparison-bar-value,
+.comparison-bar-label {
+  fill: #111318;
+  font-size: 10px;
+  font-weight: 800;
+  text-anchor: middle;
 }
 
 [data-comparison-chart] .chart-head {
@@ -1233,7 +1226,7 @@ figcaption {
 [data-comparison-chart] .chart-head .chart-detail {
   position: relative;
   display: grid;
-  grid-template-columns: max-content minmax(0, 1fr) max-content;
+  grid-template-columns: minmax(0, 1fr) max-content;
   align-items: center;
   gap: 10px 16px;
   flex: 0 1 430px;
@@ -1251,14 +1244,22 @@ figcaption {
 }
 
 [data-comparison-chart] .chart-head .chart-detail strong {
+  grid-column: 2;
+  grid-row: 1 / span 2;
   font-size: clamp(24px, 2.4vw, 34px);
 }
 
 [data-comparison-chart] .chart-head .chart-detail h4 {
+  grid-column: 1;
   min-width: 0;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  overflow: visible;
+  overflow-wrap: anywhere;
+  word-break: keep-all;
+  white-space: normal;
+}
+
+[data-comparison-chart] .chart-head .chart-detail span {
+  grid-column: 1;
 }
 
 [data-comparison-chart] .chart-head .chart-detail p {
@@ -1345,6 +1346,22 @@ figcaption {
   }
 }
 
+@keyframes comparison-bar-rise {
+  to {
+    transform: scaleY(1);
+  }
+}
+
+@keyframes choice-marquee {
+  0%, 12% {
+    transform: translateX(0);
+  }
+
+  88%, 100% {
+    transform: translateX(-45%);
+  }
+}
+
 .chart-bar {
   display: grid;
   grid-template-rows: var(--bar-value-height, 28px) minmax(0, 1fr) var(--bar-label-height, 52px);
@@ -1379,28 +1396,6 @@ figcaption {
   background: var(--bar-color, var(--green));
   transform-origin: bottom;
   transition: filter 180ms ease, transform 180ms ease;
-}
-
-.comparison-bars .chart-bar {
-  display: grid;
-  grid-template-rows: var(--bar-value-height, 28px) minmax(0, 1fr) var(--bar-label-height, 52px);
-}
-
-.comparison-bars .chart-bar-plot {
-  position: relative;
-  display: block;
-  min-height: 0;
-}
-
-.comparison-bars .chart-bar-fill {
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  left: 0;
-}
-
-.comparison-bars .chart-bar.is-active .chart-bar-fill {
-  animation: bar-rise 520ms cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
 .chart-bar:hover .chart-bar-fill,
@@ -1461,7 +1456,7 @@ figcaption {
 [data-interactive-chart] .chart-head .chart-detail {
   position: relative;
   display: grid;
-  grid-template-columns: max-content minmax(0, 1fr) max-content;
+  grid-template-columns: minmax(0, 1fr) max-content;
   align-items: center;
   gap: 10px 16px;
   flex: 0 1 430px;
@@ -1473,14 +1468,22 @@ figcaption {
 }
 
 [data-interactive-chart] .chart-head .chart-detail strong {
+  grid-column: 2;
+  grid-row: 1 / span 2;
   font-size: clamp(24px, 2.4vw, 34px);
 }
 
 [data-interactive-chart] .chart-head .chart-detail h4 {
+  grid-column: 1;
   min-width: 0;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  overflow: visible;
+  overflow-wrap: anywhere;
+  word-break: keep-all;
+  white-space: normal;
+}
+
+[data-interactive-chart] .chart-head .chart-detail span {
+  grid-column: 1;
 }
 
 [data-interactive-chart] .chart-head .chart-detail span,
@@ -1810,11 +1813,6 @@ figcaption {
     overflow-x: auto;
     border-right: 0;
     border-bottom: 1px solid var(--line);
-  }
-
-  .comparison-bars {
-    grid-template-columns: repeat(var(--bar-count, 2), minmax(110px, 180px));
-    min-height: 430px;
   }
 
   .trend-chart {
