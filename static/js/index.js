@@ -453,6 +453,14 @@ function formatAxisPrice(value, lang) {
   return lang === "ko" ? `${value.toFixed(1)}억` : `₩${(value / 10).toFixed(2)}B`;
 }
 
+function formatCount(value, lang) {
+  return lang === "ko" ? `${Math.round(value).toLocaleString("ko-KR")}개` : `${Math.round(value).toLocaleString("en-US")} academies`;
+}
+
+function formatAxisCount(value, lang) {
+  return lang === "ko" ? `${Math.round(value).toLocaleString("ko-KR")}개` : Math.round(value).toLocaleString("en-US");
+}
+
 function getGraphItem(id) {
   return graphData.find((item) => item.id === id) || graphData[0];
 }
@@ -601,6 +609,23 @@ const comparisonChartData = {
       { id: "changwonSeongsan", name: { ko: "창원 성산", en: "Changwon Seongsan" }, value: 4.12 },
       { id: "changwonUichang", name: { ko: "창원 의창", en: "Changwon Uichang" }, value: 3.73 },
       { id: "busanHaeundae", name: { ko: "부산 해운대", en: "Busan Haeundae" }, value: 5.57 }
+    ]
+  },
+  academy: {
+    label: { ko: "Academy Count Indicator", en: "Academy Count Indicator" },
+    title: { ko: "지방 학군지의 학원 갯수 지표", en: "Academy Count Indicator for Local School-District Areas" },
+    description: { ko: "행정구역별 버튼을 선택하면 2026년 03월 기준 해당 구역의 학원 갯수를 확인할 수 있습니다.", en: "Select an administrative-region button to view the academy count as of March 2026." },
+    detailLabel: { ko: "학원 갯수", en: "Academy Count" },
+    baseline: { ko: "5개 지역 평균", en: "Five-Area Average" },
+    baselineValue: 1577.8,
+    valueType: "count",
+    footnote: { ko: "* 학원 갯수는 2026년 03월의 지표를 기반으로 함.", en: "* Academy counts are based on the March 2026 indicator." },
+    items: [
+      { id: "daeguSuseongAcademy", name: { ko: "대구 수성", en: "Daegu Suseong" }, value: 2489 },
+      { id: "daejeonYuseongAcademy", name: { ko: "대전 유성", en: "Daejeon Yuseong" }, value: 1156 },
+      { id: "daejeonSeoAcademy", name: { ko: "대전 서", en: "Daejeon Seo" }, value: 1473 },
+      { id: "ulsanNamAcademy", name: { ko: "울산 남", en: "Ulsan Nam" }, value: 1364 },
+      { id: "busanHaeundaeAcademy", name: { ko: "부산 해운대", en: "Busan Haeundae" }, value: 1407 }
     ]
   }
 };
@@ -941,7 +966,21 @@ function getComparisonDetailLabel(lang) {
   return lang === "ko" ? "특정 지역 평균" : "Selected Region Average";
 }
 
-function drawComparisonBars(bars, axisMax, lang) {
+function getComparisonValueText(value, lang, config, axis = false) {
+  if (config.valueType === "count") return axis ? formatAxisCount(value, lang) : formatCount(value, lang);
+  return axis ? formatAxisPrice(value, lang) : formatPrice(value, lang);
+}
+
+function getComparisonGapText(gap, lang, config) {
+  if (config.valueType === "count") {
+    const valueText = formatCount(Math.abs(gap), lang);
+    return lang === "ko" ? `${config.baseline[lang]} 대비 ${valueText} ${gap >= 0 ? "많습니다" : "적습니다"}.` : `${valueText} ${gap >= 0 ? "above" : "below"} the ${config.baseline[lang].toLowerCase()}.`;
+  }
+  const valueText = formatPrice(Math.abs(gap), lang);
+  return lang === "ko" ? `지방 평균 대비 ${valueText} ${gap >= 0 ? "높습니다" : "낮습니다"}.` : `${valueText} ${gap >= 0 ? "above" : "below"} the local average.`;
+}
+
+function drawComparisonBars(bars, axisMax, lang, config) {
   const width = 760;
   const height = 330;
   const padding = { top: 34, right: 52, bottom: 58, left: 62 };
@@ -961,7 +1000,7 @@ function drawComparisonBars(bars, axisMax, lang) {
   const tickNodes = yTicks.map((tick) => `
     <g class="comparison-y-tick">
       <line x1="${padding.left}" y1="${tick.y.toFixed(1)}" x2="${width - padding.right}" y2="${tick.y.toFixed(1)}"></line>
-      <text x="${padding.left - 10}" y="${(tick.y + 4).toFixed(1)}">${formatAxisPrice(tick.value, lang)}</text>
+      <text x="${padding.left - 10}" y="${(tick.y + 4).toFixed(1)}">${getComparisonValueText(tick.value, lang, config, true)}</text>
     </g>
   `).join("");
 
@@ -972,7 +1011,7 @@ function drawComparisonBars(bars, axisMax, lang) {
     const stateClass = bar.id === "baseline" ? "is-baseline" : "is-active";
     return `
       <g class="comparison-bar ${stateClass}" style="--bar-color: ${bar.color}">
-        <text class="comparison-bar-value" x="${centers[index].toFixed(1)}" y="${(y - 12).toFixed(1)}">${formatPrice(bar.value, lang)}</text>
+        <text class="comparison-bar-value" x="${centers[index].toFixed(1)}" y="${(y - 12).toFixed(1)}">${getComparisonValueText(bar.value, lang, config)}</text>
         <rect x="${x.toFixed(1)}" y="${y.toFixed(1)}" width="${barWidth}" height="${barHeight.toFixed(1)}" rx="0"></rect>
         <text class="comparison-bar-label" x="${centers[index].toFixed(1)}" y="${(padding.top + plotHeight + 24).toFixed(1)}">${bar.name[lang]}</text>
       </g>
@@ -980,7 +1019,7 @@ function drawComparisonBars(bars, axisMax, lang) {
   }).join("");
 
   return `
-    <svg viewBox="0 0 ${width} ${height}" role="img" focusable="false" aria-label="${bars.map((bar) => bar.name[lang]).join(" and ")} price comparison">
+    <svg viewBox="0 0 ${width} ${height}" role="img" focusable="false" aria-label="${bars.map((bar) => bar.name[lang]).join(" and ")} comparison">
       ${tickNodes}
       <line class="comparison-axis" x1="${padding.left}" y1="${padding.top}" x2="${padding.left}" y2="${padding.top + plotHeight}"></line>
       <line class="comparison-axis" x1="${padding.left}" y1="${padding.top + plotHeight}" x2="${width - padding.right}" y2="${padding.top + plotHeight}"></line>
@@ -995,7 +1034,7 @@ function renderComparisonChart(chart, selectedId) {
   const selected = config.items.find((item) => item.id === selectedId) || config.items[0];
   const maxValue = Math.max(config.baselineValue, selected.value);
   const gap = selected.value - config.baselineValue;
-  const gapText = lang === "ko" ? `지방 평균 대비 ${formatPrice(Math.abs(gap), lang)} ${gap >= 0 ? "높습니다" : "낮습니다"}.` : `${formatPrice(Math.abs(gap), lang)} ${gap >= 0 ? "above" : "below"} the local average.`;
+  const gapText = getComparisonGapText(gap, lang, config);
   const bars = [
     { id: "baseline", name: config.baseline, value: config.baselineValue, color: "#9fb4c9" },
     { ...selected, color: "#1f5eff" }
@@ -1010,9 +1049,9 @@ function renderComparisonChart(chart, selectedId) {
         <h3>${config.title[lang]}</h3>
       </div>
       <aside class="chart-detail" aria-live="polite">
-        <span>${getComparisonDetailLabel(lang)}</span>
+        <span>${config.detailLabel ? config.detailLabel[lang] : getComparisonDetailLabel(lang)}</span>
         <h4>${selected.name[lang]}</h4>
-        <strong>${formatPrice(selected.value, lang)}</strong>
+        <strong>${getComparisonValueText(selected.value, lang, config)}</strong>
         <p>${gapText}</p>
       </aside>
     </div>
@@ -1021,7 +1060,7 @@ function renderComparisonChart(chart, selectedId) {
         ${config.items.map((item) => `<button class="chart-choice ${item.id === selected.id ? "is-active" : ""}" type="button" data-region="${item.id}" aria-pressed="${item.id === selected.id}"><span>${item.name[lang]}</span></button>`).join("")}
       </div>
       <div class="comparison-chart-plot">
-        ${drawComparisonBars(bars, barAxisMax, lang)}
+        ${drawComparisonBars(bars, barAxisMax, lang, config)}
       </div>
     </div>
     ${config.footnote ? `<p class="chart-footnote">${config.footnote[lang]}</p>` : ""}
@@ -1039,6 +1078,28 @@ function initComparisonCharts() {
       renderComparisonChart(chart, button.dataset.region);
     });
   });
+}
+
+function syncAcademyCountChart() {
+  const sectionTitle = document.querySelector("#analysis-gap");
+  if (!sectionTitle) return;
+
+  let current = sectionTitle.nextElementSibling;
+  while (current && !current.matches(".analysis-subtitle")) {
+    if (current.matches("p") && current.textContent.includes("학원의 갯수")) {
+      if (!current.nextElementSibling || !current.nextElementSibling.matches("[data-academy-count-chart]")) {
+        const chart = document.createElement("div");
+        chart.className = "interactive-chart";
+        chart.dataset.comparisonChart = "";
+        chart.dataset.comparisonType = "academy";
+        chart.dataset.lang = "ko";
+        chart.dataset.academyCountChart = "";
+        current.after(chart);
+      }
+      return;
+    }
+    current = current.nextElementSibling;
+  }
 }
 
 window.addEventListener("resize", () => {
@@ -1499,6 +1560,7 @@ function initPage() {
   initInteractiveCharts();
   syncSeoulGrowthSection();
   renderGrdpDonutCharts();
+  syncAcademyCountChart();
   initComparisonCharts();
   initMapWidgets();
   initScrollDots();
