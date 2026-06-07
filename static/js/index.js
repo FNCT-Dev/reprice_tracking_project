@@ -638,10 +638,9 @@ const transactionVolumeData = {
     en: "Compares housing transaction volume in the capital area and local regions from Mar. 2014 to Mar. 2026."
   },
   lineTitle: { ko: "전체 기간 직선그래프", en: "Full-Period Line Chart" },
-  barTitle: { ko: "선택 정권 기간 월별 막대그래프", en: "Monthly Bar Chart for Selected Administration" },
   footnote: {
-    ko: "* 주택매매거래량은 2014.03-2026.03 월별 지표를 기반으로 함.",
-    en: "* Housing transaction volume is based on monthly indicators from 2014.03 to 2026.03."
+    ko: "* 주택매매거래량은 2014.03-2026.03 월별 지표를 기반으로 함. 점선 세로줄은 정권별 부동산 금융규제 대책 발표일을 표시함.",
+    en: "* Housing transaction volume is based on monthly indicators from 2014.03 to 2026.03. Dashed vertical lines mark real-estate finance-policy announcement dates by administration."
   },
   months: ["2014.03", "2014.04", "2014.05", "2014.06", "2014.07", "2014.08", "2014.09", "2014.10", "2014.11", "2014.12", "2015.01", "2015.02", "2015.03", "2015.04", "2015.05", "2015.06", "2015.07", "2015.08", "2015.09", "2015.10", "2015.11", "2015.12", "2016.01", "2016.02", "2016.03", "2016.04", "2016.05", "2016.06", "2016.07", "2016.08", "2016.09", "2016.10", "2016.11", "2016.12", "2017.01", "2017.02", "2017.03", "2017.04", "2017.05", "2017.06", "2017.07", "2017.08", "2017.09", "2017.10", "2017.11", "2017.12", "2018.01", "2018.02", "2018.03", "2018.04", "2018.05", "2018.06", "2018.07", "2018.08", "2018.09", "2018.10", "2018.11", "2018.12", "2019.01", "2019.02", "2019.03", "2019.04", "2019.05", "2019.06", "2019.07", "2019.08", "2019.09", "2019.10", "2019.11", "2019.12", "2020.01", "2020.02", "2020.03", "2020.04", "2020.05", "2020.06", "2020.07", "2020.08", "2020.09", "2020.10", "2020.11", "2020.12", "2021.01", "2021.02", "2021.03", "2021.04", "2021.05", "2021.06", "2021.07", "2021.08", "2021.09", "2021.10", "2021.11", "2021.12", "2022.01", "2022.02", "2022.03", "2022.04", "2022.05", "2022.06", "2022.07", "2022.08", "2022.09", "2022.10", "2022.11", "2022.12", "2023.01", "2023.02", "2023.03", "2023.04", "2023.05", "2023.06", "2023.07", "2023.08", "2023.09", "2023.10", "2023.11", "2023.12", "2024.01", "2024.02", "2024.03", "2024.04", "2024.05", "2024.06", "2024.07", "2024.08", "2024.09", "2024.10", "2024.11", "2024.12", "2025.01", "2025.02", "2025.03", "2025.04", "2025.05", "2025.06", "2025.07", "2025.08", "2025.09", "2025.10", "2025.11", "2025.12", "2026.01", "2026.02", "2026.03"],
   series: [
@@ -654,6 +653,27 @@ const transactionVolumeData = {
     { id: "moon", name: { ko: "문재인 정부", en: "Moon Jae-in" }, range: "2017.05-2022.05", start: "2017.05", end: "2022.05" },
     { id: "yoon", name: { ko: "윤석열 정부", en: "Yoon Suk Yeol" }, range: "2022.05-2025.06", start: "2022.05", end: "2025.06" },
     { id: "lee", name: { ko: "이재명 정부", en: "Lee Jae-myung" }, range: "2025.06-2026.03", start: "2025.06", end: "2026.03" }
+  ],
+  policies: [
+    { government: "park", date: "2014-09-01", name: { ko: "9.1 부동산 대책", en: "Sep. 1 Real Estate Measures" }, direction: { ko: "완화", en: "Easing" } },
+    { government: "park", date: "2016-08-25", name: { ko: "8.25 가계부채 대책", en: "Aug. 25 Household Debt Measures" }, direction: { ko: "강화", en: "Tightening" } },
+    { government: "park", date: "2016-11-03", name: { ko: "11.3 부동산 대책", en: "Nov. 3 Real Estate Measures" }, direction: { ko: "강화", en: "Tightening" } },
+    { government: "moon", date: "2017-06-19", name: { ko: "6.19 부동산 대책", en: "Jun. 19 Real Estate Measures" }, direction: { ko: "강화", en: "Tightening" } },
+    { government: "moon", date: "2017-08-02", name: { ko: "8.2 부동산 대책", en: "Aug. 2 Real Estate Measures" }, direction: { ko: "강화", en: "Tightening" } },
+    { government: "moon", date: "2017-09-05", name: { ko: "9.5 부동산 대책", en: "Sep. 5 Real Estate Measures" }, direction: { ko: "강화", en: "Tightening" } },
+    { government: "moon", date: "2017-10-24", name: { ko: "10.24 가계부채 대책", en: "Oct. 24 Household Debt Measures" }, direction: { ko: "강화", en: "Tightening" } },
+    { government: "moon", date: "2018-09-13", name: { ko: "9.13 부동산 대책", en: "Sep. 13 Real Estate Measures" }, direction: { ko: "강화", en: "Tightening" } },
+    { government: "moon", date: "2019-12-16", name: { ko: "12.16 부동산 대책", en: "Dec. 16 Real Estate Measures" }, direction: { ko: "강화", en: "Tightening" } },
+    { government: "moon", date: "2020-06-17", name: { ko: "6.17 부동산 대책", en: "Jun. 17 Real Estate Measures" }, direction: { ko: "강화", en: "Tightening" } },
+    { government: "moon", date: "2020-07-10", name: { ko: "7.10 부동산 대책", en: "Jul. 10 Real Estate Measures" }, direction: { ko: "강화", en: "Tightening" } },
+    { government: "moon", date: "2020-08-04", name: { ko: "8.4 부동산 대책", en: "Aug. 4 Real Estate Measures" }, direction: { ko: "중립", en: "Neutral" } },
+    { government: "moon", date: "2021-02-04", name: { ko: "2.4 부동산 대책", en: "Feb. 4 Real Estate Measures" }, direction: { ko: "중립", en: "Neutral" } },
+    { government: "yoon", date: "2023-01-03", name: { ko: "1.3 부동산 대책", en: "Jan. 3 Real Estate Measures" }, direction: { ko: "완화", en: "Easing" } },
+    { government: "yoon", date: "2024-01-10", name: { ko: "1.10 부동산 대책", en: "Jan. 10 Real Estate Measures" }, direction: { ko: "완화/지원", en: "Easing/Support" } },
+    { government: "yoon", date: "2024-08-08", name: { ko: "8.8 부동산 대책", en: "Aug. 8 Real Estate Measures" }, direction: { ko: "지원", en: "Support" } },
+    { government: "lee", date: "2025-06-27", name: { ko: "6.27 부동산 대책", en: "Jun. 27 Real Estate Measures" }, direction: { ko: "강화", en: "Tightening" } },
+    { government: "lee", date: "2025-09-05", name: { ko: "9.5 부동산 대책", en: "Sep. 5 Real Estate Measures" }, direction: { ko: "강화", en: "Tightening" } },
+    { government: "lee", date: "2025-10-15", name: { ko: "10.15 부동산 대책", en: "Oct. 15 Real Estate Measures" }, direction: { ko: "강화", en: "Tightening" } }
   ]
 };
 
@@ -1143,13 +1163,32 @@ function getTransactionPeriod(id) {
   return transactionVolumeData.periods.find((period) => period.id === id) || transactionVolumeData.periods[0];
 }
 
-function getTransactionPeriodIndexes(period) {
-  return transactionVolumeData.months
-    .map((month, index) => ({ month, index }))
-    .filter((item) => item.month >= period.start && item.month <= period.end);
+function getPolicyMonth(date) {
+  return date.slice(0, 7).replace("-", ".");
 }
 
-function drawTransactionLineChart(container, lang) {
+function getDaysInMonth(year, month) {
+  return new Date(year, month, 0).getDate();
+}
+
+function getTransactionPolicyX(date, paddingLeft, plotWidth) {
+  const [yearText, monthText, dayText] = date.split("-");
+  const monthKey = `${yearText}.${monthText}`;
+  const monthIndex = transactionVolumeData.months.indexOf(monthKey);
+  if (monthIndex < 0) return null;
+  const dayRatio = (Number(dayText) - 1) / getDaysInMonth(Number(yearText), Number(monthText));
+  const monthStep = plotWidth / (transactionVolumeData.months.length - 1);
+  return paddingLeft + (monthIndex + dayRatio) * monthStep;
+}
+
+function getTransactionPolicies(period) {
+  return transactionVolumeData.policies.filter((policy) => {
+    const policyMonth = getPolicyMonth(policy.date);
+    return policyMonth >= period.start && policyMonth <= period.end;
+  });
+}
+
+function drawTransactionLineChart(container, lang, period) {
   const width = 2200;
   const height = 360;
   const padding = { top: 34, right: 42, bottom: 54, left: 74 };
@@ -1192,65 +1231,27 @@ function drawTransactionLineChart(container, lang) {
       </g>
     `;
   }).join("");
+  const policyNodes = getTransactionPolicies(period).map((policy, index) => {
+    const x = getTransactionPolicyX(policy.date, padding.left, plotWidth);
+    if (x === null) return "";
+    const labelY = padding.top + 15 + (index % 3) * 16;
+    return `
+      <g class="transaction-policy-marker">
+        <line x1="${x.toFixed(1)}" y1="${padding.top}" x2="${x.toFixed(1)}" y2="${height - padding.bottom}"></line>
+        <text x="${(x + 5).toFixed(1)}" y="${labelY}">${policy.date.slice(5).replace("-", ".")}</text>
+        <title>${policy.date} ${policy.name[lang]} (${policy.direction[lang]})</title>
+      </g>
+    `;
+  }).join("");
 
   container.innerHTML = `
     <svg viewBox="0 0 ${width} ${height}" role="img" focusable="false" aria-label="${transactionVolumeData.title[lang]} line chart">
       ${yAxisNodes}
       <line class="line-axis" x1="${padding.left}" y1="${height - padding.bottom}" x2="${width - padding.right}" y2="${height - padding.bottom}"></line>
       <line class="line-axis" x1="${padding.left}" y1="${padding.top}" x2="${padding.left}" y2="${height - padding.bottom}"></line>
+      ${policyNodes}
       ${paths}
       ${xLabels}
-    </svg>
-  `;
-}
-
-function drawTransactionBars(container, period, lang) {
-  const indexes = getTransactionPeriodIndexes(period);
-  const width = Math.max(820, indexes.length * 42 + 110);
-  const height = 360;
-  const padding = { top: 34, right: 36, bottom: 66, left: 74 };
-  const plotWidth = width - padding.left - padding.right;
-  const plotHeight = height - padding.top - padding.bottom;
-  const maxValue = Math.max(...transactionVolumeData.series.flatMap((series) => indexes.map((item) => series.values[item.index])));
-  const max = Math.ceil((maxValue * 1.14) / 10000) * 10000;
-  const groupWidth = plotWidth / indexes.length;
-  const barWidth = Math.max(5, Math.min(12, groupWidth * 0.28));
-  const yTicks = Array.from({ length: 5 }, (_, index) => {
-    const value = max - (max / 4) * index;
-    const y = padding.top + (index / 4) * plotHeight;
-    return { value, y };
-  });
-  const yAxisNodes = yTicks.map((tick) => `
-    <g class="comparison-y-tick">
-      <line x1="${padding.left}" y1="${tick.y.toFixed(1)}" x2="${width - padding.right}" y2="${tick.y.toFixed(1)}"></line>
-      <text x="${padding.left - 10}" y="${(tick.y + 4).toFixed(1)}">${formatAxisVolume(tick.value, lang)}</text>
-    </g>
-  `).join("");
-  const bars = indexes.map((item, groupIndex) => {
-    const center = padding.left + groupWidth * (groupIndex + 0.5);
-    const labels = groupIndex === 0 || groupIndex === indexes.length - 1 || item.month.endsWith(".01")
-      ? `<text class="comparison-bar-label transaction-bar-month" x="${center.toFixed(1)}" y="${(height - 24).toFixed(1)}">${item.month}</text>`
-      : "";
-    const rects = transactionVolumeData.series.map((series, seriesIndex) => {
-      const value = series.values[item.index];
-      const barHeight = (value / max) * plotHeight;
-      const x = center + (seriesIndex === 0 ? -barWidth - 2 : 2);
-      const y = padding.top + plotHeight - barHeight;
-      return `
-        <rect class="transaction-bar" x="${x.toFixed(1)}" y="${y.toFixed(1)}" width="${barWidth.toFixed(1)}" height="${barHeight.toFixed(1)}" style="--bar-color: ${series.color}">
-          <title>${item.month} ${series.name[lang]}: ${formatVolume(value, lang)}</title>
-        </rect>
-      `;
-    }).join("");
-    return `<g>${rects}${labels}</g>`;
-  }).join("");
-
-  container.innerHTML = `
-    <svg viewBox="0 0 ${width} ${height}" role="img" focusable="false" aria-label="${period.name[lang]} transaction volume bar chart">
-      ${yAxisNodes}
-      <line class="comparison-axis" x1="${padding.left}" y1="${padding.top}" x2="${padding.left}" y2="${padding.top + plotHeight}"></line>
-      <line class="comparison-axis" x1="${padding.left}" y1="${padding.top + plotHeight}" x2="${width - padding.right}" y2="${padding.top + plotHeight}"></line>
-      ${bars}
     </svg>
   `;
 }
@@ -1277,14 +1278,9 @@ function renderTransactionVolumeChart(chart, selectedPeriodId = "all") {
       <h4>${transactionVolumeData.lineTitle[lang]}</h4>
       <div class="line-chart transaction-line-chart" data-transaction-line-chart></div>
     </div>
-    <div class="transaction-chart-block">
-      <h4>${transactionVolumeData.barTitle[lang]} (${period.range})</h4>
-      <div class="comparison-chart-plot transaction-bar-chart" data-transaction-bar-chart></div>
-    </div>
     <p class="chart-footnote">${transactionVolumeData.footnote[lang]}</p>
   `;
-  drawTransactionLineChart(chart.querySelector("[data-transaction-line-chart]"), lang);
-  drawTransactionBars(chart.querySelector("[data-transaction-bar-chart]"), period, lang);
+  drawTransactionLineChart(chart.querySelector("[data-transaction-line-chart]"), lang, period);
   updateOverflowingChoices(chart);
 }
 

@@ -1521,21 +1521,18 @@ figcaption {
   border-bottom: 1px solid var(--line);
 }
 
-.transaction-bar-chart {
-  min-height: 420px;
-  border-bottom: 0;
+.transaction-policy-marker line {
+  stroke: rgba(182, 95, 91, 0.62);
+  stroke-width: 2;
+  stroke-dasharray: 7 7;
+  pointer-events: stroke;
 }
 
-.transaction-bar {
-  fill: var(--bar-color, var(--blue));
-  transform: scaleY(0);
-  transform-box: fill-box;
-  transform-origin: bottom;
-  animation: comparison-bar-rise 900ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
-}
-
-.transaction-bar-month {
+.transaction-policy-marker text {
+  fill: #9b4f4c;
   font-size: 10px;
+  font-weight: 900;
+  pointer-events: none;
 }
 
 .grdp-donut-body {
