@@ -1442,6 +1442,101 @@ figcaption {
   text-anchor: middle;
 }
 
+.transaction-volume-chart .chart-detail p {
+  position: static;
+  grid-column: 1 / -1;
+  width: auto;
+  height: auto;
+  margin: 0;
+  overflow: visible;
+  clip: auto;
+  white-space: normal;
+  color: #5f6872;
+  font-size: 13px;
+  font-weight: 800;
+  line-height: 1.5;
+}
+
+.transaction-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 18px;
+  padding: 0 clamp(18px, 3vw, 34px) 18px;
+  color: #26313c;
+  font-size: 13px;
+  font-weight: 900;
+}
+
+.transaction-legend span {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.transaction-legend i {
+  width: 12px;
+  height: 12px;
+  border-radius: 999px;
+  background: var(--legend-color, var(--blue));
+}
+
+.transaction-chart-block {
+  min-width: 0;
+  border-top: 1px solid var(--line);
+}
+
+.transaction-chart-block h4 {
+  margin: 0;
+  padding: 18px clamp(18px, 3vw, 34px) 0;
+  color: #26313c;
+  font-size: 15px;
+  font-weight: 900;
+}
+
+.transaction-line-chart svg {
+  min-width: 1500px;
+}
+
+.transaction-line-path {
+  stroke-width: 4;
+}
+
+.transaction-line-point {
+  fill: #ffffff;
+  stroke: var(--line-color, var(--blue));
+  stroke-width: 2;
+  opacity: 0.72;
+}
+
+.transaction-x-label {
+  fill: #5f6872;
+  font-size: 11px;
+  font-weight: 800;
+  text-anchor: middle;
+}
+
+.transaction-period-selector {
+  border-top: 1px solid var(--line);
+  border-bottom: 0;
+}
+
+.transaction-bar-chart {
+  min-height: 420px;
+  border-bottom: 0;
+}
+
+.transaction-bar {
+  fill: var(--bar-color, var(--blue));
+  transform: scaleY(0);
+  transform-box: fill-box;
+  transform-origin: bottom;
+  animation: comparison-bar-rise 900ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.transaction-bar-month {
+  font-size: 10px;
+}
+
 .grdp-donut-body {
   display: grid;
   grid-template-columns: minmax(220px, 0.62fr) minmax(320px, 1fr);
@@ -2046,6 +2141,31 @@ figcaption {
   line-height: 1.75;
   overflow-wrap: break-word;
   word-break: keep-all;
+}
+
+.transaction-volume-chart .chart-detail {
+  flex: 0 1 430px;
+  margin-left: auto;
+  padding: 18px;
+  border: 1px solid rgba(17, 19, 24, 0.12);
+  background: #ffffff;
+}
+
+.transaction-volume-chart .chart-detail span,
+.transaction-volume-chart .chart-detail h4,
+.transaction-volume-chart .chart-detail strong,
+.transaction-volume-chart .chart-detail p {
+  margin: 0;
+}
+
+.transaction-volume-chart .chart-detail h4 {
+  font-size: clamp(18px, 2vw, 24px);
+}
+
+.transaction-volume-chart .chart-detail strong {
+  margin: 8px 0;
+  font-size: clamp(24px, 2.5vw, 34px);
+  white-space: normal;
 }
 
 .sparkline {

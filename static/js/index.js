@@ -630,6 +630,33 @@ const comparisonChartData = {
   }
 };
 
+const transactionVolumeData = {
+  label: { ko: "Housing Transaction Volume", en: "Housing Transaction Volume" },
+  title: { ko: "정권별 주택매매거래량 비교", en: "Housing Transaction Volume by Administration" },
+  description: {
+    ko: "2014.03부터 2026.03까지의 주택매매거래량을 수도권과 지방으로 나누어 비교합니다.",
+    en: "Compares housing transaction volume in the capital area and local regions from Mar. 2014 to Mar. 2026."
+  },
+  lineTitle: { ko: "전체 기간 직선그래프", en: "Full-Period Line Chart" },
+  barTitle: { ko: "선택 정권 기간 월별 막대그래프", en: "Monthly Bar Chart for Selected Administration" },
+  detailLabel: { ko: "선택 기간 합계", en: "Selected Period Total" },
+  footnote: {
+    ko: "* 주택매매거래량은 2014.03-2026.03 월별 지표를 기반으로 함.",
+    en: "* Housing transaction volume is based on monthly indicators from 2014.03 to 2026.03."
+  },
+  months: ["2014.03", "2014.04", "2014.05", "2014.06", "2014.07", "2014.08", "2014.09", "2014.10", "2014.11", "2014.12", "2015.01", "2015.02", "2015.03", "2015.04", "2015.05", "2015.06", "2015.07", "2015.08", "2015.09", "2015.10", "2015.11", "2015.12", "2016.01", "2016.02", "2016.03", "2016.04", "2016.05", "2016.06", "2016.07", "2016.08", "2016.09", "2016.10", "2016.11", "2016.12", "2017.01", "2017.02", "2017.03", "2017.04", "2017.05", "2017.06", "2017.07", "2017.08", "2017.09", "2017.10", "2017.11", "2017.12", "2018.01", "2018.02", "2018.03", "2018.04", "2018.05", "2018.06", "2018.07", "2018.08", "2018.09", "2018.10", "2018.11", "2018.12", "2019.01", "2019.02", "2019.03", "2019.04", "2019.05", "2019.06", "2019.07", "2019.08", "2019.09", "2019.10", "2019.11", "2019.12", "2020.01", "2020.02", "2020.03", "2020.04", "2020.05", "2020.06", "2020.07", "2020.08", "2020.09", "2020.10", "2020.11", "2020.12", "2021.01", "2021.02", "2021.03", "2021.04", "2021.05", "2021.06", "2021.07", "2021.08", "2021.09", "2021.10", "2021.11", "2021.12", "2022.01", "2022.02", "2022.03", "2022.04", "2022.05", "2022.06", "2022.07", "2022.08", "2022.09", "2022.10", "2022.11", "2022.12", "2023.01", "2023.02", "2023.03", "2023.04", "2023.05", "2023.06", "2023.07", "2023.08", "2023.09", "2023.10", "2023.11", "2023.12", "2024.01", "2024.02", "2024.03", "2024.04", "2024.05", "2024.06", "2024.07", "2024.08", "2024.09", "2024.10", "2024.11", "2024.12", "2025.01", "2025.02", "2025.03", "2025.04", "2025.05", "2025.06", "2025.07", "2025.08", "2025.09", "2025.10", "2025.11", "2025.12", "2026.01", "2026.02", "2026.03"],
+  series: [
+    { id: "capital", color: "#1f5eff", name: { ko: "수도권 거래량", en: "Capital Area Volume" }, values: [44289, 43335, 35187, 30982, 33065, 34816, 43013, 54233, 43661, 37674, 34301, 37502, 58242, 63712, 58963, 57227, 57105, 49892, 45932, 56199, 49392, 43315, 29705, 28084, 38311, 43452, 49477, 52864, 56629, 56792, 51868, 60728, 54976, 45376, 26042, 28459, 37836, 39467, 47093, 57251, 58247, 57094, 46019, 31487, 37550, 37441, 37328, 40538, 54144, 37045, 35054, 31521, 33509, 38604, 49219, 54823, 32921, 25986, 22483, 18390, 22375, 25366, 26826, 26944, 34471, 35290, 33335, 42465, 48547, 62374, 55382, 66456, 65051, 36852, 40228, 75534, 75725, 43107, 38089, 41884, 41117, 63203, 47132, 47433, 49358, 45012, 47389, 42016, 42074, 41668, 37225, 31982, 26365, 21573, 16209, 16149, 20109, 23346, 26314, 21704, 16734, 13883, 12609, 12102, 11428, 11127, 10299, 17240, 22722, 20830, 24739, 23989, 22179, 23277, 22741, 19791, 18010, 15083, 17608, 18916, 22722, 27124, 27603, 28703, 37684, 32776, 25829, 25011, 21777, 20235, 17846, 24026, 35556, 33820, 32362, 42967, 34704, 21673, 31298, 39644, 27697, 29048, 30142, 29459, 36008] },
+    { id: "local", color: "#6f9b78", name: { ko: "지방 거래량", en: "Local Volume" }, values: [45637, 49873, 43023, 42553, 44221, 41569, 43676, 55142, 47389, 53456, 45019, 41362, 53627, 56776, 50909, 53156, 53570, 44218, 40220, 50075, 48421, 44556, 32660, 31181, 39542, 42846, 39790, 39747, 38949, 41338, 39744, 47873, 47912, 43225, 32497, 35025, 39474, 35914, 37953, 40747, 40167, 39484, 38331, 31723, 37598, 34205, 33026, 29141, 38651, 34706, 32735, 33506, 30178, 27341, 26922, 37743, 31883, 29695, 27803, 25054, 28982, 31659, 30277, 27949, 32878, 31216, 30753, 39928, 43866, 56041, 45952, 48808, 43626, 36679, 43266, 63044, 65694, 42165, 43839, 50885, 75641, 77078, 43547, 39588, 52751, 48056, 50135, 46906, 46863, 47389, 44406, 43308, 40794, 32201, 25500, 27030, 33352, 35061, 36886, 28600, 22866, 21648, 19794, 20071, 18792, 17476, 15462, 23951, 29611, 26725, 30437, 28603, 25991, 28301, 26707, 28008, 27405, 22953, 25425, 24575, 30094, 31091, 29833, 27057, 30612, 27872, 25438, 31568, 27337, 25686, 20476, 26672, 31703, 31601, 30341, 30871, 29531, 24579, 32067, 30074, 33710, 33845, 31308, 28326, 35967] }
+  ],
+  periods: [
+    { id: "park", name: { ko: "박근혜 정부", en: "Park Geun-hye" }, range: "2014.03-2017.05", start: "2014.03", end: "2017.05" },
+    { id: "moon", name: { ko: "문재인 정부", en: "Moon Jae-in" }, range: "2017.05-2022.05", start: "2017.05", end: "2022.05" },
+    { id: "yoon", name: { ko: "윤석열 정부", en: "Yoon Suk Yeol" }, range: "2022.05-2025.06", start: "2022.05", end: "2025.06" },
+    { id: "lee", name: { ko: "이재명 정부", en: "Lee Jae-myung" }, range: "2025.06-2026.03", start: "2025.06", end: "2026.03" }
+  ]
+};
+
 const grdpDonutData = {
   label: { ko: "GRDP Concentration Visualization", en: "GRDP Concentration Visualization" },
   title: { ko: "2024년 권역별 지역내총생산 비중", en: "Regional GRDP Share by Area, 2024" },
@@ -1102,6 +1129,201 @@ function syncAcademyCountChart() {
   }
 }
 
+function formatVolume(value, lang) {
+  const locale = lang === "ko" ? "ko-KR" : "en-US";
+  return lang === "ko" ? `${Math.round(value).toLocaleString(locale)}건` : `${Math.round(value).toLocaleString(locale)} transactions`;
+}
+
+function formatAxisVolume(value, lang) {
+  const locale = lang === "ko" ? "ko-KR" : "en-US";
+  return Math.round(value).toLocaleString(locale);
+}
+
+function getTransactionPeriod(id) {
+  return transactionVolumeData.periods.find((period) => period.id === id) || transactionVolumeData.periods[0];
+}
+
+function getTransactionPeriodIndexes(period) {
+  return transactionVolumeData.months
+    .map((month, index) => ({ month, index }))
+    .filter((item) => item.month >= period.start && item.month <= period.end);
+}
+
+function getTransactionTotal(series, indexes) {
+  return indexes.reduce((sum, item) => sum + series.values[item.index], 0);
+}
+
+function drawTransactionLineChart(container, lang) {
+  const width = 2200;
+  const height = 360;
+  const padding = { top: 34, right: 42, bottom: 54, left: 74 };
+  const plotWidth = width - padding.left - padding.right;
+  const plotHeight = height - padding.top - padding.bottom;
+  const allValues = transactionVolumeData.series.flatMap((series) => series.values);
+  const max = Math.ceil((Math.max(...allValues) * 1.12) / 10000) * 10000;
+  const yTicks = Array.from({ length: 5 }, (_, index) => {
+    const value = max - (max / 4) * index;
+    const y = padding.top + (index / 4) * plotHeight;
+    return { value, y };
+  });
+  const xLabels = transactionVolumeData.months.map((month, index) => {
+    if (index !== 0 && index !== transactionVolumeData.months.length - 1 && !month.endsWith(".01")) return "";
+    const x = padding.left + (index / (transactionVolumeData.months.length - 1)) * plotWidth;
+    return `<text class="transaction-x-label" x="${x.toFixed(1)}" y="${height - 22}">${month}</text>`;
+  }).join("");
+  const yAxisNodes = yTicks.map((tick) => `
+    <g class="line-y-tick">
+      <line x1="${padding.left}" y1="${tick.y.toFixed(1)}" x2="${width - padding.right}" y2="${tick.y.toFixed(1)}"></line>
+      <text x="${padding.left - 10}" y="${(tick.y + 4).toFixed(1)}">${formatAxisVolume(tick.value, lang)}</text>
+    </g>
+  `).join("");
+  const paths = transactionVolumeData.series.map((series) => {
+    const points = series.values.map((value, index) => {
+      const x = padding.left + (index / (series.values.length - 1)) * plotWidth;
+      const y = padding.top + (1 - value / max) * plotHeight;
+      return { x, y, value, month: transactionVolumeData.months[index] };
+    });
+    const path = points.map((point, index) => `${index === 0 ? "M" : "L"} ${point.x.toFixed(1)} ${point.y.toFixed(1)}`).join(" ");
+    const pointNodes = points.map((point) => `
+      <circle class="transaction-line-point" cx="${point.x.toFixed(1)}" cy="${point.y.toFixed(1)}" r="3">
+        <title>${point.month} ${series.name[lang]}: ${formatVolume(point.value, lang)}</title>
+      </circle>
+    `).join("");
+    return `
+      <g style="--line-color: ${series.color}">
+        <path class="line-path transaction-line-path" pathLength="1" d="${path}"></path>
+        ${pointNodes}
+      </g>
+    `;
+  }).join("");
+
+  container.innerHTML = `
+    <svg viewBox="0 0 ${width} ${height}" role="img" focusable="false" aria-label="${transactionVolumeData.title[lang]} line chart">
+      ${yAxisNodes}
+      <line class="line-axis" x1="${padding.left}" y1="${height - padding.bottom}" x2="${width - padding.right}" y2="${height - padding.bottom}"></line>
+      <line class="line-axis" x1="${padding.left}" y1="${padding.top}" x2="${padding.left}" y2="${height - padding.bottom}"></line>
+      ${paths}
+      ${xLabels}
+    </svg>
+  `;
+}
+
+function drawTransactionBars(container, period, lang) {
+  const indexes = getTransactionPeriodIndexes(period);
+  const width = Math.max(820, indexes.length * 42 + 110);
+  const height = 360;
+  const padding = { top: 34, right: 36, bottom: 66, left: 74 };
+  const plotWidth = width - padding.left - padding.right;
+  const plotHeight = height - padding.top - padding.bottom;
+  const maxValue = Math.max(...transactionVolumeData.series.flatMap((series) => indexes.map((item) => series.values[item.index])));
+  const max = Math.ceil((maxValue * 1.14) / 10000) * 10000;
+  const groupWidth = plotWidth / indexes.length;
+  const barWidth = Math.max(5, Math.min(12, groupWidth * 0.28));
+  const yTicks = Array.from({ length: 5 }, (_, index) => {
+    const value = max - (max / 4) * index;
+    const y = padding.top + (index / 4) * plotHeight;
+    return { value, y };
+  });
+  const yAxisNodes = yTicks.map((tick) => `
+    <g class="comparison-y-tick">
+      <line x1="${padding.left}" y1="${tick.y.toFixed(1)}" x2="${width - padding.right}" y2="${tick.y.toFixed(1)}"></line>
+      <text x="${padding.left - 10}" y="${(tick.y + 4).toFixed(1)}">${formatAxisVolume(tick.value, lang)}</text>
+    </g>
+  `).join("");
+  const bars = indexes.map((item, groupIndex) => {
+    const center = padding.left + groupWidth * (groupIndex + 0.5);
+    const labels = groupIndex === 0 || groupIndex === indexes.length - 1 || item.month.endsWith(".01")
+      ? `<text class="comparison-bar-label transaction-bar-month" x="${center.toFixed(1)}" y="${(height - 24).toFixed(1)}">${item.month}</text>`
+      : "";
+    const rects = transactionVolumeData.series.map((series, seriesIndex) => {
+      const value = series.values[item.index];
+      const barHeight = (value / max) * plotHeight;
+      const x = center + (seriesIndex === 0 ? -barWidth - 2 : 2);
+      const y = padding.top + plotHeight - barHeight;
+      return `
+        <rect class="transaction-bar" x="${x.toFixed(1)}" y="${y.toFixed(1)}" width="${barWidth.toFixed(1)}" height="${barHeight.toFixed(1)}" style="--bar-color: ${series.color}">
+          <title>${item.month} ${series.name[lang]}: ${formatVolume(value, lang)}</title>
+        </rect>
+      `;
+    }).join("");
+    return `<g>${rects}${labels}</g>`;
+  }).join("");
+
+  container.innerHTML = `
+    <svg viewBox="0 0 ${width} ${height}" role="img" focusable="false" aria-label="${period.name[lang]} transaction volume bar chart">
+      ${yAxisNodes}
+      <line class="comparison-axis" x1="${padding.left}" y1="${padding.top}" x2="${padding.left}" y2="${padding.top + plotHeight}"></line>
+      <line class="comparison-axis" x1="${padding.left}" y1="${padding.top + plotHeight}" x2="${width - padding.right}" y2="${padding.top + plotHeight}"></line>
+      ${bars}
+    </svg>
+  `;
+}
+
+function renderTransactionVolumeChart(chart, selectedPeriodId = "park") {
+  const lang = chart.dataset.lang || "en";
+  const period = getTransactionPeriod(selectedPeriodId);
+  const indexes = getTransactionPeriodIndexes(period);
+  const capitalTotal = getTransactionTotal(transactionVolumeData.series[0], indexes);
+  const localTotal = getTransactionTotal(transactionVolumeData.series[1], indexes);
+
+  chart.innerHTML = `
+    <div class="chart-head">
+      <div>
+        <p class="chart-label">${transactionVolumeData.label[lang]}</p>
+        <h3>${transactionVolumeData.title[lang]}</h3>
+      </div>
+      <aside class="chart-detail" aria-live="polite">
+        <span>${transactionVolumeData.detailLabel[lang]}</span>
+        <h4>${period.name[lang]} ${period.range}</h4>
+        <strong>${formatVolume(capitalTotal + localTotal, lang)}</strong>
+        <p>${transactionVolumeData.series[0].name[lang]} ${formatVolume(capitalTotal, lang)} / ${transactionVolumeData.series[1].name[lang]} ${formatVolume(localTotal, lang)}</p>
+      </aside>
+    </div>
+    <p class="chart-intro-text">${transactionVolumeData.description[lang]}</p>
+    <div class="transaction-legend">
+      ${transactionVolumeData.series.map((series) => `<span><i style="--legend-color: ${series.color}"></i>${series.name[lang]}</span>`).join("")}
+    </div>
+    <div class="transaction-chart-block">
+      <h4>${transactionVolumeData.lineTitle[lang]}</h4>
+      <div class="line-chart transaction-line-chart" data-transaction-line-chart></div>
+    </div>
+    <div class="chart-selector transaction-period-selector" data-transaction-period-selector>
+      ${transactionVolumeData.periods.map((item) => `<button class="chart-choice ${item.id === period.id ? "is-active" : ""}" type="button" data-period="${item.id}" aria-pressed="${item.id === period.id}"><span>${item.name[lang]}</span></button>`).join("")}
+    </div>
+    <div class="transaction-chart-block">
+      <h4>${transactionVolumeData.barTitle[lang]} (${period.range})</h4>
+      <div class="comparison-chart-plot transaction-bar-chart" data-transaction-bar-chart></div>
+    </div>
+    <p class="chart-footnote">${transactionVolumeData.footnote[lang]}</p>
+  `;
+  drawTransactionLineChart(chart.querySelector("[data-transaction-line-chart]"), lang);
+  drawTransactionBars(chart.querySelector("[data-transaction-bar-chart]"), period, lang);
+  updateOverflowingChoices(chart);
+}
+
+function initTransactionVolumeCharts() {
+  document.querySelectorAll("[data-transaction-volume-chart]").forEach((chart) => {
+    renderTransactionVolumeChart(chart, "park");
+    chart.addEventListener("click", (event) => {
+      const button = event.target.closest("[data-period]");
+      if (!button) return;
+      renderTransactionVolumeChart(chart, button.dataset.period);
+    });
+  });
+}
+
+function syncRegulationTransactionChart() {
+  const sectionTitle = document.querySelector("#analysis-regulations");
+  if (!sectionTitle) return;
+  if (sectionTitle.nextElementSibling && sectionTitle.nextElementSibling.matches("[data-transaction-volume-chart]")) return;
+
+  const chart = document.createElement("div");
+  chart.className = "interactive-chart transaction-volume-chart";
+  chart.dataset.transactionVolumeChart = "";
+  chart.dataset.lang = document.documentElement.lang === "ko" ? "ko" : "en";
+  sectionTitle.after(chart);
+}
+
 window.addEventListener("resize", () => {
   window.requestAnimationFrame(() => updateOverflowingChoices());
 });
@@ -1561,7 +1783,9 @@ function initPage() {
   syncSeoulGrowthSection();
   renderGrdpDonutCharts();
   syncAcademyCountChart();
+  syncRegulationTransactionChart();
   initComparisonCharts();
+  initTransactionVolumeCharts();
   initMapWidgets();
   initScrollDots();
 }
