@@ -1293,7 +1293,7 @@ function drawTransactionLineChart(container, lang, period) {
   }).join("");
 
   container.innerHTML = `
-    <svg viewBox="0 0 ${width} ${height}" role="img" focusable="false" aria-label="${transactionVolumeData.title[lang]} line chart">
+    <svg viewBox="0 0 ${width} ${height}" role="img" focusable="false" aria-label="${transactionVolumeData.title[lang]} line chart" style="width: ${width}px; height: 380px;">
       ${yAxisNodes}
       <line class="line-axis" x1="${padding.left}" y1="${height - padding.bottom}" x2="${width - padding.right}" y2="${height - padding.bottom}"></line>
       <line class="line-axis" x1="${padding.left}" y1="${padding.top}" x2="${padding.left}" y2="${height - padding.bottom}"></line>
@@ -1369,7 +1369,7 @@ function drawAreaPriceLineChart(container, lang, period) {
   }).join("");
 
   container.innerHTML = `
-    <svg viewBox="0 0 ${width} ${height}" role="img" focusable="false" aria-label="${areaPriceData.title[lang]} line chart">
+    <svg viewBox="0 0 ${width} ${height}" role="img" focusable="false" aria-label="${areaPriceData.title[lang]} line chart" style="width: ${width}px; height: 380px;">
       ${yAxisNodes}
       <line class="line-axis" x1="${padding.left}" y1="${height - padding.bottom}" x2="${width - padding.right}" y2="${height - padding.bottom}"></line>
       <line class="line-axis" x1="${padding.left}" y1="${padding.top}" x2="${padding.left}" y2="${height - padding.bottom}"></line>
@@ -1402,6 +1402,26 @@ function renderTransactionVolumeChart(chart, selectedPeriodId = "all") {
       <h4>${transactionVolumeData.lineTitle[lang]} (${period.range})</h4>
       <div class="line-chart transaction-line-chart" data-transaction-line-chart></div>
     </div>
+    <p class="chart-footnote">${transactionVolumeData.footnote[lang]}</p>
+  `;
+  drawTransactionLineChart(chart.querySelector("[data-transaction-line-chart]"), lang, period);
+  updateOverflowingChoices(chart);
+}
+
+function renderAreaPriceChart(chart, selectedPeriodId = "all") {
+  const lang = chart.dataset.lang || "en";
+  const period = getTransactionPeriod(selectedPeriodId);
+
+  chart.innerHTML = `
+    <div class="chart-head">
+      <div>
+        <p class="chart-label">${areaPriceData.label[lang]}</p>
+        <h3>${areaPriceData.title[lang]}</h3>
+      </div>
+    </div>
+    <div class="map-view-toggle transaction-period-selector" role="group" aria-label="${areaPriceData.title[lang]} period selector" data-area-price-period-selector>
+      ${transactionVolumeData.periods.map((item) => `<button class="map-view-button ${item.id === period.id ? "is-active" : ""}" type="button" data-period="${item.id}" aria-pressed="${item.id === period.id}">${item.name[lang]}</button>`).join("")}
+    </div>
     <div class="transaction-chart-block area-price-chart-block">
       <p class="chart-intro-text">${areaPriceData.description[lang]}</p>
       <div class="transaction-legend">
@@ -1409,11 +1429,9 @@ function renderTransactionVolumeChart(chart, selectedPeriodId = "all") {
       </div>
       <h4>${areaPriceData.lineTitle[lang]} (${period.range})</h4>
       <div class="line-chart transaction-line-chart area-price-line-chart" data-area-price-line-chart></div>
-      <p class="chart-footnote area-price-footnote">${areaPriceData.footnote[lang]}</p>
     </div>
-    <p class="chart-footnote">${transactionVolumeData.footnote[lang]}</p>
+    <p class="chart-footnote area-price-footnote">${areaPriceData.footnote[lang]}</p>
   `;
-  drawTransactionLineChart(chart.querySelector("[data-transaction-line-chart]"), lang, period);
   drawAreaPriceLineChart(chart.querySelector("[data-area-price-line-chart]"), lang, period);
   updateOverflowingChoices(chart);
 }
@@ -1429,16 +1447,37 @@ function initTransactionVolumeCharts() {
   });
 }
 
+function initAreaPriceCharts() {
+  document.querySelectorAll("[data-area-price-chart]").forEach((chart) => {
+    renderAreaPriceChart(chart, "all");
+    chart.addEventListener("click", (event) => {
+      const button = event.target.closest("[data-period]");
+      if (!button) return;
+      renderAreaPriceChart(chart, button.dataset.period);
+    });
+  });
+}
+
 function syncRegulationTransactionChart() {
   const sectionTitle = document.querySelector("#analysis-regulations");
   if (!sectionTitle) return;
-  if (sectionTitle.nextElementSibling && sectionTitle.nextElementSibling.matches("[data-transaction-volume-chart]")) return;
+  const lang = document.documentElement.lang === "ko" ? "ko" : "en";
+  let transactionChart = sectionTitle.nextElementSibling;
+  if (!transactionChart || !transactionChart.matches("[data-transaction-volume-chart]")) {
+    transactionChart = document.createElement("div");
+    transactionChart.className = "interactive-chart transaction-volume-chart";
+    transactionChart.dataset.transactionVolumeChart = "";
+    transactionChart.dataset.lang = lang;
+    sectionTitle.after(transactionChart);
+  }
 
-  const chart = document.createElement("div");
-  chart.className = "interactive-chart transaction-volume-chart";
-  chart.dataset.transactionVolumeChart = "";
-  chart.dataset.lang = document.documentElement.lang === "ko" ? "ko" : "en";
-  sectionTitle.after(chart);
+  if (!transactionChart.nextElementSibling || !transactionChart.nextElementSibling.matches("[data-area-price-chart]")) {
+    const areaPriceChart = document.createElement("div");
+    areaPriceChart.className = "interactive-chart area-price-chart";
+    areaPriceChart.dataset.areaPriceChart = "";
+    areaPriceChart.dataset.lang = lang;
+    transactionChart.after(areaPriceChart);
+  }
 }
 
 window.addEventListener("resize", () => {
@@ -1903,6 +1942,7 @@ function initPage() {
   syncRegulationTransactionChart();
   initComparisonCharts();
   initTransactionVolumeCharts();
+  initAreaPriceCharts();
   initMapWidgets();
   initScrollDots();
 }
