@@ -666,7 +666,9 @@ function renderComparisonChart(chart, selectedId) {
           ${bars.map((bar) => `
             <button class="chart-bar month-bar ${bar.id === selected.id ? "is-active" : ""}" type="button" data-region="${bar.id}" ${bar.id === "baseline" ? "disabled" : ""}>
               <span class="chart-bar-value">${formatPrice(bar.value, lang)}</span>
-              <span class="chart-bar-fill" style="--bar-color: ${bar.color}; height: ${(bar.value / barAxisMax * 100).toFixed(1)}%"></span>
+              <span class="chart-bar-plot">
+                <span class="chart-bar-fill" style="--bar-color: ${bar.color}; height: ${(bar.value / barAxisMax * 100).toFixed(1)}%"></span>
+              </span>
               <span class="chart-bar-label">${bar.name[lang]}</span>
             </button>
           `).join("")}

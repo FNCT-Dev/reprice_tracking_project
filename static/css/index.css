@@ -1233,9 +1233,9 @@ figcaption {
 [data-comparison-chart] .chart-head .chart-detail {
   position: relative;
   display: grid;
-  grid-template-columns: auto minmax(120px, 1fr) minmax(160px, auto);
+  grid-template-columns: max-content minmax(0, 1fr) max-content;
   align-items: center;
-  gap: 12px 18px;
+  gap: 10px 16px;
   flex: 0 1 430px;
   min-width: min(100%, 380px);
   margin-left: auto;
@@ -1251,10 +1251,13 @@ figcaption {
 }
 
 [data-comparison-chart] .chart-head .chart-detail strong {
-  font-size: clamp(24px, 2.7vw, 36px);
+  font-size: clamp(24px, 2.4vw, 34px);
 }
 
 [data-comparison-chart] .chart-head .chart-detail h4 {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
   white-space: nowrap;
 }
 
@@ -1378,6 +1381,24 @@ figcaption {
   transition: filter 180ms ease, transform 180ms ease;
 }
 
+.comparison-bars .chart-bar {
+  display: grid;
+  grid-template-rows: var(--bar-value-height, 28px) minmax(0, 1fr) var(--bar-label-height, 52px);
+}
+
+.comparison-bars .chart-bar-plot {
+  position: relative;
+  display: block;
+  min-height: 0;
+}
+
+.comparison-bars .chart-bar-fill {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
 .comparison-bars .chart-bar.is-active .chart-bar-fill {
   animation: bar-rise 520ms cubic-bezier(0.22, 1, 0.36, 1) both;
 }
@@ -1440,9 +1461,9 @@ figcaption {
 [data-interactive-chart] .chart-head .chart-detail {
   position: relative;
   display: grid;
-  grid-template-columns: auto minmax(120px, 1fr) minmax(160px, auto);
+  grid-template-columns: max-content minmax(0, 1fr) max-content;
   align-items: center;
-  gap: 12px 18px;
+  gap: 10px 16px;
   flex: 0 1 430px;
   min-width: min(100%, 380px);
   margin-left: auto;
@@ -1452,10 +1473,13 @@ figcaption {
 }
 
 [data-interactive-chart] .chart-head .chart-detail strong {
-  font-size: clamp(24px, 2.7vw, 36px);
+  font-size: clamp(24px, 2.4vw, 34px);
 }
 
 [data-interactive-chart] .chart-head .chart-detail h4 {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
   white-space: nowrap;
 }
 
