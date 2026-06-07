@@ -605,6 +605,25 @@ const comparisonChartData = {
   }
 };
 
+const grdpDonutData = {
+  label: { ko: "GRDP Concentration Visualization", en: "GRDP Concentration Visualization" },
+  title: { ko: "2022-2024년 권역별 지역내총생산 누적 비중", en: "Cumulative Regional GRDP Share by Area, 2022-2024" },
+  detailLabel: { ko: "수도권 누적 비중", en: "Capital Area Share" },
+  detailName: { ko: "서울·인천·경기", en: "Seoul, Incheon, Gyeonggi" },
+  note: {
+    ko: "* 국가데이터처 「지역소득」 시도별 지역내총생산(2020년 기준), 당해년가격 기준 2022-2024년 자료를 권역별로 합산함. 단위: 10억원.",
+    en: "* Based on Statistics Korea regional income data, GRDP by province/city at current prices, 2022-2024 cumulative values. Unit: billion KRW."
+  },
+  items: [
+    { id: "capitalArea", color: "#b65f5b", name: { ko: "수도권", en: "Capital Area" }, value: 3846515 },
+    { id: "southeast", color: "#8b6f5a", name: { ko: "동남권", en: "Southeast Region" }, value: 1036967 },
+    { id: "chungcheong", color: "#6f9b78", name: { ko: "충청권", en: "Chungcheong Region" }, value: 908004 },
+    { id: "honam", color: "#5f83ad", name: { ko: "호남권", en: "Honam Region" }, value: 646245 },
+    { id: "daeguGyeongbuk", color: "#c77b9a", name: { ko: "대구·경북권", en: "Daegu-Gyeongbuk Region" }, value: 600731 },
+    { id: "gangwonJeju", color: "#c48755", name: { ko: "강원·제주권", en: "Gangwon-Jeju Region" }, value: 261805 }
+  ]
+};
+
 function getBarAxisMax(value) {
   const padded = value * 1.14;
   if (padded <= 4) return 4;
@@ -615,6 +634,63 @@ function getBarAxisMax(value) {
   if (padded <= 20) return 20;
   if (padded <= 25) return 25;
   return Math.ceil(padded / 10) * 10;
+}
+
+function formatGrdpValue(value, lang) {
+  const trillion = value / 1000;
+  return lang === "ko" ? `${trillion.toLocaleString("ko-KR", { maximumFractionDigits: 0 })}조 원` : `KRW ${trillion.toLocaleString("en-US", { maximumFractionDigits: 0 })}T`;
+}
+
+function renderGrdpDonutCharts() {
+  document.querySelectorAll("[data-grdp-donut-chart]").forEach((chart) => {
+    const lang = chart.dataset.lang || "en";
+    const total = grdpDonutData.items.reduce((sum, item) => sum + item.value, 0);
+    const capital = grdpDonutData.items.find((item) => item.id === "capitalArea") || grdpDonutData.items[0];
+    const capitalShare = (capital.value / total) * 100;
+    let cursor = 0;
+    const gradientStops = grdpDonutData.items.map((item) => {
+      const start = cursor;
+      const share = (item.value / total) * 100;
+      cursor += share;
+      return `${item.color} ${start.toFixed(2)}% ${cursor.toFixed(2)}%`;
+    }).join(", ");
+
+    chart.innerHTML = `
+      <div class="chart-head">
+        <div>
+          <p class="chart-label">${grdpDonutData.label[lang]}</p>
+          <h3>${grdpDonutData.title[lang]}</h3>
+        </div>
+        <aside class="chart-detail" aria-live="polite">
+          <span>${grdpDonutData.detailLabel[lang]}</span>
+          <h4>${grdpDonutData.detailName[lang]}</h4>
+          <strong>${capitalShare.toFixed(1)}%</strong>
+          <p>${formatGrdpValue(capital.value, lang)} / ${formatGrdpValue(total, lang)}</p>
+        </aside>
+      </div>
+      <div class="grdp-donut-body">
+        <div class="grdp-donut-visual" style="--donut-gradient: ${gradientStops}">
+          <div class="grdp-donut-hole">
+            <span>${lang === "ko" ? "3년 누적" : "3-year total"}</span>
+            <strong>${formatGrdpValue(total, lang)}</strong>
+          </div>
+        </div>
+        <div class="grdp-donut-legend">
+          ${grdpDonutData.items.map((item) => {
+            const share = (item.value / total) * 100;
+            return `
+              <div class="grdp-donut-legend-item">
+                <span class="grdp-donut-swatch" style="background: ${item.color}"></span>
+                <span>${item.name[lang]}</span>
+                <strong>${share.toFixed(1)}%</strong>
+              </div>
+            `;
+          }).join("")}
+        </div>
+      </div>
+      <p class="chart-footnote">${grdpDonutData.note[lang]}</p>
+    `;
+  });
 }
 
 function syncComparisonIntro(chart, text) {
@@ -1028,6 +1104,7 @@ function initPage() {
   maybeStartCounters();
   initRevealSections();
   initInteractiveCharts();
+  renderGrdpDonutCharts();
   initComparisonCharts();
   initMapWidgets();
   initScrollDots();
