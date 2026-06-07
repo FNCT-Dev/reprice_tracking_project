@@ -723,12 +723,12 @@ a {
 }
 
 .seoul-map-widget .map-panel {
-  grid-template-columns: minmax(280px, 1fr) minmax(310px, 0.78fr);
+  grid-template-columns: minmax(280px, 1fr) minmax(330px, 0.86fr);
 }
 
 .seoul-map-widget .map-region-list {
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 7px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
 }
 
 .map-region-list .map-region {
@@ -763,9 +763,9 @@ a {
 }
 
 .seoul-map-widget .map-region-list .map-region {
-  min-height: 30px;
-  padding-inline: 7px;
-  font-size: 10px;
+  min-height: 34px;
+  padding: 8px 9px;
+  font-size: 11px;
 }
 
 .map-region-list .map-region:hover,
@@ -1138,6 +1138,9 @@ figcaption {
 
 .comparison-bars {
   min-height: 360px;
+  grid-template-columns: repeat(var(--bar-count, 2), minmax(110px, 180px));
+  justify-content: center;
+  gap: clamp(24px, 5vw, 44px);
 }
 
 .bar-chart-shell {
@@ -1180,10 +1183,13 @@ figcaption {
 }
 
 .chart-footnote {
-  margin: 24px clamp(18px, 3vw, 28px) 28px;
+  margin: 0;
+  padding: 16px clamp(20px, 4vw, 34px) 18px;
   color: var(--muted);
-  font-size: 12px;
-  line-height: 1.65;
+  font-size: 11px;
+  line-height: 1.45;
+  overflow-wrap: break-word;
+  word-break: keep-all;
 }
 
 [data-comparison-chart] .chart-head {
@@ -1198,11 +1204,11 @@ figcaption {
 [data-comparison-chart] .chart-head .chart-detail {
   position: relative;
   display: grid;
-  grid-template-columns: auto minmax(90px, 1fr) auto;
+  grid-template-columns: auto minmax(max-content, 1fr) auto;
   align-items: center;
   gap: 12px 16px;
-  flex: 0 1 380px;
-  min-width: min(100%, 320px);
+  flex: 0 1 430px;
+  min-width: min(100%, 360px);
   margin-left: auto;
   padding: 18px;
   border: 1px solid rgba(17, 19, 24, 0.12);
@@ -1217,6 +1223,10 @@ figcaption {
 
 [data-comparison-chart] .chart-head .chart-detail strong {
   font-size: clamp(24px, 2.7vw, 36px);
+}
+
+[data-comparison-chart] .chart-head .chart-detail h4 {
+  white-space: nowrap;
 }
 
 [data-comparison-chart] .chart-head .chart-detail p {
@@ -1371,6 +1381,12 @@ figcaption {
   word-break: keep-all;
 }
 
+[data-comparison-selector] .chart-choice {
+  min-height: 36px;
+  padding: 10px 12px;
+  font-size: 11px;
+}
+
 .chart-detail {
   display: flex;
   flex-direction: column;
@@ -1393,11 +1409,11 @@ figcaption {
 [data-interactive-chart] .chart-head .chart-detail {
   position: relative;
   display: grid;
-  grid-template-columns: auto minmax(90px, 1fr) auto;
+  grid-template-columns: auto minmax(max-content, 1fr) auto;
   align-items: center;
   gap: 12px 16px;
-  flex: 0 1 360px;
-  min-width: min(100%, 320px);
+  flex: 0 1 420px;
+  min-width: min(100%, 350px);
   margin-left: auto;
   padding: 18px;
   border: 1px solid rgba(17, 19, 24, 0.12);
@@ -1406,6 +1422,10 @@ figcaption {
 
 [data-interactive-chart] .chart-head .chart-detail strong {
   font-size: clamp(24px, 2.7vw, 36px);
+}
+
+[data-interactive-chart] .chart-head .chart-detail h4 {
+  white-space: nowrap;
 }
 
 [data-interactive-chart] .chart-head .chart-detail span,

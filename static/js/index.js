@@ -595,26 +595,49 @@ const comparisonChartData = {
   }
 };
 
+function getBarAxisMax(value) {
+  const padded = value * 1.14;
+  if (padded <= 4) return 4;
+  if (padded <= 6) return 6;
+  if (padded <= 8) return 8;
+  if (padded <= 12) return 12;
+  if (padded <= 16) return 16;
+  if (padded <= 20) return 20;
+  if (padded <= 25) return 25;
+  return Math.ceil(padded / 10) * 10;
+}
+
+function syncComparisonIntro(chart, text) {
+  let intro = chart.previousElementSibling;
+  if (!intro || !intro.matches(".chart-intro-text[data-comparison-intro]")) {
+    intro = document.createElement("p");
+    intro.className = "chart-intro-text";
+    intro.dataset.comparisonIntro = "";
+    chart.before(intro);
+  }
+  intro.textContent = text;
+}
+
 function renderComparisonChart(chart, selectedId) {
   const lang = chart.dataset.lang || "en";
   const config = comparisonChartData[chart.dataset.comparisonType] || comparisonChartData.capital;
   const selected = config.items.find((item) => item.id === selectedId) || config.items[0];
-  const maxValue = Math.max(config.baselineValue, ...config.items.map((item) => item.value));
+  const maxValue = Math.max(config.baselineValue, selected.value);
   const gap = selected.value - config.baselineValue;
   const gapText = lang === "ko" ? `지방 평균 대비 ${formatPrice(Math.abs(gap), lang)} ${gap >= 0 ? "높습니다" : "낮습니다"}.` : `${formatPrice(Math.abs(gap), lang)} ${gap >= 0 ? "above" : "below"} the local average.`;
   const bars = [
     { id: "baseline", name: config.baseline, value: config.baselineValue, color: "#9fb4c9" },
     { ...selected, color: "#1f5eff" }
   ];
-  const barAxisMax = Math.ceil(maxValue * 1.08);
+  const barAxisMax = getBarAxisMax(maxValue);
   const barAxisTicks = Array.from({ length: 5 }, (_, index) => {
     const value = barAxisMax - (barAxisMax / 4) * index;
     const position = 100 - (value / barAxisMax) * 100;
     return { value, position };
   });
 
+  syncComparisonIntro(chart, config.description[lang]);
   chart.innerHTML = `
-    <p class="chart-intro-text">${config.description[lang]}</p>
     <div class="chart-head">
       <div>
         <p class="chart-label">${config.label[lang]}</p>
