@@ -677,6 +677,26 @@ const transactionVolumeData = {
   ]
 };
 
+const areaPriceData = {
+  label: { ko: "Mid-Small Unit Price", en: "Mid-Small Unit Price" },
+  title: { ko: "중소형 평형 매매평균가 비교", en: "Average Sale Price for Mid-Small Unit Sizes" },
+  description: {
+    ko: "전용면적별 매매평균가 중 중소형 평형만 사용하여 서울, 수도권, 지방 평균 가격을 비교합니다.",
+    en: "Compares average sale prices for mid-small unit sizes across Seoul, the capital area, and local regions."
+  },
+  lineTitle: { ko: "중소형 평형 매매평균가", en: "Mid-Small Unit Average Sale Price" },
+  footnote: {
+    ko: "* 단위: 만원. 지방 평균은 부산, 대구, 광주, 대전, 울산, 세종, 충북, 충남, 경북, 경남, 전북, 전남, 제주, 강원 중소형 평균값을 단순 평균함.",
+    en: "* Unit: KRW 10,000. Local average is the simple average of mid-small unit prices across Busan, Daegu, Gwangju, Daejeon, Ulsan, Sejong, Chungbuk, Chungnam, Gyeongbuk, Gyeongnam, Jeonbuk, Jeonnam, Jeju, and Gangwon."
+  },
+  months: ["2016.01", "2016.02", "2016.03", "2016.04", "2016.05", "2016.06", "2016.07", "2016.08", "2016.09", "2016.10", "2016.11", "2016.12", "2017.01", "2017.02", "2017.03", "2017.04", "2017.05", "2017.06", "2017.07", "2017.08", "2017.09", "2017.10", "2017.11", "2017.12", "2018.01", "2018.02", "2018.03", "2018.04", "2018.05", "2018.06", "2018.07", "2018.08", "2018.09", "2018.10", "2018.11", "2018.12", "2019.01", "2019.02", "2019.03", "2019.04", "2019.05", "2019.06", "2019.07", "2019.08", "2019.09", "2019.10", "2019.11", "2019.12", "2020.01", "2020.02", "2020.03", "2020.04", "2020.05", "2020.06", "2020.07", "2020.08", "2020.09", "2020.10", "2020.11", "2020.12", "2021.01", "2021.02", "2021.03", "2021.04", "2021.05", "2021.06", "2021.07", "2021.08", "2021.09", "2021.10", "2021.11", "2021.12", "2022.01", "2022.02", "2022.03", "2022.04", "2022.05", "2022.06", "2022.07", "2022.08", "2022.09", "2022.10", "2022.11", "2022.12", "2023.01", "2023.02", "2023.03", "2023.04", "2023.05", "2023.06", "2023.07", "2023.08", "2023.09", "2023.10", "2023.11", "2023.12", "2024.01", "2024.02", "2024.03", "2024.04", "2024.05", "2024.06", "2024.07", "2024.08", "2024.09", "2024.10", "2024.11", "2024.12", "2025.01", "2025.02", "2025.03", "2025.04", "2025.05", "2025.06", "2025.07", "2025.08", "2025.09", "2025.10", "2025.11", "2025.12", "2026.01", "2026.02", "2026.03", "2026.04", "2026.05"],
+  series: [
+    { id: "seoul", color: "#b65f5b", name: { ko: "서울 중소형 평균", en: "Seoul Mid-Small Average" }, values: [49283.0, 49354.9, 49417.0, 49560.5, 49865.0, 50237.1, 50750.8, 51326.5, 51772.0, 52628.3, 53325.5, 53499.5, 53575.1, 53665.2, 53810.8, 53975.5, 54464.0, 55332.1, 56013.3, 57171.4, 57501.7, 58118.0, 58953.0, 59884.8, 61193.5, 62408.6, 64397.4, 65630.0, 66229.9, 66672.8, 67284.1, 68461.2, 71895.6, 73677.2, 74513.6, 74771.3, 69607.4, 69581.6, 69445.3, 69421.8, 69501.4, 69651.1, 70506.9, 71166.3, 71824.0, 72276.9, 73048.6, 74292.0, 76668.8, 77680.1, 79157.7, 79567.4, 79654.5, 80663.8, 83136.6, 85489.5, 87835.2, 88986.4, 90728.7, 92151.2, 93921.1, 95947.2, 97629.4, 98658.5, 99585.5, 101262.4, 102464.1, 104201.2, 106002.7, 109963.7, 114308.7, 116224.8, 118193.8, 120180.5, 121798.2, 122895.0, 123545.7, 123652.6, 123678.8, 123273.2, 122221.6, 120844.1, 123760.5, 121663.5, 118953.8, 117426.1, 115784.1, 114714.5, 113863.2, 113842.4, 113860.0, 114316.9, 115058.5, 115550.7, 115772.1, 115622.9, 115419.1, 115300.6, 115229.2, 115243.6, 115423.6, 115874.3, 117134.5, 118882.4, 120339.7, 121258.1, 122477.1, 123087.3, 123292.4, 123704.3, 125518.7, 128525.1, 129859.1, 133715.8, 136151.9, 137730.8, 139027.0, 141637.3, 144416.2, 146278.8, 147650.0, 149322.7, 151021.7, 151860.7, 152698.7] },
+    { id: "capital", color: "#1f5eff", name: { ko: "수도권 중소형 평균", en: "Capital Area Mid-Small Average" }, values: [35838.9, 35889.6, 35927.7, 35998.4, 36144.8, 36319.0, 36556.1, 36825.0, 37045.5, 37462.4, 37830.1, 37940.4, 37990.3, 38034.6, 38116.1, 38190.6, 38393.5, 38758.1, 39068.5, 39578.2, 39769.7, 40024.7, 40371.4, 40732.6, 41283.3, 41795.1, 42589.7, 43093.2, 43350.2, 43535.6, 43782.0, 44248.8, 45778.9, 46633.8, 47002.3, 47122.8, 44135.7, 44127.2, 44075.5, 44022.0, 44001.7, 44036.7, 44291.1, 44512.4, 44734.8, 45103.6, 45490.7, 46260.1, 46854.4, 47530.8, 48655.4, 49027.2, 49201.5, 49886.6, 51230.9, 52382.9, 53565.7, 54235.4, 55341.1, 56382.4, 57641.6, 59319.3, 60865.4, 61999.7, 62906.4, 64340.5, 65491.0, 67101.0, 68678.2, 71031.4, 73641.3, 74803.7, 75989.7, 77184.2, 78140.0, 78772.6, 79125.0, 79177.7, 79170.0, 78728.8, 77830.0, 76614.9, 77090.6, 75408.9, 73335.8, 72147.7, 70974.0, 70025.6, 69488.7, 69409.3, 69391.5, 69715.6, 70144.3, 70479.2, 70692.3, 70658.2, 70587.5, 70523.1, 70465.6, 70436.0, 70440.8, 70611.3, 71014.9, 71698.2, 72296.9, 72688.2, 73087.8, 73223.8, 73235.6, 73346.5, 73856.1, 74756.5, 75148.4, 76315.2, 77062.4, 77605.1, 78025.9, 78922.1, 79925.5, 80638.3, 81154.8, 81894.5, 82690.4, 83127.4, 83535.3] },
+    { id: "local", color: "#6f9b78", name: { ko: "지방 중소형 평균", en: "Local Mid-Small Average" }, values: [21101.5, 21131.9, 21163.8, 21181.9, 21201.1, 21196.8, 21213.4, 21236.6, 21271.0, 21355.4, 21446.5, 21494.1, 21539.7, 21557.5, 21583.7, 21599.1, 21613.7, 21652.1, 21695.6, 21739.2, 21750.9, 21758.1, 21779.8, 21789.9, 21820.6, 21821.3, 21844.7, 21814.7, 21817.6, 21815.7, 21790.5, 21773.1, 21786.5, 21809.9, 21775.6, 21782.8, 21586.7, 21550.1, 21511.7, 21456.3, 21424.3, 21350.2, 21292.0, 21249.5, 21252.1, 21279.3, 21309.1, 21428.7, 21577.1, 21808.7, 22106.2, 22184.0, 22226.7, 22542.3, 22902.2, 23272.4, 23729.5, 24059.5, 24605.0, 25253.9, 25789.7, 26293.1, 26655.8, 26905.7, 27145.3, 27461.8, 27734.4, 28122.0, 28459.9, 30002.3, 31524.1, 32203.5, 32890.7, 33576.2, 34119.8, 34478.4, 34665.4, 34693.4, 34688.1, 34469.1, 34060.6, 33638.7, 35538.7, 34927.7, 34183.2, 33745.4, 33404.9, 33108.0, 32944.8, 32913.1, 32890.5, 32947.7, 33020.8, 33115.9, 33174.4, 33199.1, 33249.4, 33235.8, 33225.6, 33174.5, 33145.5, 33120.1, 33108.6, 33219.7, 33280.2, 33333.5, 33353.5, 33294.5, 33273.2, 33261.7, 33253.7, 33272.1, 33329.0, 33422.0, 33546.4, 33598.3, 33646.9, 33673.7, 33752.6, 33900.4, 34019.8, 34137.1, 34289.7, 34417.4, 34484.8] }
+  ]
+};
+
 const grdpDonutData = {
   label: { ko: "GRDP Concentration Visualization", en: "GRDP Concentration Visualization" },
   title: { ko: "2024년 권역별 지역내총생산 비중", en: "Regional GRDP Share by Area, 2024" },
@@ -1159,6 +1179,16 @@ function formatAxisVolume(value, lang) {
   return Math.round(value).toLocaleString(locale);
 }
 
+function formatAreaPrice(value, lang) {
+  const locale = lang === "ko" ? "ko-KR" : "en-US";
+  return lang === "ko" ? `${Math.round(value).toLocaleString(locale)}만원` : `KRW ${(value / 100).toLocaleString(locale, { maximumFractionDigits: 1 })}M`;
+}
+
+function formatAxisAreaPrice(value, lang) {
+  const locale = lang === "ko" ? "ko-KR" : "en-US";
+  return lang === "ko" ? `${Math.round(value).toLocaleString(locale)}만` : `${Math.round(value / 100).toLocaleString(locale)}M`;
+}
+
 function getTransactionPeriod(id) {
   return transactionVolumeData.periods.find((period) => period.id === id) || transactionVolumeData.periods[0];
 }
@@ -1173,6 +1203,12 @@ function getDaysInMonth(year, month) {
 
 function getTransactionPeriodIndexes(period) {
   return transactionVolumeData.months
+    .map((month, index) => ({ month, index }))
+    .filter((item) => item.month >= period.start && item.month <= period.end);
+}
+
+function getAreaPricePeriodIndexes(period) {
+  return areaPriceData.months
     .map((month, index) => ({ month, index }))
     .filter((item) => item.month >= period.start && item.month <= period.end);
 }
@@ -1268,6 +1304,82 @@ function drawTransactionLineChart(container, lang, period) {
   `;
 }
 
+function drawAreaPriceLineChart(container, lang, period) {
+  const visibleIndexes = getAreaPricePeriodIndexes(period);
+  const visibleMonths = visibleIndexes.map((item) => item.month);
+  const visibleSeries = areaPriceData.series.map((series) => ({
+    ...series,
+    values: visibleIndexes.map((item) => series.values[item.index])
+  }));
+  const width = Math.max(860, visibleMonths.length * 72);
+  const height = 360;
+  const padding = { top: 34, right: 42, bottom: 54, left: 82 };
+  const plotWidth = width - padding.left - padding.right;
+  const plotHeight = height - padding.top - padding.bottom;
+  const allValues = visibleSeries.flatMap((series) => series.values);
+  const max = Math.ceil((Math.max(...allValues) * 1.08) / 10000) * 10000;
+  const min = Math.max(0, Math.floor((Math.min(...allValues) * 0.92) / 10000) * 10000);
+  const range = Math.max(max - min, 1);
+  const yTicks = Array.from({ length: 5 }, (_, index) => {
+    const value = max - (range / 4) * index;
+    const y = padding.top + (index / 4) * plotHeight;
+    return { value, y };
+  });
+  const xLabels = visibleMonths.map((month, index) => {
+    if (index !== 0 && index !== visibleMonths.length - 1 && !month.endsWith(".01")) return "";
+    const x = padding.left + (index / Math.max(visibleMonths.length - 1, 1)) * plotWidth;
+    return `<text class="transaction-x-label" x="${x.toFixed(1)}" y="${height - 22}">${month}</text>`;
+  }).join("");
+  const yAxisNodes = yTicks.map((tick) => `
+    <g class="line-y-tick">
+      <line x1="${padding.left}" y1="${tick.y.toFixed(1)}" x2="${width - padding.right}" y2="${tick.y.toFixed(1)}"></line>
+      <text x="${padding.left - 10}" y="${(tick.y + 4).toFixed(1)}">${formatAxisAreaPrice(tick.value, lang)}</text>
+    </g>
+  `).join("");
+  const paths = visibleSeries.map((series) => {
+    const points = series.values.map((value, index) => {
+      const x = padding.left + (index / Math.max(series.values.length - 1, 1)) * plotWidth;
+      const y = padding.top + (1 - (value - min) / range) * plotHeight;
+      return { x, y, value, month: visibleMonths[index] };
+    });
+    const path = points.map((point, index) => `${index === 0 ? "M" : "L"} ${point.x.toFixed(1)} ${point.y.toFixed(1)}`).join(" ");
+    const pointNodes = points.map((point) => `
+      <circle class="transaction-line-point" cx="${point.x.toFixed(1)}" cy="${point.y.toFixed(1)}" r="3">
+        <title>${point.month} ${series.name[lang]}: ${formatAreaPrice(point.value, lang)}</title>
+      </circle>
+    `).join("");
+    return `
+      <g style="--line-color: ${series.color}">
+        <path class="line-path transaction-line-path" pathLength="1" d="${path}"></path>
+        ${pointNodes}
+      </g>
+    `;
+  }).join("");
+  const policyNodes = getTransactionPolicies(period).map((policy, index) => {
+    const x = getTransactionPolicyX(policy.date, visibleMonths, padding.left, plotWidth);
+    if (x === null) return "";
+    const labelY = padding.top + 15 + (index % 3) * 16;
+    return `
+      <g class="transaction-policy-marker">
+        <line x1="${x.toFixed(1)}" y1="${padding.top}" x2="${x.toFixed(1)}" y2="${height - padding.bottom}"></line>
+        <text x="${(x + 5).toFixed(1)}" y="${labelY}">${policy.date.slice(5).replace("-", ".")}</text>
+        <title>${policy.date} ${policy.name[lang]} (${policy.direction[lang]})</title>
+      </g>
+    `;
+  }).join("");
+
+  container.innerHTML = `
+    <svg viewBox="0 0 ${width} ${height}" role="img" focusable="false" aria-label="${areaPriceData.title[lang]} line chart">
+      ${yAxisNodes}
+      <line class="line-axis" x1="${padding.left}" y1="${height - padding.bottom}" x2="${width - padding.right}" y2="${height - padding.bottom}"></line>
+      <line class="line-axis" x1="${padding.left}" y1="${padding.top}" x2="${padding.left}" y2="${height - padding.bottom}"></line>
+      ${policyNodes}
+      ${paths}
+      ${xLabels}
+    </svg>
+  `;
+}
+
 function renderTransactionVolumeChart(chart, selectedPeriodId = "all") {
   const lang = chart.dataset.lang || "en";
   const period = getTransactionPeriod(selectedPeriodId);
@@ -1290,9 +1402,19 @@ function renderTransactionVolumeChart(chart, selectedPeriodId = "all") {
       <h4>${transactionVolumeData.lineTitle[lang]} (${period.range})</h4>
       <div class="line-chart transaction-line-chart" data-transaction-line-chart></div>
     </div>
+    <div class="transaction-chart-block area-price-chart-block">
+      <p class="chart-intro-text">${areaPriceData.description[lang]}</p>
+      <div class="transaction-legend">
+        ${areaPriceData.series.map((series) => `<span><i style="--legend-color: ${series.color}"></i>${series.name[lang]}</span>`).join("")}
+      </div>
+      <h4>${areaPriceData.lineTitle[lang]} (${period.range})</h4>
+      <div class="line-chart transaction-line-chart area-price-line-chart" data-area-price-line-chart></div>
+      <p class="chart-footnote area-price-footnote">${areaPriceData.footnote[lang]}</p>
+    </div>
     <p class="chart-footnote">${transactionVolumeData.footnote[lang]}</p>
   `;
   drawTransactionLineChart(chart.querySelector("[data-transaction-line-chart]"), lang, period);
+  drawAreaPriceLineChart(chart.querySelector("[data-area-price-line-chart]"), lang, period);
   updateOverflowingChoices(chart);
 }
 
