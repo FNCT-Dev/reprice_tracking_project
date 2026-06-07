@@ -1256,7 +1256,6 @@ figcaption {
 .grdp-donut-control-panel {
   display: grid;
   align-self: center;
-  gap: 14px;
 }
 
 .grdp-donut-controls {
@@ -1271,7 +1270,7 @@ figcaption {
   grid-template-columns: 14px minmax(0, 1fr) max-content;
   align-items: center;
   gap: 8px;
-  min-height: 38px;
+  min-height: 46px;
   padding: 7px 12px;
   border: 0;
   border-bottom: 1px solid var(--line);
@@ -1279,7 +1278,7 @@ figcaption {
   color: #26313c;
   font: inherit;
   font-size: 12px;
-  font-weight: 800;
+  font-weight: 600;
   text-align: left;
   cursor: pointer;
 }
@@ -1288,14 +1287,35 @@ figcaption {
   border-bottom: 0;
 }
 
-.grdp-donut-toggle span:not(.grdp-donut-swatch),
 .grdp-donut-toggle strong {
   white-space: nowrap;
+}
+
+.grdp-donut-toggle-copy {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+}
+
+.grdp-donut-toggle-name {
+  color: #26313c;
+  font-weight: 900;
+  line-height: 1.2;
+  white-space: nowrap;
+}
+
+.grdp-donut-toggle-areas {
+  color: #68727c;
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1.25;
+  word-break: keep-all;
 }
 
 .grdp-donut-toggle strong {
   justify-self: end;
   color: var(--ink);
+  font-weight: 900;
 }
 
 .grdp-donut-toggle:hover,
@@ -1306,14 +1326,6 @@ figcaption {
 
 .grdp-donut-toggle.is-active {
   box-shadow: inset 4px 0 0 var(--green);
-}
-
-.grdp-donut-region-note {
-  margin: 0;
-  color: #5f6974;
-  font-size: 11px;
-  line-height: 1.55;
-  word-break: keep-all;
 }
 
 .grdp-donut-visual {

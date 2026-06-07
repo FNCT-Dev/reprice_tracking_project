@@ -616,10 +616,6 @@ const grdpDonutData = {
   selectedLabel: { ko: "선택 권역 총생산", en: "Selected Area GRDP" },
   totalName: { ko: "대한민국", en: "South Korea" },
   totalValue: 2560811,
-  regionDescription: {
-    ko: "수도권: 서울, 경기, 인천 / 동남권: 부산, 울산, 경남 / 충청권: 충북, 충남, 세종, 대전 / 호남권: 전북, 전남, 광주 / 대구, 경북권: 대구, 경북 / 강원, 제주권: 강원, 제주",
-    en: "Capital area: Seoul, Gyeonggi, Incheon / Southeast: Busan, Ulsan, Gyeongnam / Chungcheong: Chungbuk, Chungnam, Sejong, Daejeon / Honam: Jeonbuk, Jeonnam, Gwangju / Daegu-Gyeongbuk: Daegu, Gyeongbuk / Gangwon-Jeju: Gangwon, Jeju"
-  },
   note: {
     ko: "* 국가데이터처 「지역소득」 시도별 지역내총생산(2020년 기준), 당해년가격 기준 2024년 자료를 권역별로 합산함. 단위: 10억원.",
     en: "* Based on Statistics Korea regional income data, GRDP by province/city at current prices, 2024 values. Unit: billion KRW."
@@ -629,12 +625,12 @@ const grdpDonutData = {
     en: "** Because preliminary data for the previous year is released at the end of each December, then finalized and added to the database the following December after supplementing base statistics such as national and local taxes, 2025 GRDP data had not been published as of the June 2026 data collection point."
   },
   items: [
-    { id: "capitalArea", color: "#b65f5b", name: { ko: "수도권", en: "Capital Area" }, value: 1352044 },
-    { id: "southeast", color: "#8b6f5a", name: { ko: "동남권", en: "Southeast Region" }, value: 366264 },
-    { id: "chungcheong", color: "#6f9b78", name: { ko: "충청권", en: "Chungcheong Region" }, value: 316135 },
-    { id: "honam", color: "#5f83ad", name: { ko: "호남권", en: "Honam Region" }, value: 224600 },
-    { id: "daeguGyeongbuk", color: "#c77b9a", name: { ko: "대구·경북권", en: "Daegu-Gyeongbuk Region" }, value: 209222 },
-    { id: "gangwonJeju", color: "#c48755", name: { ko: "강원·제주권", en: "Gangwon-Jeju Region" }, value: 91544 }
+    { id: "capitalArea", color: "#b65f5b", name: { ko: "수도권", en: "Capital Area" }, areas: { ko: "서울, 경기, 인천", en: "Seoul, Gyeonggi, Incheon" }, value: 1352044 },
+    { id: "southeast", color: "#8b6f5a", name: { ko: "동남권", en: "Southeast Region" }, areas: { ko: "부산, 울산, 경남", en: "Busan, Ulsan, Gyeongnam" }, value: 366264 },
+    { id: "chungcheong", color: "#6f9b78", name: { ko: "충청권", en: "Chungcheong Region" }, areas: { ko: "충북, 충남, 세종, 대전", en: "Chungbuk, Chungnam, Sejong, Daejeon" }, value: 316135 },
+    { id: "honam", color: "#5f83ad", name: { ko: "호남권", en: "Honam Region" }, areas: { ko: "전북, 전남, 광주", en: "Jeonbuk, Jeonnam, Gwangju" }, value: 224600 },
+    { id: "daeguGyeongbuk", color: "#c77b9a", name: { ko: "대구·경북권", en: "Daegu-Gyeongbuk Region" }, areas: { ko: "대구, 경북", en: "Daegu, Gyeongbuk" }, value: 209222 },
+    { id: "gangwonJeju", color: "#c48755", name: { ko: "강원·제주권", en: "Gangwon-Jeju Region" }, areas: { ko: "강원, 제주", en: "Gangwon, Jeju" }, value: 91544 }
   ],
   analysis: {
     ko: [
@@ -760,7 +756,9 @@ function renderGrdpDonutCharts() {
           <div class="grdp-donut-controls" aria-label="${lang === "ko" ? "권역 선택" : "Select area"}">
             <button class="grdp-donut-toggle is-active" type="button" data-grdp-region="total" aria-pressed="true">
               <span class="grdp-donut-swatch is-total"></span>
-              <span>${grdpDonutData.totalName[lang]}</span>
+              <span class="grdp-donut-toggle-copy">
+                <span class="grdp-donut-toggle-name">${grdpDonutData.totalName[lang]}</span>
+              </span>
               <strong>100.0%</strong>
             </button>
             ${grdpDonutData.items.map((item) => {
@@ -768,13 +766,15 @@ function renderGrdpDonutCharts() {
               return `
                 <button class="grdp-donut-toggle" type="button" data-grdp-region="${item.id}" aria-pressed="false">
                   <span class="grdp-donut-swatch" style="background: ${item.color}"></span>
-                  <span>${item.name[lang]}</span>
+                  <span class="grdp-donut-toggle-copy">
+                    <span class="grdp-donut-toggle-name">${item.name[lang]}</span>
+                    <span class="grdp-donut-toggle-areas">${item.areas[lang]}</span>
+                  </span>
                   <strong>${share.toFixed(1)}%</strong>
                 </button>
               `;
             }).join("")}
           </div>
-          <p class="grdp-donut-region-note">${grdpDonutData.regionDescription[lang]}</p>
         </div>
         <div class="grdp-donut-visual">
           <svg class="grdp-donut-svg" viewBox="0 0 100 100" role="img" aria-label="${grdpDonutData.title[lang]}">
