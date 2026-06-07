@@ -1230,6 +1230,13 @@ function getTransactionPolicies(period) {
   });
 }
 
+function getPolicyMarkerColor(policy) {
+  const direction = policy.direction.ko;
+  if (direction.includes("강화")) return "#b65f5b";
+  if (direction.includes("완화") || direction.includes("지원")) return "#2f5f95";
+  return "#7b8794";
+}
+
 function drawTransactionLineChart(container, lang, period) {
   const visibleIndexes = getTransactionPeriodIndexes(period);
   const visibleMonths = visibleIndexes.map((item) => item.month);
@@ -1267,10 +1274,11 @@ function drawTransactionLineChart(container, lang, period) {
       return { x, y, value, month: visibleMonths[index] };
     });
     const path = points.map((point, index) => `${index === 0 ? "M" : "L"} ${point.x.toFixed(1)} ${point.y.toFixed(1)}`).join(" ");
-    const pointNodes = points.map((point) => `
-      <circle class="transaction-line-point" cx="${point.x.toFixed(1)}" cy="${point.y.toFixed(1)}" r="3">
-        <title>${point.month} ${series.name[lang]}: ${formatVolume(point.value, lang)}</title>
-      </circle>
+    const pointNodes = points.map((point, index) => `
+      <g class="line-point transaction-line-point" style="--point-delay: ${(260 + index * 18).toFixed(0)}ms">
+        <circle cx="${point.x.toFixed(1)}" cy="${point.y.toFixed(1)}" r="3"></circle>
+        <text x="${point.x.toFixed(1)}" y="${(point.y - 10).toFixed(1)}">${formatVolume(point.value, lang)}</text>
+      </g>
     `).join("");
     return `
       <g style="--line-color: ${series.color}">
@@ -1284,7 +1292,7 @@ function drawTransactionLineChart(container, lang, period) {
     if (x === null) return "";
     const labelY = padding.top + 15 + (index % 3) * 16;
     return `
-      <g class="transaction-policy-marker">
+      <g class="transaction-policy-marker" style="--policy-color: ${getPolicyMarkerColor(policy)}">
         <line x1="${x.toFixed(1)}" y1="${padding.top}" x2="${x.toFixed(1)}" y2="${height - padding.bottom}"></line>
         <text x="${(x + 5).toFixed(1)}" y="${labelY}">${policy.date.slice(5).replace("-", ".")}</text>
         <title>${policy.date} ${policy.name[lang]} (${policy.direction[lang]})</title>
@@ -1316,7 +1324,7 @@ function drawAreaPriceLineChart(container, lang, period) {
   const padding = { top: 34, right: 42, bottom: 54, left: 82 };
   const plotWidth = width - padding.left - padding.right;
   const plotHeight = height - padding.top - padding.bottom;
-  const allValues = visibleSeries.flatMap((series) => series.values);
+  const allValues = areaPriceData.series.flatMap((series) => series.values);
   const max = Math.ceil((Math.max(...allValues) * 1.08) / 10000) * 10000;
   const min = Math.max(0, Math.floor((Math.min(...allValues) * 0.92) / 10000) * 10000);
   const range = Math.max(max - min, 1);
@@ -1343,10 +1351,11 @@ function drawAreaPriceLineChart(container, lang, period) {
       return { x, y, value, month: visibleMonths[index] };
     });
     const path = points.map((point, index) => `${index === 0 ? "M" : "L"} ${point.x.toFixed(1)} ${point.y.toFixed(1)}`).join(" ");
-    const pointNodes = points.map((point) => `
-      <circle class="transaction-line-point" cx="${point.x.toFixed(1)}" cy="${point.y.toFixed(1)}" r="3">
-        <title>${point.month} ${series.name[lang]}: ${formatAreaPrice(point.value, lang)}</title>
-      </circle>
+    const pointNodes = points.map((point, index) => `
+      <g class="line-point transaction-line-point" style="--point-delay: ${(260 + index * 18).toFixed(0)}ms">
+        <circle cx="${point.x.toFixed(1)}" cy="${point.y.toFixed(1)}" r="3"></circle>
+        <text x="${point.x.toFixed(1)}" y="${(point.y - 10).toFixed(1)}">${formatAreaPrice(point.value, lang)}</text>
+      </g>
     `).join("");
     return `
       <g style="--line-color: ${series.color}">
@@ -1360,7 +1369,7 @@ function drawAreaPriceLineChart(container, lang, period) {
     if (x === null) return "";
     const labelY = padding.top + 15 + (index % 3) * 16;
     return `
-      <g class="transaction-policy-marker">
+      <g class="transaction-policy-marker" style="--policy-color: ${getPolicyMarkerColor(policy)}">
         <line x1="${x.toFixed(1)}" y1="${padding.top}" x2="${x.toFixed(1)}" y2="${height - padding.bottom}"></line>
         <text x="${(x + 5).toFixed(1)}" y="${labelY}">${policy.date.slice(5).replace("-", ".")}</text>
         <title>${policy.date} ${policy.name[lang]} (${policy.direction[lang]})</title>

@@ -1503,10 +1503,11 @@ figcaption {
 }
 
 .transaction-line-point {
-  fill: #ffffff;
-  stroke: var(--line-color, var(--blue));
+  opacity: 0.82;
+}
+
+.transaction-line-point circle {
   stroke-width: 2;
-  opacity: 0.72;
 }
 
 .transaction-x-label {
@@ -1522,14 +1523,14 @@ figcaption {
 }
 
 .transaction-policy-marker line {
-  stroke: rgba(182, 95, 91, 0.62);
+  stroke: var(--policy-color, rgba(182, 95, 91, 0.62));
   stroke-width: 2;
   stroke-dasharray: 7 7;
   pointer-events: stroke;
 }
 
 .transaction-policy-marker text {
-  fill: #9b4f4c;
+  fill: var(--policy-color, #9b4f4c);
   font-size: 10px;
   font-weight: 900;
   pointer-events: none;
