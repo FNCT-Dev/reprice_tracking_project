@@ -1290,7 +1290,8 @@ function syncSeoulGrowthSection() {
   if (!section) return;
 
   const lineChart = section.querySelector("[data-interactive-chart]");
-  const sourceHeatmap = section.querySelector(".interactive-chart.heatmap-chart:not([data-seoul-growth-clone])");
+  const sourceHeatmap = Array.from(section.querySelectorAll(".interactive-chart.heatmap-chart:not([data-seoul-growth-clone])"))
+    .find((chart) => chart.querySelector(".seoul-map-widget"));
   if (!lineChart || !sourceHeatmap) return;
 
   const lang = lineChart.dataset.lang || "en";
