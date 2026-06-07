@@ -1220,18 +1220,69 @@ figcaption {
 
 .grdp-donut-body {
   display: grid;
-  grid-template-columns: minmax(260px, 0.8fr) minmax(260px, 1fr);
+  grid-template-columns: minmax(220px, 0.72fr) minmax(300px, 1fr);
   align-items: center;
-  gap: clamp(24px, 5vw, 56px);
+  gap: clamp(24px, 5vw, 64px);
   min-height: 420px;
   padding: clamp(28px, 5vw, 52px);
+}
+
+.grdp-donut-controls {
+  display: grid;
+  gap: 0;
+  align-self: stretch;
+  align-content: center;
+  border: 1px solid var(--line);
+  background: #ffffff;
+}
+
+.grdp-donut-toggle {
+  display: grid;
+  grid-template-columns: 14px minmax(0, 1fr) max-content;
+  align-items: center;
+  gap: 10px;
+  min-height: 48px;
+  padding: 10px 14px;
+  border: 0;
+  border-bottom: 1px solid var(--line);
+  background: transparent;
+  color: #26313c;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 800;
+  text-align: left;
+  cursor: pointer;
+}
+
+.grdp-donut-toggle:last-child {
+  border-bottom: 0;
+}
+
+.grdp-donut-toggle span:not(.grdp-donut-swatch),
+.grdp-donut-toggle strong {
+  white-space: nowrap;
+}
+
+.grdp-donut-toggle strong {
+  justify-self: end;
+  color: var(--ink);
+}
+
+.grdp-donut-toggle:hover,
+.grdp-donut-toggle:focus-visible,
+.grdp-donut-toggle.is-active {
+  background: #f5f0e9;
+}
+
+.grdp-donut-toggle.is-active {
+  box-shadow: inset 4px 0 0 var(--green);
 }
 
 .grdp-donut-visual {
   position: relative;
   display: grid;
   place-items: center;
-  width: min(100%, 360px);
+  width: min(100%, 440px);
   aspect-ratio: 1;
   margin: 0 auto;
   border-radius: 50%;
@@ -1242,25 +1293,53 @@ figcaption {
 .grdp-donut-hole {
   display: grid;
   place-items: center;
-  width: 56%;
+  width: 58%;
   aspect-ratio: 1;
-  padding: 18px;
+  padding: 14px;
   border-radius: 50%;
   background: #ffffff;
   text-align: center;
   box-shadow: 0 0 0 1px rgba(17, 19, 24, 0.08);
+  z-index: 1;
 }
 
 .grdp-donut-hole span {
   color: var(--green);
   font-size: 11px;
   font-weight: 800;
+  white-space: nowrap;
 }
 
 .grdp-donut-hole strong {
   color: var(--ink);
-  font-size: clamp(22px, 2.6vw, 34px);
+  font-size: clamp(18px, 2.2vw, 30px);
   line-height: 1.1;
+  white-space: nowrap;
+}
+
+.grdp-donut-share-badge {
+  position: absolute;
+  left: var(--badge-x, 50%);
+  top: var(--badge-y, 50%);
+  z-index: 2;
+  display: none;
+  min-width: 54px;
+  padding: 7px 10px;
+  border: 2px solid #ffffff;
+  border-radius: 999px;
+  background: var(--badge-color, var(--green));
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: 900;
+  line-height: 1;
+  text-align: center;
+  white-space: nowrap;
+  box-shadow: 0 10px 20px rgba(17, 19, 24, 0.18);
+  transform: translate(-50%, -50%);
+}
+
+.grdp-donut-share-badge.is-visible {
+  display: block;
 }
 
 .grdp-donut-legend {
