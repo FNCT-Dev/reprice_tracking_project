@@ -786,7 +786,7 @@ a {
 
 .heatmap-chart[data-seoul-growth-clone] .seoul-map img,
 .heatmap-chart[data-seoul-growth-clone] .seoul-map .interactive-map-svg {
-  filter: drop-shadow(0 16px 24px rgba(17, 19, 24, 0.12)) grayscale(1) saturate(0.45);
+  filter: drop-shadow(0 16px 24px rgba(17, 19, 24, 0.12));
 }
 
 .heatmap-chart[data-seoul-growth-clone] .seoul-plan-controls {
@@ -906,13 +906,14 @@ a {
   position: absolute;
   display: grid;
   place-items: center;
-  width: 34px;
-  height: 34px;
+  width: 26px;
+  height: 26px;
   border: 2px solid rgba(255, 255, 255, 0.92);
   border-radius: 50%;
   background: var(--dot-color);
   color: #ffffff;
   box-shadow: 0 7px 16px rgba(17, 19, 24, 0.22);
+  pointer-events: auto;
   transform: translate(-50%, -50%);
 }
 
@@ -928,24 +929,33 @@ a {
   font-size: 10px;
   font-weight: 900;
   line-height: 1.15;
+  opacity: 0;
+  pointer-events: none;
   text-align: center;
   box-shadow: 0 4px 10px rgba(17, 19, 24, 0.14);
-  transform: translateX(-50%);
+  transform: translate(-50%, 4px);
+  transition: opacity 160ms ease, transform 160ms ease;
+}
+
+.seoul-plan-dot:hover span,
+.seoul-plan-dot:focus-visible span {
+  opacity: 1;
+  transform: translate(-50%, 0);
 }
 
 .seoul-plan-dot-core {
-  width: 42px;
-  height: 42px;
+  width: 32px;
+  height: 32px;
 }
 
 .seoul-plan-dot-metropolitan {
-  width: 34px;
-  height: 34px;
+  width: 26px;
+  height: 26px;
 }
 
 .seoul-plan-dot-local {
-  width: 26px;
-  height: 26px;
+  width: 20px;
+  height: 20px;
 }
 
 .seoul-plan-dot-local span {

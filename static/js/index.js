@@ -1193,19 +1193,32 @@ function updateSeoulGrowthPlanDots(map) {
   if (!layer) return;
 
   const lang = map.dataset.lang || "en";
-  const activeTier = map.dataset.activePlanTier || "core";
-  const tier = seoulGrowthPlanTiers[activeTier] || seoulGrowthPlanTiers.core;
-  layer.innerHTML = tier.points.map((point) => `
-    <span class="seoul-plan-dot seoul-plan-dot-${activeTier}" style="left: ${point.x}%; top: ${point.y}%; --dot-color: ${tier.color};" title="${point.name[lang]}">
-      <span>${point.name[lang]}</span>
-    </span>
-  `).join("");
+  const activeTiers = new Set((map.dataset.activePlanTiers || "").split(",").filter(Boolean));
+  layer.innerHTML = Object.entries(seoulGrowthPlanTiers)
+    .filter(([id]) => activeTiers.has(id))
+    .map(([id, tier]) => tier.points.map((point) => `
+      <span class="seoul-plan-dot seoul-plan-dot-${id}" style="left: ${point.x}%; top: ${point.y}%; --dot-color: ${tier.color};" title="${point.name[lang]}">
+        <span>${point.name[lang]}</span>
+      </span>
+    `).join(""))
+    .join("");
 
   map.querySelectorAll("[data-plan-tier]").forEach((button) => {
-    const isActive = button.dataset.planTier === activeTier;
+    const isActive = activeTiers.has(button.dataset.planTier);
     button.classList.toggle("is-active", isActive);
     button.setAttribute("aria-pressed", String(isActive));
   });
+}
+
+function updateSeoulGrowthSwitchCopy(map) {
+  const label = map.querySelector("[data-upper-tier-label]");
+  if (!label) return;
+
+  const lang = map.dataset.lang || "en";
+  const isActive = map.dataset.upperTierHeatmap === "true";
+  label.textContent = isActive
+    ? (lang === "ko" ? "상급지 강조 끄기" : "Turn Off Upper-Tier Highlight")
+    : (lang === "ko" ? "상급지 강조 켜기" : "Turn On Upper-Tier Highlight");
 }
 
 function setupSeoulGrowthPlanMap(clonedHeatmap, lang) {
@@ -1218,12 +1231,10 @@ function setupSeoulGrowthPlanMap(clonedHeatmap, lang) {
   map.dataset.mapView = "region";
   map.dataset.defaultRegion = "seoul";
   map.dataset.upperTierHeatmap = "false";
-  map.dataset.activePlanTier = "core";
+  map.dataset.activePlanTiers = "";
 
-  const heatmapLabel = lang === "ko" ? "상급지 히트맵" : "Upper-Tier Heatmap";
-  const heatmapState = lang === "ko" ? "켜기" : "On";
   const tierButtons = Object.entries(seoulGrowthPlanTiers).map(([id, tier]) => `
-    <button class="seoul-plan-toggle ${id === "core" ? "is-active" : ""}" type="button" data-plan-tier="${id}" aria-pressed="${id === "core" ? "true" : "false"}">
+    <button class="seoul-plan-toggle" type="button" data-plan-tier="${id}" aria-pressed="false">
       <span class="seoul-plan-toggle-dot" style="--dot-color: ${tier.color};"></span>
       ${tier.label[lang]}
     </button>
@@ -1234,7 +1245,7 @@ function setupSeoulGrowthPlanMap(clonedHeatmap, lang) {
     <label class="seoul-plan-switch">
       <input type="checkbox" data-upper-tier-switch>
       <span class="seoul-plan-switch-track" aria-hidden="true"></span>
-      <span>${heatmapLabel} <strong>${heatmapState}</strong></span>
+      <span data-upper-tier-label>${lang === "ko" ? "상급지 강조 켜기" : "Turn On Upper-Tier Highlight"}</span>
     </label>
     <div class="seoul-plan-toggle-group" role="group" aria-label="${lang === "ko" ? "서울 2040 중심지 토글" : "Seoul 2040 center toggles"}">
       ${tierButtons}
@@ -1251,15 +1262,23 @@ function setupSeoulGrowthPlanMap(clonedHeatmap, lang) {
   regionList.addEventListener("click", (event) => {
     const tierButton = event.target.closest("[data-plan-tier]");
     if (!tierButton) return;
-    map.dataset.activePlanTier = tierButton.dataset.planTier;
+    const activeTiers = new Set((map.dataset.activePlanTiers || "").split(",").filter(Boolean));
+    if (activeTiers.has(tierButton.dataset.planTier)) {
+      activeTiers.delete(tierButton.dataset.planTier);
+    } else {
+      activeTiers.add(tierButton.dataset.planTier);
+    }
+    map.dataset.activePlanTiers = Array.from(activeTiers).join(",");
     updateSeoulGrowthPlanDots(map);
   });
 
   regionList.querySelector("[data-upper-tier-switch]")?.addEventListener("change", (event) => {
     map.dataset.upperTierHeatmap = event.currentTarget.checked ? "true" : "false";
+    updateSeoulGrowthSwitchCopy(map);
     updateMapWidget(map, "seoul");
   });
 
+  updateSeoulGrowthSwitchCopy(map);
   updateSeoulGrowthPlanDots(map);
 }
 
