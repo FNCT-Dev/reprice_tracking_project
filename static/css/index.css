@@ -1150,6 +1150,7 @@ figcaption {
 }
 
 .comparison-bars {
+  align-items: stretch;
   min-height: 430px;
   grid-template-columns: repeat(var(--bar-count, 2), minmax(110px, 180px));
   justify-content: center;
