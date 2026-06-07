@@ -1091,7 +1091,8 @@ a {
 }
 
 .interactive-chart > .chart-intro-text,
-.content-section .interactive-chart > .chart-intro-text {
+.content-section .interactive-chart > .chart-intro-text,
+.transaction-chart-block > .chart-intro-text {
   margin: 0;
   padding: clamp(18px, 3vw, 26px) clamp(22px, 4vw, 34px) 0;
 }
@@ -1516,8 +1517,8 @@ figcaption {
 }
 
 .transaction-period-selector {
-  border-top: 1px solid var(--line);
-  border-bottom: 0;
+  border-top: 0;
+  border-bottom: 1px solid var(--line);
 }
 
 .transaction-bar-chart {

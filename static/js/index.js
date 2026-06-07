@@ -616,10 +616,10 @@ const comparisonChartData = {
     title: { ko: "지방 학군지의 학원 갯수 지표", en: "Academy Count Indicator for Local School-District Areas" },
     description: { ko: "행정구역별 버튼을 선택하면 2026년 03월 기준 해당 구역의 학원 갯수를 확인할 수 있습니다.", en: "Select an administrative-region button to view the academy count as of March 2026." },
     detailLabel: { ko: "학원 갯수", en: "Academy Count" },
-    baseline: { ko: "5개 지역 평균", en: "Five-Area Average" },
-    baselineValue: 1577.8,
+    baseline: { ko: "지방 기초자치단체 평균", en: "Local Municipality Average" },
+    baselineValue: 366.7,
     valueType: "count",
-    footnote: { ko: "* 학원 갯수는 2026년 03월의 지표를 기반으로 함.", en: "* Academy counts are based on the March 2026 indicator." },
+    footnote: { ko: "* 학원 갯수는 2026년 03월의 지표를 기반으로 함. 평균값은 서울/경기/인천교육청 관할 구역을 제외한 지방 기초자치단체 기준.", en: "* Academy counts are based on the March 2026 indicator. The average excludes districts under the Seoul, Gyeonggi, and Incheon education offices." },
     items: [
       { id: "daeguSuseongAcademy", name: { ko: "대구 수성", en: "Daegu Suseong" }, value: 2489 },
       { id: "daejeonYuseongAcademy", name: { ko: "대전 유성", en: "Daejeon Yuseong" }, value: 1156 },
@@ -639,7 +639,6 @@ const transactionVolumeData = {
   },
   lineTitle: { ko: "전체 기간 직선그래프", en: "Full-Period Line Chart" },
   barTitle: { ko: "선택 정권 기간 월별 막대그래프", en: "Monthly Bar Chart for Selected Administration" },
-  detailLabel: { ko: "선택 기간 합계", en: "Selected Period Total" },
   footnote: {
     ko: "* 주택매매거래량은 2014.03-2026.03 월별 지표를 기반으로 함.",
     en: "* Housing transaction volume is based on monthly indicators from 2014.03 to 2026.03."
@@ -650,6 +649,7 @@ const transactionVolumeData = {
     { id: "local", color: "#6f9b78", name: { ko: "지방 거래량", en: "Local Volume" }, values: [45637, 49873, 43023, 42553, 44221, 41569, 43676, 55142, 47389, 53456, 45019, 41362, 53627, 56776, 50909, 53156, 53570, 44218, 40220, 50075, 48421, 44556, 32660, 31181, 39542, 42846, 39790, 39747, 38949, 41338, 39744, 47873, 47912, 43225, 32497, 35025, 39474, 35914, 37953, 40747, 40167, 39484, 38331, 31723, 37598, 34205, 33026, 29141, 38651, 34706, 32735, 33506, 30178, 27341, 26922, 37743, 31883, 29695, 27803, 25054, 28982, 31659, 30277, 27949, 32878, 31216, 30753, 39928, 43866, 56041, 45952, 48808, 43626, 36679, 43266, 63044, 65694, 42165, 43839, 50885, 75641, 77078, 43547, 39588, 52751, 48056, 50135, 46906, 46863, 47389, 44406, 43308, 40794, 32201, 25500, 27030, 33352, 35061, 36886, 28600, 22866, 21648, 19794, 20071, 18792, 17476, 15462, 23951, 29611, 26725, 30437, 28603, 25991, 28301, 26707, 28008, 27405, 22953, 25425, 24575, 30094, 31091, 29833, 27057, 30612, 27872, 25438, 31568, 27337, 25686, 20476, 26672, 31703, 31601, 30341, 30871, 29531, 24579, 32067, 30074, 33710, 33845, 31308, 28326, 35967] }
   ],
   periods: [
+    { id: "all", name: { ko: "전체 기간", en: "Full Period" }, range: "2014.03-2026.03", start: "2014.03", end: "2026.03" },
     { id: "park", name: { ko: "박근혜 정부", en: "Park Geun-hye" }, range: "2014.03-2017.05", start: "2014.03", end: "2017.05" },
     { id: "moon", name: { ko: "문재인 정부", en: "Moon Jae-in" }, range: "2017.05-2022.05", start: "2017.05", end: "2022.05" },
     { id: "yoon", name: { ko: "윤석열 정부", en: "Yoon Suk Yeol" }, range: "2022.05-2025.06", start: "2022.05", end: "2025.06" },
@@ -1149,10 +1149,6 @@ function getTransactionPeriodIndexes(period) {
     .filter((item) => item.month >= period.start && item.month <= period.end);
 }
 
-function getTransactionTotal(series, indexes) {
-  return indexes.reduce((sum, item) => sum + series.values[item.index], 0);
-}
-
 function drawTransactionLineChart(container, lang) {
   const width = 2200;
   const height = 360;
@@ -1259,12 +1255,9 @@ function drawTransactionBars(container, period, lang) {
   `;
 }
 
-function renderTransactionVolumeChart(chart, selectedPeriodId = "park") {
+function renderTransactionVolumeChart(chart, selectedPeriodId = "all") {
   const lang = chart.dataset.lang || "en";
   const period = getTransactionPeriod(selectedPeriodId);
-  const indexes = getTransactionPeriodIndexes(period);
-  const capitalTotal = getTransactionTotal(transactionVolumeData.series[0], indexes);
-  const localTotal = getTransactionTotal(transactionVolumeData.series[1], indexes);
 
   chart.innerHTML = `
     <div class="chart-head">
@@ -1272,23 +1265,17 @@ function renderTransactionVolumeChart(chart, selectedPeriodId = "park") {
         <p class="chart-label">${transactionVolumeData.label[lang]}</p>
         <h3>${transactionVolumeData.title[lang]}</h3>
       </div>
-      <aside class="chart-detail" aria-live="polite">
-        <span>${transactionVolumeData.detailLabel[lang]}</span>
-        <h4>${period.name[lang]} ${period.range}</h4>
-        <strong>${formatVolume(capitalTotal + localTotal, lang)}</strong>
-        <p>${transactionVolumeData.series[0].name[lang]} ${formatVolume(capitalTotal, lang)} / ${transactionVolumeData.series[1].name[lang]} ${formatVolume(localTotal, lang)}</p>
-      </aside>
     </div>
-    <p class="chart-intro-text">${transactionVolumeData.description[lang]}</p>
-    <div class="transaction-legend">
-      ${transactionVolumeData.series.map((series) => `<span><i style="--legend-color: ${series.color}"></i>${series.name[lang]}</span>`).join("")}
+    <div class="map-view-toggle transaction-period-selector" role="group" aria-label="${transactionVolumeData.title[lang]} period selector" data-transaction-period-selector>
+      ${transactionVolumeData.periods.map((item) => `<button class="map-view-button ${item.id === period.id ? "is-active" : ""}" type="button" data-period="${item.id}" aria-pressed="${item.id === period.id}">${item.name[lang]}</button>`).join("")}
     </div>
     <div class="transaction-chart-block">
+      <p class="chart-intro-text">${transactionVolumeData.description[lang]}</p>
+      <div class="transaction-legend">
+        ${transactionVolumeData.series.map((series) => `<span><i style="--legend-color: ${series.color}"></i>${series.name[lang]}</span>`).join("")}
+      </div>
       <h4>${transactionVolumeData.lineTitle[lang]}</h4>
       <div class="line-chart transaction-line-chart" data-transaction-line-chart></div>
-    </div>
-    <div class="chart-selector transaction-period-selector" data-transaction-period-selector>
-      ${transactionVolumeData.periods.map((item) => `<button class="chart-choice ${item.id === period.id ? "is-active" : ""}" type="button" data-period="${item.id}" aria-pressed="${item.id === period.id}"><span>${item.name[lang]}</span></button>`).join("")}
     </div>
     <div class="transaction-chart-block">
       <h4>${transactionVolumeData.barTitle[lang]} (${period.range})</h4>
@@ -1303,7 +1290,7 @@ function renderTransactionVolumeChart(chart, selectedPeriodId = "park") {
 
 function initTransactionVolumeCharts() {
   document.querySelectorAll("[data-transaction-volume-chart]").forEach((chart) => {
-    renderTransactionVolumeChart(chart, "park");
+    renderTransactionVolumeChart(chart, "all");
     chart.addEventListener("click", (event) => {
       const button = event.target.closest("[data-period]");
       if (!button) return;
