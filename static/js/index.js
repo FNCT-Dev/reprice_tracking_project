@@ -616,6 +616,10 @@ const grdpDonutData = {
     ko: "* 국가데이터처 「지역소득」 시도별 지역내총생산(2020년 기준), 당해년가격 기준 2024년 자료를 권역별로 합산함. 단위: 10억원.",
     en: "* Based on Statistics Korea regional income data, GRDP by province/city at current prices, 2024 values. Unit: billion KRW."
   },
+  additionalNote: {
+    ko: "** 매년 12월말 전년도 잠정자료 발표 후 국세, 지방세 등 기초통계자료를 보완하여 익년 12월 확정자료를 발표 및 DB에 수록하기 때문에, 데이터 수집 시점인 2026.06 기준 2025년 GRDP 자료는 공시내용이 없음.",
+    en: "** Because preliminary data for the previous year is released at the end of each December, then finalized and added to the database the following December after supplementing base statistics such as national and local taxes, 2025 GRDP data had not been published as of the June 2026 data collection point."
+  },
   items: [
     { id: "capitalArea", color: "#b65f5b", name: { ko: "수도권", en: "Capital Area" }, value: 1352044 },
     { id: "southeast", color: "#8b6f5a", name: { ko: "동남권", en: "Southeast Region" }, value: 366264 },
@@ -643,18 +647,49 @@ function formatGrdpValue(value, lang) {
   return lang === "ko" ? `${trillion.toLocaleString("ko-KR", { maximumFractionDigits: 0 })}조 원` : `KRW ${trillion.toLocaleString("en-US", { maximumFractionDigits: 0 })}T`;
 }
 
+function getDonutPoint(cx, cy, radius, angle) {
+  const radians = ((angle - 90) * Math.PI) / 180;
+  return {
+    x: cx + (radius * Math.cos(radians)),
+    y: cy + (radius * Math.sin(radians))
+  };
+}
+
+function getDonutSegmentPath(startAngle, endAngle, outerRadius = 50, innerRadius = 29) {
+  const center = 50;
+  const startOuter = getDonutPoint(center, center, outerRadius, startAngle);
+  const endOuter = getDonutPoint(center, center, outerRadius, endAngle);
+  const startInner = getDonutPoint(center, center, innerRadius, endAngle);
+  const endInner = getDonutPoint(center, center, innerRadius, startAngle);
+  const largeArc = endAngle - startAngle > 180 ? 1 : 0;
+
+  return [
+    `M ${startOuter.x.toFixed(3)} ${startOuter.y.toFixed(3)}`,
+    `A ${outerRadius} ${outerRadius} 0 ${largeArc} 1 ${endOuter.x.toFixed(3)} ${endOuter.y.toFixed(3)}`,
+    `L ${startInner.x.toFixed(3)} ${startInner.y.toFixed(3)}`,
+    `A ${innerRadius} ${innerRadius} 0 ${largeArc} 0 ${endInner.x.toFixed(3)} ${endInner.y.toFixed(3)}`,
+    "Z"
+  ].join(" ");
+}
+
 function renderGrdpDonutCharts() {
   document.querySelectorAll("[data-grdp-donut-chart]").forEach((chart) => {
     const lang = chart.dataset.lang || "en";
     const sectorTotal = grdpDonutData.items.reduce((sum, item) => sum + item.value, 0);
     const total = grdpDonutData.totalValue;
     let cursor = 0;
-    const gradientStops = grdpDonutData.items.map((item) => {
-      const start = cursor;
-      const share = (item.value / sectorTotal) * 100;
-      cursor += share;
-      return `${item.color} ${start.toFixed(2)}% ${cursor.toFixed(2)}%`;
-    }).join(", ");
+    const segments = grdpDonutData.items.map((item) => {
+      const startAngle = cursor;
+      const angle = (item.value / sectorTotal) * 360;
+      cursor += angle;
+      return {
+        item,
+        startAngle,
+        endAngle: cursor,
+        midpoint: startAngle + (angle / 2),
+        path: getDonutSegmentPath(startAngle, cursor)
+      };
+    });
 
     chart.innerHTML = `
       <div class="chart-head">
@@ -682,7 +717,12 @@ function renderGrdpDonutCharts() {
             `;
           }).join("")}
         </div>
-        <div class="grdp-donut-visual" style="--donut-gradient: ${gradientStops}">
+        <div class="grdp-donut-visual">
+          <svg class="grdp-donut-svg" viewBox="0 0 100 100" role="img" aria-label="${grdpDonutData.title[lang]}">
+            ${segments.map(({ item, path }) => `
+              <path d="${path}" fill="${item.color}" data-grdp-segment="${item.id}"></path>
+            `).join("")}
+          </svg>
           <span class="grdp-donut-share-badge" data-grdp-share-badge></span>
           <div class="grdp-donut-hole">
             <span data-grdp-hole-label>${grdpDonutData.totalLabel[lang]}</span>
@@ -691,6 +731,7 @@ function renderGrdpDonutCharts() {
         </div>
       </div>
       <p class="chart-footnote">${grdpDonutData.note[lang]}</p>
+      <p class="chart-footnote">${grdpDonutData.additionalNote[lang]}</p>
     `;
 
     const detailLabel = chart.querySelector("[data-grdp-detail-label]");
@@ -713,12 +754,9 @@ function renderGrdpDonutCharts() {
         });
 
         const itemIndex = grdpDonutData.items.indexOf(item);
-        const previousValue = grdpDonutData.items.slice(0, itemIndex).reduce((sum, entry) => sum + entry.value, 0);
-        const sectorShare = item.value / sectorTotal;
         const totalShare = (item.value / total) * 100;
-        const midpoint = ((previousValue / sectorTotal) + (sectorShare / 2)) * 360;
-        const x = 50 + Math.sin((midpoint * Math.PI) / 180) * 36;
-        const y = 50 - Math.cos((midpoint * Math.PI) / 180) * 36;
+        const segment = segments[itemIndex];
+        const badgePoint = getDonutPoint(50, 50, 39.5, segment.midpoint);
 
         detailLabel.textContent = grdpDonutData.selectedLabel[lang];
         detailName.textContent = item.name[lang];
@@ -727,10 +765,16 @@ function renderGrdpDonutCharts() {
         holeLabel.textContent = item.name[lang];
         holeValue.textContent = formatGrdpValue(item.value, lang);
         badge.textContent = `${totalShare.toFixed(1)}%`;
-        badge.style.setProperty("--badge-x", `${x.toFixed(2)}%`);
-        badge.style.setProperty("--badge-y", `${y.toFixed(2)}%`);
+        badge.style.setProperty("--badge-x", `${badgePoint.x.toFixed(2)}%`);
+        badge.style.setProperty("--badge-y", `${badgePoint.y.toFixed(2)}%`);
         badge.style.setProperty("--badge-color", item.color);
         badge.classList.add("is-visible");
+
+        chart.querySelectorAll("[data-grdp-segment]").forEach((segmentPath) => {
+          const isSelected = segmentPath.dataset.grdpSegment === item.id;
+          segmentPath.classList.toggle("is-active", isSelected);
+          segmentPath.classList.toggle("is-muted", !isSelected);
+        });
       });
     });
   });
