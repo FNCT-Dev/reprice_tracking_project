@@ -602,12 +602,11 @@ function renderComparisonChart(chart, selectedId) {
   const maxValue = Math.max(config.baselineValue, ...config.items.map((item) => item.value));
   const gap = selected.value - config.baselineValue;
   const gapText = lang === "ko" ? `지방 평균 대비 ${formatPrice(Math.abs(gap), lang)} ${gap >= 0 ? "높습니다" : "낮습니다"}.` : `${formatPrice(Math.abs(gap), lang)} ${gap >= 0 ? "above" : "below"} the local average.`;
-  const sortedBars = [...config.items].sort((a, b) => b.value - a.value);
   const bars = [
     { id: "baseline", name: config.baseline, value: config.baselineValue, color: "#9fb4c9" },
-    ...sortedBars.map((item) => ({ ...item, color: "#1f5eff" }))
+    { ...selected, color: "#1f5eff" }
   ];
-  const barAxisMax = Math.ceil(maxValue * 1.08 * 10) / 10;
+  const barAxisMax = Math.ceil(maxValue * 1.08);
   const barAxisTicks = Array.from({ length: 5 }, (_, index) => {
     const value = barAxisMax - (barAxisMax / 4) * index;
     const position = 100 - (value / barAxisMax) * 100;
@@ -621,6 +620,12 @@ function renderComparisonChart(chart, selectedId) {
         <p class="chart-label">${config.label[lang]}</p>
         <h3>${config.title[lang]}</h3>
       </div>
+      <aside class="chart-detail" aria-live="polite">
+        <span>${config.baseline[lang]}</span>
+        <h4>${selected.name[lang]}</h4>
+        <strong>${formatPrice(selected.value, lang)}</strong>
+        <p>${gapText}</p>
+      </aside>
     </div>
     <div class="chart-layout">
       <div class="chart-selector" data-comparison-selector>
@@ -636,7 +641,7 @@ function renderComparisonChart(chart, selectedId) {
         </div>
         <div class="bar-chart comparison-bars" style="--bar-count: ${bars.length}">
           ${bars.map((bar) => `
-            <button class="chart-bar month-bar ${bar.id === selected.id ? "is-active" : ""} ${bar.id !== "baseline" && bar.id !== selected.id ? "is-muted" : ""}" type="button" data-region="${bar.id}" ${bar.id === "baseline" ? "disabled" : ""}>
+            <button class="chart-bar month-bar ${bar.id === selected.id ? "is-active" : ""}" type="button" data-region="${bar.id}" ${bar.id === "baseline" ? "disabled" : ""}>
               <span class="chart-bar-value">${formatPrice(bar.value, lang)}</span>
               <span class="chart-bar-fill" style="--bar-color: ${bar.color}; height: ${(bar.value / barAxisMax * 100).toFixed(1)}%"></span>
               <span class="chart-bar-label">${bar.name[lang]}</span>
@@ -644,12 +649,6 @@ function renderComparisonChart(chart, selectedId) {
           `).join("")}
         </div>
       </div>
-      <aside class="chart-detail" aria-live="polite">
-        <span>${config.baseline[lang]}</span>
-        <h4>${selected.name[lang]}</h4>
-        <strong>${formatPrice(selected.value, lang)}</strong>
-        <p>${gapText}</p>
-      </aside>
     </div>
     ${config.footnote ? `<p class="chart-footnote">${config.footnote[lang]}</p>` : ""}
   `;

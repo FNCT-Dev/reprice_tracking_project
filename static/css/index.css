@@ -718,7 +718,7 @@ a {
   grid-template-columns: repeat(2, minmax(0, 1fr));
   order: 2;
   align-content: center;
-  gap: 6px;
+  gap: 8px;
   min-width: 0;
 }
 
@@ -728,7 +728,7 @@ a {
 
 .seoul-map-widget .map-region-list {
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 5px;
+  gap: 7px;
 }
 
 .map-region-list .map-region {
@@ -736,11 +736,11 @@ a {
   transform: none;
   width: 100%;
   min-width: 0;
-  justify-content: start;
-  min-height: 24px;
-  padding: 5px 7px;
-  font-size: 10px;
-  text-align: left;
+  justify-content: center;
+  min-height: 32px;
+  padding: 7px 9px;
+  font-size: 11px;
+  text-align: center;
 }
 
 .map-region-list .map-region-divider {
@@ -763,8 +763,9 @@ a {
 }
 
 .seoul-map-widget .map-region-list .map-region {
-  padding-inline: 6px;
-  font-size: 9px;
+  min-height: 30px;
+  padding-inline: 7px;
+  font-size: 10px;
 }
 
 .map-region-list .map-region:hover,
@@ -867,6 +868,12 @@ a {
   line-height: 1.45;
   overflow-wrap: break-word;
   word-break: keep-all;
+}
+
+.map-source-note + .map-source-note,
+.content-section .map-source-note + .map-source-note {
+  padding-top: 0;
+  margin-top: -10px;
 }
 
 .chart-intro-text,
@@ -1112,7 +1119,21 @@ figcaption {
   fill: #26313c;
   font-size: 11px;
   font-weight: 800;
+  opacity: 0;
+  pointer-events: none;
   text-anchor: middle;
+  transition: opacity 160ms ease, transform 160ms ease;
+}
+
+.line-point:hover text:not(.line-month),
+.line-point:focus-within text:not(.line-month) {
+  opacity: 1;
+  transform: translateY(-2px);
+}
+
+.line-point .line-month {
+  opacity: 1;
+  transform: none;
 }
 
 .comparison-bars {
@@ -1122,18 +1143,18 @@ figcaption {
 .bar-chart-shell {
   position: relative;
   min-width: 0;
-  border-right: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
 }
 
 .bar-chart-shell .bar-chart {
   border-right: 0;
-  padding-left: clamp(52px, 6vw, 72px);
+  padding: 70px clamp(36px, 8vw, 88px) 82px clamp(64px, 9vw, 92px);
 }
 
 .bar-y-axis {
   position: absolute;
-  top: 34px;
-  bottom: 74px;
+  top: 70px;
+  bottom: 82px;
   left: clamp(12px, 2vw, 24px);
   width: clamp(38px, 5vw, 54px);
   pointer-events: none;
@@ -1163,6 +1184,47 @@ figcaption {
   color: var(--muted);
   font-size: 12px;
   line-height: 1.65;
+}
+
+[data-comparison-chart] .chart-head {
+  align-items: stretch;
+}
+
+[data-comparison-chart] .chart-head > div:first-child {
+  align-self: center;
+  min-width: 0;
+}
+
+[data-comparison-chart] .chart-head .chart-detail {
+  position: relative;
+  display: grid;
+  grid-template-columns: auto minmax(90px, 1fr) auto;
+  align-items: center;
+  gap: 12px 16px;
+  flex: 0 1 380px;
+  min-width: min(100%, 320px);
+  margin-left: auto;
+  padding: 18px;
+  border: 1px solid rgba(17, 19, 24, 0.12);
+  background: #ffffff;
+}
+
+[data-comparison-chart] .chart-head .chart-detail span,
+[data-comparison-chart] .chart-head .chart-detail h4,
+[data-comparison-chart] .chart-head .chart-detail strong {
+  margin: 0;
+}
+
+[data-comparison-chart] .chart-head .chart-detail strong {
+  font-size: clamp(24px, 2.7vw, 36px);
+}
+
+[data-comparison-chart] .chart-head .chart-detail p {
+  grid-column: 1 / -1;
+  margin: 0;
+  color: #323943;
+  font-size: 12px;
+  line-height: 1.5;
 }
 
 .reason-box {
@@ -1229,6 +1291,16 @@ figcaption {
   }
 }
 
+@keyframes bar-rise {
+  from {
+    transform: scaleY(0);
+  }
+
+  to {
+    transform: scaleY(1);
+  }
+}
+
 .chart-bar {
   display: grid;
   grid-template-rows: auto 1fr auto;
@@ -1263,6 +1335,10 @@ figcaption {
   background: var(--bar-color, var(--green));
   transform-origin: bottom;
   transition: filter 180ms ease, transform 180ms ease;
+}
+
+.comparison-bars .chart-bar.is-active .chart-bar-fill {
+  animation: bar-rise 520ms cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
 .chart-bar:hover .chart-bar-fill,
@@ -1589,6 +1665,11 @@ figcaption {
   }
 
   .heatmap-chart .chart-head .map-detail {
+    min-width: 0;
+    margin: 18px 0 0;
+  }
+
+  [data-comparison-chart] .chart-head .chart-detail {
     min-width: 0;
     margin: 18px 0 0;
   }
