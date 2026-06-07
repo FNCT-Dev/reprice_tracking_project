@@ -1171,13 +1171,19 @@ function getDaysInMonth(year, month) {
   return new Date(year, month, 0).getDate();
 }
 
-function getTransactionPolicyX(date, paddingLeft, plotWidth) {
+function getTransactionPeriodIndexes(period) {
+  return transactionVolumeData.months
+    .map((month, index) => ({ month, index }))
+    .filter((item) => item.month >= period.start && item.month <= period.end);
+}
+
+function getTransactionPolicyX(date, visibleMonths, paddingLeft, plotWidth) {
   const [yearText, monthText, dayText] = date.split("-");
   const monthKey = `${yearText}.${monthText}`;
-  const monthIndex = transactionVolumeData.months.indexOf(monthKey);
+  const monthIndex = visibleMonths.indexOf(monthKey);
   if (monthIndex < 0) return null;
   const dayRatio = (Number(dayText) - 1) / getDaysInMonth(Number(yearText), Number(monthText));
-  const monthStep = plotWidth / (transactionVolumeData.months.length - 1);
+  const monthStep = plotWidth / Math.max(visibleMonths.length - 1, 1);
   return paddingLeft + (monthIndex + dayRatio) * monthStep;
 }
 
@@ -1189,21 +1195,27 @@ function getTransactionPolicies(period) {
 }
 
 function drawTransactionLineChart(container, lang, period) {
-  const width = 2200;
+  const visibleIndexes = getTransactionPeriodIndexes(period);
+  const visibleMonths = visibleIndexes.map((item) => item.month);
+  const visibleSeries = transactionVolumeData.series.map((series) => ({
+    ...series,
+    values: visibleIndexes.map((item) => series.values[item.index])
+  }));
+  const width = Math.max(860, visibleMonths.length * 72);
   const height = 360;
   const padding = { top: 34, right: 42, bottom: 54, left: 74 };
   const plotWidth = width - padding.left - padding.right;
   const plotHeight = height - padding.top - padding.bottom;
-  const allValues = transactionVolumeData.series.flatMap((series) => series.values);
+  const allValues = visibleSeries.flatMap((series) => series.values);
   const max = Math.ceil((Math.max(...allValues) * 1.12) / 10000) * 10000;
   const yTicks = Array.from({ length: 5 }, (_, index) => {
     const value = max - (max / 4) * index;
     const y = padding.top + (index / 4) * plotHeight;
     return { value, y };
   });
-  const xLabels = transactionVolumeData.months.map((month, index) => {
-    if (index !== 0 && index !== transactionVolumeData.months.length - 1 && !month.endsWith(".01")) return "";
-    const x = padding.left + (index / (transactionVolumeData.months.length - 1)) * plotWidth;
+  const xLabels = visibleMonths.map((month, index) => {
+    if (index !== 0 && index !== visibleMonths.length - 1 && !month.endsWith(".01")) return "";
+    const x = padding.left + (index / Math.max(visibleMonths.length - 1, 1)) * plotWidth;
     return `<text class="transaction-x-label" x="${x.toFixed(1)}" y="${height - 22}">${month}</text>`;
   }).join("");
   const yAxisNodes = yTicks.map((tick) => `
@@ -1212,11 +1224,11 @@ function drawTransactionLineChart(container, lang, period) {
       <text x="${padding.left - 10}" y="${(tick.y + 4).toFixed(1)}">${formatAxisVolume(tick.value, lang)}</text>
     </g>
   `).join("");
-  const paths = transactionVolumeData.series.map((series) => {
+  const paths = visibleSeries.map((series) => {
     const points = series.values.map((value, index) => {
-      const x = padding.left + (index / (series.values.length - 1)) * plotWidth;
+      const x = padding.left + (index / Math.max(series.values.length - 1, 1)) * plotWidth;
       const y = padding.top + (1 - value / max) * plotHeight;
-      return { x, y, value, month: transactionVolumeData.months[index] };
+      return { x, y, value, month: visibleMonths[index] };
     });
     const path = points.map((point, index) => `${index === 0 ? "M" : "L"} ${point.x.toFixed(1)} ${point.y.toFixed(1)}`).join(" ");
     const pointNodes = points.map((point) => `
@@ -1232,7 +1244,7 @@ function drawTransactionLineChart(container, lang, period) {
     `;
   }).join("");
   const policyNodes = getTransactionPolicies(period).map((policy, index) => {
-    const x = getTransactionPolicyX(policy.date, padding.left, plotWidth);
+    const x = getTransactionPolicyX(policy.date, visibleMonths, padding.left, plotWidth);
     if (x === null) return "";
     const labelY = padding.top + 15 + (index % 3) * 16;
     return `
@@ -1275,7 +1287,7 @@ function renderTransactionVolumeChart(chart, selectedPeriodId = "all") {
       <div class="transaction-legend">
         ${transactionVolumeData.series.map((series) => `<span><i style="--legend-color: ${series.color}"></i>${series.name[lang]}</span>`).join("")}
       </div>
-      <h4>${transactionVolumeData.lineTitle[lang]}</h4>
+      <h4>${transactionVolumeData.lineTitle[lang]} (${period.range})</h4>
       <div class="line-chart transaction-line-chart" data-transaction-line-chart></div>
     </div>
     <p class="chart-footnote">${transactionVolumeData.footnote[lang]}</p>
