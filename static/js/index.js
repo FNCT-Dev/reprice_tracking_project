@@ -715,7 +715,9 @@ function syncGrdpDonutCopy(chart, lang) {
   analysis.innerHTML = `
     <p>${main}</p>
     <p>${lead}</p>
-    <blockquote>${question}</blockquote>
+    <div class="question-callout">
+      <p class="question-line"><strong>${question}</strong></p>
+    </div>
     <p>${close}</p>
   `;
 }
