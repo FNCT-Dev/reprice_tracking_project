@@ -1319,14 +1319,18 @@ function drawAreaPriceLineChart(container, lang, period) {
     ...series,
     values: visibleIndexes.map((item) => series.values[item.index])
   }));
-  const width = Math.max(860, visibleMonths.length * 72);
-  const height = 360;
-  const padding = { top: 34, right: 42, bottom: 54, left: 82 };
+  const width = Math.max(1600, visibleMonths.length * 110);
+  const height = 400;
+  const padding = { top: 42, right: 54, bottom: 62, left: 88 };
   const plotWidth = width - padding.left - padding.right;
   const plotHeight = height - padding.top - padding.bottom;
-  const allValues = areaPriceData.series.flatMap((series) => series.values);
-  const max = Math.ceil((Math.max(...allValues) * 1.08) / 10000) * 10000;
-  const min = Math.max(0, Math.floor((Math.min(...allValues) * 0.92) / 10000) * 10000);
+  const allValues = visibleSeries.flatMap((series) => series.values);
+  const rawMin = Math.min(...allValues);
+  const rawMax = Math.max(...allValues);
+  const paddedRange = Math.max((rawMax - rawMin) * 1.24, 10000);
+  const step = Math.max(5000, Math.ceil((paddedRange / 4) / 5000) * 5000);
+  const min = Math.max(0, Math.floor((rawMin - step * 0.7) / step) * step);
+  const max = Math.ceil((rawMax + step * 0.7) / step) * step;
   const range = Math.max(max - min, 1);
   const yTicks = Array.from({ length: 5 }, (_, index) => {
     const value = max - (range / 4) * index;
@@ -1378,7 +1382,7 @@ function drawAreaPriceLineChart(container, lang, period) {
   }).join("");
 
   container.innerHTML = `
-    <svg viewBox="0 0 ${width} ${height}" role="img" focusable="false" aria-label="${areaPriceData.title[lang]} line chart" style="width: ${width}px; height: 380px;">
+    <svg viewBox="0 0 ${width} ${height}" role="img" focusable="false" aria-label="${areaPriceData.title[lang]} line chart" style="width: ${width}px; height: 400px;">
       ${yAxisNodes}
       <line class="line-axis" x1="${padding.left}" y1="${height - padding.bottom}" x2="${width - padding.right}" y2="${height - padding.bottom}"></line>
       <line class="line-axis" x1="${padding.left}" y1="${padding.top}" x2="${padding.left}" y2="${height - padding.bottom}"></line>
