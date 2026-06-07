@@ -661,6 +661,51 @@ const seoulGrowthSectionCopy = {
   }
 };
 
+const seoulGrowthUpperTierIds = ["gangnam", "seocho", "songpa", "mapo", "yongsan", "seongdong", "gangdong", "gwangjin"];
+
+const seoulGrowthPlanTiers = {
+  core: {
+    color: "#2f5f95",
+    label: { ko: "3도심", en: "3 Metropolitan Centers" },
+    points: [
+      { name: { ko: "서울 도심", en: "Seoul CBD" }, x: 52, y: 45 },
+      { name: { ko: "여의도·영등포", en: "Yeouido·Yeongdeungpo" }, x: 36, y: 61 },
+      { name: { ko: "강남", en: "Gangnam" }, x: 65, y: 67 }
+    ]
+  },
+  metropolitan: {
+    color: "#c9151b",
+    label: { ko: "7광역중심", en: "7 Regional Centers" },
+    points: [
+      { name: { ko: "용산", en: "Yongsan" }, x: 45, y: 59 },
+      { name: { ko: "청량리·왕십리", en: "Cheongnyangni·Wangsimni" }, x: 62, y: 45 },
+      { name: { ko: "창동·상계", en: "Changdong·Sanggye" }, x: 66, y: 16 },
+      { name: { ko: "상암·수색", en: "Sangam·Susaek" }, x: 27, y: 43 },
+      { name: { ko: "마곡", en: "Magok" }, x: 16, y: 54 },
+      { name: { ko: "가산·대림", en: "Gasan·Daerim" }, x: 25, y: 80 },
+      { name: { ko: "잠실", en: "Jamsil" }, x: 76, y: 61 }
+    ]
+  },
+  local: {
+    color: "#f3c735",
+    label: { ko: "12지역중심", en: "12 Local Centers" },
+    points: [
+      { name: { ko: "동대문", en: "Dongdaemun" }, x: 54, y: 47 },
+      { name: { ko: "마포·공덕", en: "Mapo·Gongdeok" }, x: 41, y: 55 },
+      { name: { ko: "연신내·불광", en: "Yeonsinnae·Bulgwang" }, x: 35, y: 30 },
+      { name: { ko: "신촌", en: "Sinchon" }, x: 39, y: 50 },
+      { name: { ko: "목동", en: "Mokdong" }, x: 28, y: 65 },
+      { name: { ko: "봉천", en: "Bongcheon" }, x: 40, y: 79 },
+      { name: { ko: "사당·이수", en: "Sadang·Isu" }, x: 49, y: 79 },
+      { name: { ko: "수서·문정", en: "Suseo·Munjeong" }, x: 77, y: 78 },
+      { name: { ko: "천호·길동", en: "Cheonho·Gildong" }, x: 84, y: 55 },
+      { name: { ko: "망우", en: "Mangu" }, x: 78, y: 33 },
+      { name: { ko: "미아", en: "Mia" }, x: 60, y: 34 },
+      { name: { ko: "성수", en: "Seongsu" }, x: 65, y: 49 }
+    ]
+  }
+};
+
 function getBarAxisMax(value) {
   const padded = value * 1.14;
   if (padded <= 4) return 4;
@@ -1034,6 +1079,11 @@ function renderMapLegend(map) {
   const legend = map.querySelector("[data-map-legend]");
   if (!legend) return;
 
+  if (map.dataset.growthPlanMap === "true") {
+    legend.innerHTML = "";
+    return;
+  }
+
   const lang = map.dataset.lang || "en";
   const labels = mapViewText[lang] || mapViewText.en;
   const isPriceView = map.dataset.mapView === "price";
@@ -1087,6 +1137,7 @@ function colorMapSvg(map, selectedId) {
   const ids = getMapSvgIds(map);
   const isSeoulMap = map.dataset.mapType === "seoul";
   const isPriceView = map.dataset.mapView === "price";
+  const isGrowthPlanMap = map.dataset.growthPlanMap === "true";
   const priceData = getPriceMapData(map);
   const selectedMembers = koreaRegionMembers[selectedId] || [];
 
@@ -1100,8 +1151,15 @@ function colorMapSvg(map, selectedId) {
     const item = getMapData(map).find((entry) => entry.id === dataId);
     const isSelected = selectedId === dataId || selectedMembers.includes(dataId);
 
-    region.style.stroke = isSelected ? "#0d355a" : "";
-    region.style.strokeWidth = isSelected ? "2.4" : "";
+    region.style.stroke = isSelected && !isGrowthPlanMap ? "#0d355a" : "";
+    region.style.strokeWidth = isSelected && !isGrowthPlanMap ? "2.4" : "";
+
+    if (isGrowthPlanMap) {
+      const showUpperTier = map.dataset.upperTierHeatmap === "true";
+      region.style.fill = showUpperTier && seoulGrowthUpperTierIds.includes(dataId) ? "#b8dbc3" : "#dedede";
+      region.style.opacity = showUpperTier && seoulGrowthUpperTierIds.includes(dataId) ? "0.94" : "0.56";
+      return;
+    }
 
     if (isPriceView && item) {
       region.style.fill = getPriceColor(item, priceData);
@@ -1128,6 +1186,81 @@ function colorMapSvg(map, selectedId) {
     return;
   }
   selectedRegion.style.opacity = "0.95";
+}
+
+function updateSeoulGrowthPlanDots(map) {
+  const layer = map.querySelector("[data-plan-dot-layer]");
+  if (!layer) return;
+
+  const lang = map.dataset.lang || "en";
+  const activeTier = map.dataset.activePlanTier || "core";
+  const tier = seoulGrowthPlanTiers[activeTier] || seoulGrowthPlanTiers.core;
+  layer.innerHTML = tier.points.map((point) => `
+    <span class="seoul-plan-dot seoul-plan-dot-${activeTier}" style="left: ${point.x}%; top: ${point.y}%; --dot-color: ${tier.color};" title="${point.name[lang]}">
+      <span>${point.name[lang]}</span>
+    </span>
+  `).join("");
+
+  map.querySelectorAll("[data-plan-tier]").forEach((button) => {
+    const isActive = button.dataset.planTier === activeTier;
+    button.classList.toggle("is-active", isActive);
+    button.setAttribute("aria-pressed", String(isActive));
+  });
+}
+
+function setupSeoulGrowthPlanMap(clonedHeatmap, lang) {
+  const map = clonedHeatmap.querySelector("[data-map-widget]");
+  const seoulMap = clonedHeatmap.querySelector(".seoul-map");
+  const regionList = clonedHeatmap.querySelector(".map-region-list");
+  if (!map || !seoulMap || !regionList) return;
+
+  map.dataset.growthPlanMap = "true";
+  map.dataset.mapView = "region";
+  map.dataset.defaultRegion = "seoul";
+  map.dataset.upperTierHeatmap = "false";
+  map.dataset.activePlanTier = "core";
+
+  const heatmapLabel = lang === "ko" ? "상급지 히트맵" : "Upper-Tier Heatmap";
+  const heatmapState = lang === "ko" ? "켜기" : "On";
+  const tierButtons = Object.entries(seoulGrowthPlanTiers).map(([id, tier]) => `
+    <button class="seoul-plan-toggle ${id === "core" ? "is-active" : ""}" type="button" data-plan-tier="${id}" aria-pressed="${id === "core" ? "true" : "false"}">
+      <span class="seoul-plan-toggle-dot" style="--dot-color: ${tier.color};"></span>
+      ${tier.label[lang]}
+    </button>
+  `).join("");
+
+  regionList.classList.add("seoul-plan-controls");
+  regionList.innerHTML = `
+    <label class="seoul-plan-switch">
+      <input type="checkbox" data-upper-tier-switch>
+      <span class="seoul-plan-switch-track" aria-hidden="true"></span>
+      <span>${heatmapLabel} <strong>${heatmapState}</strong></span>
+    </label>
+    <div class="seoul-plan-toggle-group" role="group" aria-label="${lang === "ko" ? "서울 2040 중심지 토글" : "Seoul 2040 center toggles"}">
+      ${tierButtons}
+    </div>
+  `;
+
+  if (!seoulMap.querySelector("[data-plan-dot-layer]")) {
+    const dotLayer = document.createElement("div");
+    dotLayer.className = "seoul-plan-dot-layer";
+    dotLayer.dataset.planDotLayer = "";
+    seoulMap.append(dotLayer);
+  }
+
+  regionList.addEventListener("click", (event) => {
+    const tierButton = event.target.closest("[data-plan-tier]");
+    if (!tierButton) return;
+    map.dataset.activePlanTier = tierButton.dataset.planTier;
+    updateSeoulGrowthPlanDots(map);
+  });
+
+  regionList.querySelector("[data-upper-tier-switch]")?.addEventListener("change", (event) => {
+    map.dataset.upperTierHeatmap = event.currentTarget.checked ? "true" : "false";
+    updateMapWidget(map, "seoul");
+  });
+
+  updateSeoulGrowthPlanDots(map);
 }
 
 function updateMapWidget(map, selectedId) {
@@ -1320,6 +1453,7 @@ function syncSeoulGrowthSection() {
     clonedHeatmap.querySelector(".map-view-toggle")?.remove();
     if (clonedTitle) clonedTitle.textContent = copy.cloneTitle;
     if (clonedMap) clonedMap.dataset.mapView = "region";
+    setupSeoulGrowthPlanMap(clonedHeatmap, lang);
     followup.after(clonedHeatmap);
   }
 }
