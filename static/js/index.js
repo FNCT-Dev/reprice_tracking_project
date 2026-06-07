@@ -1237,7 +1237,7 @@ function drawTransactionLineChart(container, lang, period) {
     ...series,
     values: visibleIndexes.map((item) => series.values[item.index])
   }));
-  const width = Math.max(860, visibleMonths.length * 72);
+  const width = Math.max(1600, visibleMonths.length * 110);
   const height = 360;
   const padding = { top: 34, right: 42, bottom: 54, left: 74 };
   const plotWidth = width - padding.left - padding.right;
