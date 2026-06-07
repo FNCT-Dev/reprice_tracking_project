@@ -861,6 +861,7 @@ a {
 
 .map-source-note,
 .content-section .map-source-note,
+.content-section .chart-footnote,
 .chart-footnote {
   margin: 0;
   padding: 16px clamp(20px, 4vw, 34px) 18px;
@@ -873,6 +874,7 @@ a {
 
 .map-source-note + .map-source-note,
 .content-section .map-source-note + .map-source-note,
+.content-section .chart-footnote + .chart-footnote,
 .chart-footnote + .chart-footnote {
   padding-top: 0;
   margin-top: -10px;
@@ -1159,9 +1161,23 @@ figcaption {
   --bar-pad-right: clamp(36px, 8vw, 88px);
   --bar-pad-bottom: 76px;
   --bar-pad-left: clamp(64px, 9vw, 92px);
+  --bar-value-height: 28px;
+  --bar-label-height: 52px;
+  --bar-gap: 8px;
+  --bar-axis-label-width: clamp(46px, 6vw, 62px);
   position: relative;
   min-width: 0;
+}
+
+.bar-chart-shell::after {
+  content: "";
+  position: absolute;
+  right: var(--bar-pad-right, clamp(36px, 8vw, 88px));
+  bottom: calc(var(--bar-pad-bottom, 76px) + var(--bar-label-height, 52px) + var(--bar-gap, 8px));
+  left: var(--bar-pad-left, clamp(64px, 9vw, 92px));
   border-bottom: 1px solid var(--line);
+  pointer-events: none;
+  z-index: 1;
 }
 
 .bar-chart-shell .bar-chart {
@@ -1169,17 +1185,19 @@ figcaption {
   --bar-pad-right: clamp(36px, 8vw, 88px);
   --bar-pad-bottom: 76px;
   --bar-pad-left: clamp(64px, 9vw, 92px);
+  position: relative;
   border-right: 0;
+  z-index: 2;
 }
 
 .bar-y-axis {
   position: absolute;
   top: calc(var(--bar-pad-top, 54px) + var(--bar-value-height, 28px) + var(--bar-gap, 8px));
   bottom: calc(var(--bar-pad-bottom, 76px) + var(--bar-label-height, 52px) + var(--bar-gap, 8px));
-  left: clamp(12px, 2vw, 24px);
-  width: clamp(38px, 5vw, 54px);
+  right: var(--bar-pad-right, clamp(36px, 8vw, 88px));
+  left: var(--bar-pad-left, clamp(64px, 9vw, 92px));
   pointer-events: none;
-  z-index: 2;
+  z-index: 1;
 }
 
 .bar-y-tick {
@@ -1192,11 +1210,13 @@ figcaption {
 .bar-y-tick span {
   position: absolute;
   top: -8px;
-  left: 0;
+  left: calc(-1 * var(--bar-axis-label-width, clamp(46px, 6vw, 62px)));
+  width: calc(var(--bar-axis-label-width, clamp(46px, 6vw, 62px)) - 10px);
   color: #5f6872;
   font-size: 10px;
   font-weight: 800;
   line-height: 1;
+  text-align: right;
   white-space: nowrap;
 }
 
