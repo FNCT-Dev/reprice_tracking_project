@@ -768,6 +768,38 @@ a {
   font-size: 11px;
 }
 
+.heatmap-chart[data-seoul-growth-clone] .map-widget {
+  border-top: 1px solid var(--line);
+}
+
+.heatmap-chart[data-seoul-growth-clone] .map-panel {
+  grid-template-columns: 1fr;
+  gap: 22px;
+  min-height: 0;
+  padding: clamp(26px, 4vw, 44px);
+}
+
+.heatmap-chart[data-seoul-growth-clone] .seoul-map {
+  width: min(100%, 720px);
+  height: clamp(520px, 60vw, 720px);
+}
+
+.heatmap-chart[data-seoul-growth-clone] .map-region-list {
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  align-content: start;
+  width: min(100%, 920px);
+  margin: 0 auto;
+}
+
+.heatmap-chart[data-seoul-growth-clone] .map-region-list .map-region {
+  min-height: 38px;
+  font-size: 12px;
+}
+
+.heatmap-chart[data-seoul-growth-clone] .map-price-legend {
+  display: none;
+}
+
 .map-region-list .map-region:hover,
 .map-region-list .map-region:focus-visible,
 .map-region-list .map-region.is-active {
@@ -2114,6 +2146,14 @@ figcaption {
   .korea-map,
   .seoul-map {
     height: 390px;
+  }
+
+  .heatmap-chart[data-seoul-growth-clone] .seoul-map {
+    height: 480px;
+  }
+
+  .heatmap-chart[data-seoul-growth-clone] .map-region-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .scroll-dots {
