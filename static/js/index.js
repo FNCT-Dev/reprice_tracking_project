@@ -86,6 +86,212 @@ function syncStaticBodySections() {
   });
 }
 
+const analysisNarrative = {
+  ko: {
+    capitalAccess:
+      "이러한 지역들의 공통점은 바로 서울과의 접근성이 좋거나, 해당 지역 내에서 자급자족이 가능한 구조가 이미 완성되었다는 점을 볼 수 있습니다. 실제로 송도국제도시, 청라국제도시, 동탄신도시의 경우에는 이미 해당 지역 내에서 자급자족이 가능한 경제권을 구축하고 있으며, 일산신도시, 산본신도시, 중동신도시, 광교신도시, 평촌신도시, 수지택지지구, 과천시의 경우에는 서울과의 접근성이 좋다는 점을 주 강점으로 가집니다. 그 중에서 분당신도시와 판교신도시는 서울과의 접근성과 더불어 자급자족까지 두 가지의 조건을 모두 갖추고 있다는 점 또한 특기할만한 사항입니다.",
+    localHtml: `
+      <p>
+        저희가 선정한 지방 주요 지역은 대구 수성구, 대전 유성구, 대전 서구, 울산 남구, 세종시, 충북 청주 흥덕구, 경남 창원 성산구, 경남 창원 의창구, 부산 해운대구로 총 9개 지역입니다. 본 9개 지역은 대체로 해당 지역 및 인근 지역 대비 집값이 상대적으로 높게 집계되는 지역들입니다. 이러한 지역들에 대해 저희가 분석을 진행한 결과, 크게 2가지의 경우로 나눌 수 있었습니다.
+      </p>
+      <p>
+        첫 번째는, 바로 교육과 연관된 경우입니다. 대구 수성구, 대전 유성구, 대전 서구, 울산 남구, 부산 해운대구가 이에 해당하는 지역입니다. 이들 지역의 공통점으로는, 교육열이 상당히 높은 지역이라는 점입니다. 이러한 점은, 해당 지역 내에 소재한 학원의 갯수로도 직관적으로 연결됩니다.
+      </p>
+      <p>
+        상기 그래프에서 확인되는 바와 같이, 수도권을 제외한 지방 기초자치단체 당 학원 소재 갯수는 평균 317개입니다. 그에 반해, 대구 수성, 대전 유성, 대전 서, 울산 남, 부산 해운대 5개 구의 경우 학원 갯수가 타 지역 평균 대비 압도적으로 높은 것을 알 수 있습니다. 실제로 학원 소재 갯수가 유독 높은 해당 구역들과 타 구역들 간의 집값이 차이가 난다는 점으로 미루어보아, 지방에서는 학군 소재지가 아니면 집값 상승의 요인이 없을 수 있다는 것이 첫 번째 추론 결과가 될 수 있습니다.
+      </p>
+      <p>
+        두 번째는 특정 산업과 연관된 경우입니다. 세종시, 충북 청주 흥덕구, 경남 창원 성산구, 경남 창원 의창구가 그 예시입니다. 세종시의 경우, 현재 대한민국 정부의 대다수 주무부처와 기관들이 세종을 본부로 두고 활동하고 있으며, 충북 청주 흥덕의 경우 SK하이닉스 청주FAB과 오송생명과학단지, 경남 창원 성산/의창의 경우 한국항공우주(KAI)의 본사가 소재한 사천과의 접근성을 비롯해 한화에어로스페이스의 창원본사 및 창원1/2/3사업장이 위치해있다는 점이 주요한 원인이라고 할 수 있는데, 이는 제조업 중심 국가인 대한민국에서 반도체, 군수, 바이오 산업이 현재 대한민국 경제를 이끌어가는 주 축이기 때문입니다.
+      </p>
+      <p>즉, 지방에서 사람들이 집을 구하는 경우에는 사람들의 결론은 두 가지로 나뉜다고 볼 수 있게 되는데,</p>
+      <ol class="analysis-highlight-list">
+        <li><strong>학군 소재지로 자녀 교육에 유리한 지역이거나</strong></li>
+        <li><strong>아니면 현재 주축 산업의 주 사업장과 자택이 근접한 지역이거나</strong></li>
+      </ol>
+      <p>라는 추론이 가능하게 됩니다.</p>
+    `,
+    regulationHtml: `
+      <p>
+        그렇다면, 수도권으로 몰리는 이유는 비교적 명확해졌습니다. 그런데, 왜 여전히 서울 내 집 마련은 꿈이라고 다들 표현하는 것일까요? 그 문제를 들여다보기 위해, 저희는 정권별 주택매매거래량과 집값 상승률을 확인해보기로 했습니다. 먼저 보여드리는 지표는 정권별 주택매매거래량입니다.
+      </p>
+      <p class="chart-intro-text">정권별 버튼을 선택하면 해당 정권 시기 동안의 주택매매거래량을 확인할 수 있습니다. 횡스크롤을 통해 상세 변동 내역을 확인할 수 있습니다.</p>
+      <div class="interactive-chart transaction-volume-chart" data-transaction-volume-chart data-lang="ko"></div>
+      <p>
+        세로선은 정권별 부동산 정책 발표에 관한 내용입니다. 빨간 선은 부동산 규제 강화, 파란 선은 부동산 규제 완화, 회색 선은 부동산 규제 중 주택 구매와 연관 없는 규제인 경우입니다.
+      </p>
+      <p>
+        여기서 특기할 만한 공통점이 존재하는데, 규제 완화 시기에는 주택 거래량이 상승하는 기조를 보였으며, 규제 강화 시기에는 강화 직후 한동안은 주택 거래량이 감소하는 기조를 보인다는 점입니다. 그리고, 규제 강화 이후에 주택 거래량 감소 시기를 지나고 나면, 거래량이 다시 증가하는 시기가 도래한다는 점 또한 공통적인 패턴을 보입니다. 이 점을 잘 기억해 두시고 다음으로 중소형 평형 매매평균가를 확인해보겠습니다.
+      </p>
+      <p class="chart-intro-text">정권별 버튼을 선택하면 해당 정권 시기 동안의 중소형 평형 매매평균가를 확인할 수 있습니다. 횡스크롤을 통해 상세 변동 내역을 확인할 수 있습니다.</p>
+      <div class="interactive-chart area-price-chart" data-area-price-chart data-lang="ko"></div>
+      <p>
+        중소형 평형 매매평균가를 보는 경우, 대체로 규제가 강화되는 시기에는 거래량이 일시적으로 떨어지긴 하지만, 그 시기동안 집값이 상승 기조를 보인다는 점을 알 수 있습니다. 이제 중소형 평형 매매평균가와 주택매매거래량을 같이 겹쳐놓고 비교를 해야 하는데, 그 이전에 부동산 규제의 형태에 대해 적어드리겠습니다.
+      </p>
+      <p>
+        부동산 정책은 보통 발표 이후 시행까지 약간의 유예를 두게 됩니다. 예를 들어, 6월 8일에 부동산 정책을 발표하면 실제 시행은 8월 혹은 9월에 시행된다던가와 같은 방식을 취하는데, 지금까지의 부동산 정책에서 규제가 강화되는 시점에는 항상 공통점이 있었습니다. 바로 DSR, LTV, DTI 비율에 대한 조정을 통한 규제 강화입니다. 이 비율을 조정하게 되면, 주택 구매 자금을 조달하는 주 방식인 대출 시장에 크게 영향을 끼치게 되는데, DSR, LTV, DTI라는 용어에 대해 설명을 드리겠습니다.
+      </p>
+      <div class="definition-box">
+        <p><strong>DSR:</strong> 총부채원리금상환비율, 채무자의 연간 소득에서 각종 금융 부채의 연간 원리금 상환액이 차지하는 비율. 은행, 카드사, 캐피탈사 등 여신금융을 취급하는 금융기관은 개인 당 대출을 실행할 때 정부에서 지정한 DSR 비율 내에서만 대출을 실행하여야 한다. DSR 산정에는 개인신용대출, 학자금대출, 장기카드대출, 주택담보대출 등의 모든 여신거래를 더한다.</p>
+        <p><strong>LTV:</strong> 담보인정비율, 물건의 가치 대비, 해당 물건을 담보로 빌릴 수 있는 돈의 비율을 뜻한다. 예를 들어, 어떤 부동산의 가치가 10억이고 LTV가 80%인 경우, 해당 부동산을 담보로 최대 8억까지 대출이 가능한 것이다.</p>
+        <p><strong>DTI:</strong> 총부채상환비율, 차입자의 소득에 대한 부채의 비율로, 차입자의 소득으로 연간 상환액(대출이자와 원금)을 나눈 값을 뜻한다. 산정 공식은 (DTI 비율) = (총 대출금액 + 총 대출이자) / (차입자의 소득 * 대여 연수)로 산정되는데, 보통 DSR보다 DTI가 조금 더 범위가 넓게 나오는 편이다.</p>
+      </div>
+      <p>
+        정부는 가계부채 억제 및 주택 가격 안정화를 명목으로 주택담보대출에 대출규제를 적용하여 다주택자들의 주택 판매를 유도합니다. 다만, 대부분의 주택 실수요자들은 주택 구매를 위해 거의 필연적인 수준으로 주택담보대출을 이용하게 되는데, 부동산 정책이 대출규제 강화로 이어지는 경우 정책 시행 이전까지 유예기간이 주어지기 때문에 최대한 유리한 조건으로 대출을 받아 주택 구매를 진행하기 위해 실수요자들은 구매를 서두르게 됩니다.
+      </p>
+      <p>
+        여기서 가장 기초적인 시장의 수요와 공급의 원칙이 작용하는데, 시장에서 공급이 일정하면 수요가 몰리면서 가격이 상승하게 됩니다. 만약, 여기서 공급이 더 줄어든다면 주택 가격은 어떻게 될 것인가라는 질문을 던진다면, 답은 명확해집니다.
+      </p>
+      <div class="question-callout"><p class="question-line"><strong>"주택 가격이 상승한다."</strong></p></div>
+      <p>
+        대출 규제를 시행하면서 주택 보유자들은 시장에 주택 매물을 내놓지 않게 되고, 수요가 몰리는 관계로 자연스럽게 가격이 상승하면서 부동산 가격이 지속적으로 인상되게 된 것입니다.
+      </p>
+    `,
+    conclusionHtml: `
+      <p>
+        결국, 집값 불균형을 해소하기 위한 가장 단순한 방법은 서울 내 주택 공급매물 확대라고 할 수 있는데, 이는 곧 노후 주택에 대한 재건축 지원 등 및 가로주택정비사업 지원 확대 등의 정책이 필요하고, 규제 완화를 통해 주택 실수요자들의 차주 단위 주택 구매자금 유동성 확보가 시행되어야 한다라는 결론을 내리게 됩니다.
+      </p>
+      <p>이에 따라 저희는 다음과 같은 정책 공급안을 제시하며 본 프로젝트를 마감하고자 합니다.</p>
+      <ol class="analysis-highlight-list">
+        <li><strong>서울 내 노후 주택에 대한 재건축 및 리모델링 사업 적극적 확대 및 신속 진행 지원</strong></li>
+        <li><strong>DSR 비율 완화와 LTV 비율 인상 등의 정책 완화를 통한 주택 실수요자 대상 주택 구매자금 유동성 확보 지원</strong></li>
+      </ol>
+    `
+  },
+  en: {
+    capitalAccess:
+      "The common feature of these areas is that they either have strong access to Seoul or have already formed a self-sustaining local structure. Songdo International City, Cheongna International City, and Dongtan New Town have built economic zones that can function within their own areas. Ilsan New Town, Sanbon New Town, Jungdong New Town, Gwanggyo New Town, Pyeongchon New Town, the Suji development area, and Gwacheon are strong mainly because of their access to Seoul. Bundang New Town and Pangyo New Town are especially notable because they satisfy both conditions: access to Seoul and self-sufficiency.",
+    localHtml: `
+      <p>
+        The major local regions selected here are Daegu Suseong-gu, Daejeon Yuseong-gu, Daejeon Seo-gu, Ulsan Nam-gu, Sejong, Cheongju Heungdeok-gu, Changwon Seongsan-gu, Changwon Uichang-gu, and Busan Haeundae-gu. These nine regions generally record relatively high housing prices compared with their surrounding areas. Our analysis suggests that they can be broadly divided into two cases.
+      </p>
+      <p>
+        The first case is related to education. Daegu Suseong-gu, Daejeon Yuseong-gu, Daejeon Seo-gu, Ulsan Nam-gu, and Busan Haeundae-gu fall into this category. A common feature of these regions is their strong educational demand, which is also intuitively connected to the number of private academies located there.
+      </p>
+      <p>
+        As shown in the graph above, local municipalities outside the capital area have an average of 317 private academies. By contrast, Daegu Suseong, Daejeon Yuseong, Daejeon Seo, Ulsan Nam, and Busan Haeundae have far more academies than the local average. Because housing prices differ between these academy-heavy districts and other areas, the first inference is that in local regions, housing-price growth may be difficult without a strong school-district factor.
+      </p>
+      <p>
+        The second case is related to specific industries. Sejong, Cheongju Heungdeok-gu, Changwon Seongsan-gu, and Changwon Uichang-gu are examples. Sejong hosts many central government ministries and agencies. Cheongju Heungdeok is connected to SK hynix's Cheongju FAB and the Osong Bio-Health Science Technopolis. Changwon Seongsan and Uichang benefit from access to Sacheon, where Korea Aerospace Industries is headquartered, as well as Hanwha Aerospace's Changwon headquarters and Plant 1/2/3. These factors matter because semiconductors, defense, and bio industries are key pillars of Korea's manufacturing-centered economy.
+      </p>
+      <p>In other words, when people look for homes in local regions, the conclusion tends to split into two paths:</p>
+      <ol class="analysis-highlight-list">
+        <li><strong>an area advantageous for children's education because it is a school-district location</strong></li>
+        <li><strong>or an area where the home is close to a major workplace in a current core industry</strong></li>
+      </ol>
+      <p>This is the inference suggested by the data.</p>
+    `,
+    regulationHtml: `
+      <p>
+        The reason people concentrate in the capital area has now become relatively clear. But why do people still describe buying a home in Seoul as a dream? To examine that question, we looked at housing transaction volume and housing-price growth by administration. The first indicator is housing transaction volume by administration.
+      </p>
+      <p class="chart-intro-text">Select an administration button to view housing transaction volume during that administration. Use horizontal scrolling to inspect detailed changes.</p>
+      <div class="interactive-chart transaction-volume-chart" data-transaction-volume-chart data-lang="en"></div>
+      <p>
+        The vertical lines mark real-estate policy announcements by administration. Red lines indicate stricter real-estate regulation, blue lines indicate easing or support measures, and gray lines indicate regulations that are not directly related to home purchases.
+      </p>
+      <p>
+        A notable pattern appears here: during periods of regulatory easing, housing transaction volume tended to rise, while after stricter regulations were announced, transaction volume tended to decline for a while. After that decline, transaction volume often rose again. Keep this pattern in mind as we next examine average sale prices for small-to-medium unit sizes.
+      </p>
+      <p class="chart-intro-text">Select an administration button to view average sale prices for small-to-medium unit sizes during that administration. Use horizontal scrolling to inspect detailed changes.</p>
+      <div class="interactive-chart area-price-chart" data-area-price-chart data-lang="en"></div>
+      <p>
+        Looking at average sale prices for small-to-medium units, transaction volume often falls temporarily when regulations are strengthened, yet housing prices tend to continue rising during that period. Before comparing transaction volume and average sale prices together, we first explain the form that real-estate regulation usually takes.
+      </p>
+      <p>
+        Real-estate policies usually leave a short grace period between announcement and enforcement. For example, a policy announced on June 8 may take effect in August or September. Across past tightening periods, one common feature has repeatedly appeared: tighter rules through adjustments to DSR, LTV, and DTI ratios. Because these ratios strongly affect the mortgage market, which is the main funding channel for home purchases, we explain the terms below.
+      </p>
+      <div class="definition-box">
+        <p><strong>DSR:</strong> Debt Service Ratio. This is the share of a borrower's annual income used to repay principal and interest on financial debt. Financial institutions such as banks, card companies, and capital firms must keep each borrower's lending within the DSR ratio set by the government. DSR includes credit loans, student loans, long-term card loans, mortgages, and other credit transactions.</p>
+        <p><strong>LTV:</strong> Loan-to-Value ratio. This means the percentage of an asset's value that can be borrowed using that asset as collateral. If a property is worth 1 billion KRW and the LTV is 80%, up to 800 million KRW can be borrowed against that property.</p>
+        <p><strong>DTI:</strong> Debt-to-Income ratio. This measures debt relative to the borrower's income by comparing annual repayments with income. It is generally calculated as total loan principal plus interest divided by the borrower's income multiplied by the loan period, and it often allows a somewhat wider range than DSR.</p>
+      </div>
+      <p>
+        The government applies mortgage restrictions in the name of reducing household debt and stabilizing housing prices, encouraging multi-home owners to sell. However, most end users almost inevitably rely on mortgages when purchasing homes. When a policy leads to tighter lending rules, the grace period before enforcement encourages buyers to hurry so they can secure financing under more favorable conditions.
+      </p>
+      <p>
+        This is where the basic principle of supply and demand operates. If supply is fixed and demand concentrates, prices rise. If supply decreases even further, the answer to what happens to housing prices becomes clear.
+      </p>
+      <div class="question-callout"><p class="question-line"><strong>"Housing prices rise."</strong></p></div>
+      <p>
+        As lending restrictions are implemented, homeowners become less willing to put homes on the market. Demand remains concentrated, prices rise naturally, and real-estate prices continue to increase.
+      </p>
+    `,
+    conclusionHtml: `
+      <p>
+        Ultimately, the simplest way to ease housing-price imbalance is to expand the supply of homes available in Seoul. This points to policies such as support for reconstruction of aging housing, broader support for small-block housing renewal projects, and regulatory easing that secures home-purchase liquidity for genuine end-user buyers.
+      </p>
+      <p>Accordingly, we close this project by proposing the following policy directions.</p>
+      <ol class="analysis-highlight-list">
+        <li><strong>Actively expand and accelerate reconstruction and remodeling projects for aging housing in Seoul</strong></li>
+        <li><strong>Secure purchase-fund liquidity for genuine home buyers through eased DSR ratios and higher LTV ratios</strong></li>
+      </ol>
+    `
+  }
+};
+
+function removeSiblingRange(start, endExclusive) {
+  let current = start;
+  while (current && current !== endExclusive) {
+    const next = current.nextElementSibling;
+    current.remove();
+    current = next;
+  }
+}
+
+function createFragmentFromHtml(html) {
+  const template = document.createElement("template");
+  template.innerHTML = html.trim();
+  return template.content;
+}
+
+function syncAnalysisNarrative() {
+  const lang = getPageLang();
+  const copy = analysisNarrative[lang] || analysisNarrative.en;
+  const gapTitle = document.querySelector("#analysis-gap");
+  const regulationsTitle = document.querySelector("#analysis-regulations");
+  const conclusionTitle = document.querySelector("#analysis-conclusion");
+
+  if (gapTitle) {
+    const staleSeoulContent = gapTitle.previousElementSibling;
+    if (staleSeoulContent?.matches(".content")) staleSeoulContent.remove();
+  }
+
+  const capitalChart = document.querySelector('[data-comparison-chart][data-comparison-type="capital"]');
+  const reasonBox = capitalChart?.nextElementSibling?.nextElementSibling;
+  if (reasonBox?.matches(".reason-box")) {
+    const capitalParagraph = syncParagraphAfter(reasonBox, "[data-capital-access-analysis]", copy.capitalAccess, (element) => {
+      element.dataset.capitalAccessAnalysis = "";
+    });
+    capitalParagraph.className = "";
+    const staleCapitalPlaceholder = capitalParagraph.nextElementSibling;
+    if (staleCapitalPlaceholder?.tagName === "P" && /^\((향후 추가 예정|To be added)\)$/.test(staleCapitalPlaceholder.textContent.trim())) {
+      staleCapitalPlaceholder.remove();
+    }
+  }
+
+  const localChart = document.querySelector('[data-comparison-chart][data-comparison-type="local"]');
+  if (localChart && regulationsTitle) {
+    removeSiblingRange(localChart.nextElementSibling, regulationsTitle);
+    localChart.after(createFragmentFromHtml(copy.localHtml));
+  }
+
+  if (regulationsTitle && conclusionTitle) {
+    removeSiblingRange(regulationsTitle.nextElementSibling, conclusionTitle);
+    regulationsTitle.after(createFragmentFromHtml(copy.regulationHtml));
+  }
+
+  if (conclusionTitle) {
+    conclusionTitle.parentElement.querySelectorAll("[data-synced-conclusion]").forEach((element) => element.remove());
+    removeSiblingRange(conclusionTitle.nextElementSibling, null);
+    conclusionTitle.after(createFragmentFromHtml(copy.conclusionHtml));
+    let current = conclusionTitle.nextElementSibling;
+    while (current) {
+      current.dataset.syncedConclusion = "";
+      current = current.nextElementSibling;
+    }
+  }
+}
+
 const chartText = {
   ko: {
     average: "1년 평균 거래 가격",
@@ -1513,6 +1719,14 @@ function syncRegulationTransactionChart() {
   const sectionTitle = document.querySelector("#analysis-regulations");
   if (!sectionTitle) return;
   const lang = getPageLang(sectionTitle);
+  const section = sectionTitle.parentElement;
+  const existingTransactionChart = section?.querySelector("[data-transaction-volume-chart]");
+  const existingAreaPriceChart = section?.querySelector("[data-area-price-chart]");
+  if (existingTransactionChart && existingAreaPriceChart) {
+    existingTransactionChart.dataset.lang = lang;
+    existingAreaPriceChart.dataset.lang = lang;
+    return;
+  }
   const transactionChart = ensureElementAfter(sectionTitle, "[data-transaction-volume-chart]", "div", (element) => {
     element.className = "interactive-chart transaction-volume-chart";
     element.dataset.transactionVolumeChart = "";
@@ -1978,6 +2192,7 @@ function syncSeoulGrowthSection() {
 
 function initPage() {
   syncStaticBodySections();
+  syncAnalysisNarrative();
   updateHeader();
   updateStage();
   maybeStartCounters();

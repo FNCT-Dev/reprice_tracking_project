@@ -1908,6 +1908,48 @@ figcaption {
   margin: 12px 0;
 }
 
+.definition-box {
+  display: grid;
+  gap: 0;
+  margin: 20px 0 26px;
+  border: 1px solid var(--line);
+  background: #ffffff;
+}
+
+.definition-box p {
+  margin: 0;
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--line);
+  color: #26313c;
+  font-size: 14px;
+  line-height: 1.65;
+}
+
+.definition-box p:last-child {
+  border-bottom: 0;
+}
+
+.definition-box strong,
+.analysis-highlight-list strong {
+  color: #1f2c36;
+  background: linear-gradient(transparent 44%, rgba(222, 205, 126, 0.56) 44%);
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+  padding: 0 0.18em;
+  font-weight: 900;
+}
+
+.analysis-highlight-list {
+  margin: 12px 0 22px;
+  padding-left: 1.35rem;
+  color: #26313c;
+  line-height: 1.75;
+}
+
+.analysis-highlight-list li + li {
+  margin-top: 8px;
+}
+
 .line-point .line-month {
   fill: #5f6872;
   font-size: 10px;
