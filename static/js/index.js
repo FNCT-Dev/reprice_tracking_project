@@ -743,15 +743,22 @@ const grdpDonutData = {
 const seoulGrowthSectionCopy = {
   ko: {
     intro: "저희가 선정한 상급지와 하급지가 명확히 나뉘는 기준은 최근 1년간의 KB부동산 데이터 기반 서울시 실거래가 평균이 기준입니다. 이러한 기준에서 확인해보면, 강남구, 서초구, 송파구, 마포구, 용산구, 성동구, 강동구, 광진구가 상급지로 분류되며, 그 외 지역은 하급지로 분류됩니다. 해당 지역의 거래 시세를 조금 더 살펴보기 위해, 아래에서 각 지역별 최근 12개월 간 거래가 변동 추이 그래프를 보여드리고자 합니다.",
-    afterTrend: "상급지와 하급지의 거래 금액에는 차이가 꽤 있는 편입니다. 다만, 근본적으로 왜 해당 지역이 상급지가 되었는가와 왜 해당 지역이 하급지가 되었는가에 대해서 따져보게 되면, 크게 짚어봐야 할 내용은 두 가지입니다. 그 중 첫 번째인 서울특별시 2040 도시기본계획에 대해서 짚고 넘어가고자 합니다.",
+    afterTrend: "상급지와 하급지의 거래 금액에는 차이가 꽤 있는 편입니다. 다만, 근본적으로 왜 해당 지역이 상급지가 되었는가와 왜 해당 지역이 하급지가 되었는가에 대해서 따져보게 되면, 크게 짚어봐야 할 내용은 바로 서울특별시 2040 도시기본계획입니다.",
     planIntro: "도심/광역중심/지역중심 버튼을 선택하면 해당되는 기본계획 구역에 점의 형태로 강조표시가 생깁니다. 상급지 강조 스위치를 눌러 상급지 지역을 강조처리한 다음 각 버튼을 눌러가며 비교해보세요.",
-    cloneTitle: "서울 2040 도시기본계획과 상급지 간 연관성 비교"
+    cloneTitle: "서울 2040 도시기본계획과 상급지 간 연관성 비교",
+    planAnalysis: [
+      "서울 2040 도시기본계획은 서울시를 3도심, 7광역중심, 12지역중심으로 나누어 권역별 균형개발을 활성화하는 취지에서 세워진 도시기본계획입니다. 상급지 강조를 켜고 3도심과 7광역중심을 켜면, 상급지로 지목된 지역과 3도심이 근교에 위치해 있음을 확인할 수 있습니다. 3도심 중 강남 권역에는 강남, 서초, 송파, 강동, 용산, 성동, 광진이 인접한 위치로 배치되어 있고, 서울 도심 권역에는 마포, 용산, 성동이 인접하게 배치되어 있으며, 영등포/여의도 권역에는 마포, 용산이 인접함을 알 수 있습니다. 이는 7광역중심 중 상급지에 인접한 권역이 4권역이라는 점에서도 두드러지는 부분인데, 실제로 7광역중심 중 상암/수색, 용산, 잠실 권역이 해당 상급지 내에 위치해 있다는 점은 이를 뒷받침합니다. 12지역중심까지 들여다볼 경우, 더 극명하게 드러나는 부분이 있는데, 상급지 내에 직접적으로 위치한 12지역중심은 신촌, 마포/공덕, 성수, 천호/길동, 수서/문정, 상급지에 인접한 12지역중심은 동대문, 사당/이수라는 점이 상급지가 상급지로 기능할 수 있는 개발지형도적 가치를 보여줍니다.",
+      "실제로 3도심 중 강남은 서울 내 IT 산업의 핵심 중추로, 서울 도심은 서울 원도심으로서의 역사적 지위를 통한 국제문화교류 및 관광 중심지로서의 역할과 동시에 대기업 HQ들의 소재지, 그리고 영등포/여의도 권역은 서울, 더 나아가 대한민국 금융업의 핵심 중추로 기능한다는 점이 특기할만한 사항입니다. 그리고 7광역중심 중 청량리/왕십리 쪽은 서울 동부의 철도교통 거점, 잠실은 롯데그룹의 본진이며 롯데월드 어드벤쳐 서울, 롯데월드타워 등의 요소들로 서울의 관광지로 기능하는 동시에 서울 MICE 산업의 새 중심지, 용산은 구 용산 미군기지의 재개발을 통한 새로운 글로벌 업무지구 육성의 중추이자 윤석열 정권에서 대통령 집무실로 기능했던 이력이 있는 정치적 기능지, 상암/수색은 MBC, 중앙일보/JTBC, CJ ENM의 본사 등을 위시한 한국 언론 및 방송산업의 새로운 거점으로 기능한다는 점이 특기할만한 사항입니다.",
+      "이러한 점에서 상급지들은 공통적으로 특정 산업의 중추로 기능하는 지역에서 접근성이 좋다는 공통점을 지닌다는 점을 알 수 있으며, 이를 통해 서울 주요 산업 거점구역의 접근성이 상급지와 하급지의 분류에 영향을 준다고 추론해볼 수 있습니다.",
+      "그리고, 상급지로 강조표시된 구역을 보면 하나 특기할만한 사항이 있는데, 바로 한강벨트를 따라 상급지가 분포한다는 점에 있습니다. 실제로 한강 이남에 위치한 상급지인 서초, 강남, 송파, 강동과 한강 이북에 위치한 상급지인 마포, 용산, 성동, 광진을 보면 공통점이 있습니다. 바로 한강변에 위치한 행정구라는 점인데, 실제로 서울에서 한강벨트에 접하지 않은 지역인 한강 이남지역의 구로, 금천, 관악, 양천과 한강 이북지역의 중, 종로, 서대문, 동대문, 중랑, 은평, 성북, 노원, 도봉, 강동을 보면 공통사항이 드러납니다. 한강벨트에 인접해있지 않다라는 점입니다. 다만, 한강벨트에 인접해있는 단지와 그렇지 않은 단지의 시세 차이가 있는 마포, 용산, 성동, 광진의 경우를 생각해본다면 한강벨트는 공통점으로 기능한다는 것 외에 특별한 의미를 부여하기에는 다소 신중할 필요가 있다라는 결론으로 귀결됩니다."
+    ]
   },
   en: {
     intro: "The distinction between the upper-tier and lower-tier areas selected here is based on Seoul's average transaction prices from KB Real Estate data over the past year. Under this standard, Gangnam-gu, Seocho-gu, Songpa-gu, Mapo-gu, Yongsan-gu, Seongdong-gu, Gangdong-gu, and Gwangjin-gu are classified as upper-tier areas, while the other districts are classified as lower-tier areas. To examine transaction prices in these areas more closely, the graph below shows the recent 12-month transaction-price trend for each district.",
     afterTrend: "There is a fairly clear gap in transaction prices between upper-tier and lower-tier areas. However, if we ask why certain areas became upper-tier and why others became lower-tier, there are two major points that need to be examined. The first is Seoul's 2040 Comprehensive Urban Plan, which we will address here.",
     planIntro: "Select the metropolitan center, regional center, or local center buttons to mark the corresponding Seoul 2040 planning areas with dots. Turn on the upper-tier highlight switch, then compare the highlighted districts with each center layer.",
-    cloneTitle: "Comparison Between the Seoul 2040 Comprehensive Urban Plan and Upper-Tier Areas"
+    cloneTitle: "Comparison Between the Seoul 2040 Comprehensive Urban Plan and Upper-Tier Areas",
+    planAnalysis: []
   }
 };
 
@@ -1941,6 +1948,26 @@ function syncSeoulGrowthSection() {
     setupSeoulGrowthPlanMap(clonedHeatmap, lang);
     planIntro.after(clonedHeatmap);
   }
+
+  const clonedHeatmap = planIntro.nextElementSibling && planIntro.nextElementSibling.matches("[data-seoul-growth-clone]")
+    ? planIntro.nextElementSibling
+    : null;
+  if (!clonedHeatmap) return;
+
+  const analysisCopy = copy.planAnalysis || [];
+  let analysis = clonedHeatmap.nextElementSibling;
+  if (!analysisCopy.length) {
+    if (analysis && analysis.matches("[data-seoul-plan-analysis]")) analysis.remove();
+    return;
+  }
+
+  if (!analysis || !analysis.matches("[data-seoul-plan-analysis]")) {
+    analysis = document.createElement("div");
+    analysis.className = "content seoul-plan-analysis";
+    analysis.dataset.seoulPlanAnalysis = "";
+    clonedHeatmap.after(analysis);
+  }
+  analysis.innerHTML = analysisCopy.map((paragraph) => `<p>${paragraph}</p>`).join("");
 }
 
 function initPage() {
