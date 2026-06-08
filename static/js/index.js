@@ -7,6 +7,11 @@ const stage = document.querySelector(".scroll-stage");
 const counters = Array.from(document.querySelectorAll("[data-count]"));
 let countersStarted = false;
 
+function getPageLang(element = null) {
+  const explicitLang = element?.dataset?.lang || document.documentElement.lang || "en";
+  return explicitLang.startsWith("ko") ? "ko" : "en";
+}
+
 const chartText = {
   ko: {
     average: "1년 평균 거래 가격",
@@ -1158,21 +1163,27 @@ function syncAcademyCountChart() {
   const sectionTitle = document.querySelector("#analysis-gap");
   if (!sectionTitle) return;
 
-  let current = sectionTitle.nextElementSibling;
+  const localChart = sectionTitle.parentElement?.querySelector('[data-comparison-chart][data-comparison-type="local"]');
+  if (!localChart) return;
+
+  const followingParagraphs = [];
+  let current = localChart.nextElementSibling;
   while (current && !current.matches(".analysis-subtitle")) {
-    if (current.matches("p") && current.textContent.includes("학원의 갯수")) {
-      if (!current.nextElementSibling || !current.nextElementSibling.matches("[data-academy-count-chart]")) {
-        const chart = document.createElement("div");
-        chart.className = "interactive-chart";
-        chart.dataset.comparisonChart = "";
-        chart.dataset.comparisonType = "academy";
-        chart.dataset.lang = "ko";
-        chart.dataset.academyCountChart = "";
-        current.after(chart);
-      }
-      return;
-    }
+    if (current.matches("p")) followingParagraphs.push(current);
+    if (followingParagraphs.length >= 2) break;
     current = current.nextElementSibling;
+  }
+  const insertionTarget = followingParagraphs[1];
+  if (!insertionTarget) return;
+
+  if (!insertionTarget.nextElementSibling || !insertionTarget.nextElementSibling.matches("[data-academy-count-chart]")) {
+    const chart = document.createElement("div");
+    chart.className = "interactive-chart";
+    chart.dataset.comparisonChart = "";
+    chart.dataset.comparisonType = "academy";
+    chart.dataset.lang = getPageLang(localChart);
+    chart.dataset.academyCountChart = "";
+    insertionTarget.after(chart);
   }
 }
 
@@ -1438,7 +1449,7 @@ function initAreaPriceCharts() {
 function syncRegulationTransactionChart() {
   const sectionTitle = document.querySelector("#analysis-regulations");
   if (!sectionTitle) return;
-  const lang = document.documentElement.lang === "ko" ? "ko" : "en";
+  const lang = getPageLang(sectionTitle);
   let transactionChart = sectionTitle.nextElementSibling;
   if (!transactionChart || !transactionChart.matches("[data-transaction-volume-chart]")) {
     transactionChart = document.createElement("div");
@@ -1869,7 +1880,7 @@ function syncSeoulGrowthSection() {
     .find((chart) => chart.querySelector(".seoul-map-widget"));
   if (!lineChart || !sourceHeatmap) return;
 
-  const lang = lineChart.dataset.lang || "en";
+  const lang = getPageLang(lineChart);
   const copy = seoulGrowthSectionCopy[lang] || seoulGrowthSectionCopy.en;
   const lineIntro = lineChart.previousElementSibling;
   const setupParagraph = lineIntro && lineIntro.previousElementSibling;
