@@ -151,7 +151,7 @@ const analysisNarrative = {
         결국, 집값 불균형을 해소하기 위한 가장 단순한 방법은 서울 내 주택 공급매물 확대라고 할 수 있는데, 이는 곧 노후 주택에 대한 재건축 지원 등 및 가로주택정비사업 지원 확대 등의 정책이 필요하고, 규제 완화를 통해 주택 실수요자들의 차주 단위 주택 구매자금 유동성 확보가 시행되어야 한다라는 결론을 내리게 됩니다.
       </p>
       <p>이에 따라 저희는 다음과 같은 정책 공급안을 제시하며 본 프로젝트를 마감하고자 합니다.</p>
-      <ol class="analysis-highlight-list">
+      <ol class="analysis-highlight-list policy-highlight-list">
         <li><strong>서울 내 노후 주택에 대한 재건축 및 리모델링 사업 적극적 확대 및 신속 진행 지원</strong></li>
         <li><strong>DSR 비율 완화와 LTV 비율 인상 등의 정책 완화를 통한 주택 실수요자 대상 주택 구매자금 유동성 확보 지원</strong></li>
       </ol>
@@ -221,7 +221,7 @@ const analysisNarrative = {
         Ultimately, the simplest way to ease housing-price imbalance is to expand the supply of homes available in Seoul. This points to policies such as support for reconstruction of aging housing, broader support for small-block housing renewal projects, and regulatory easing that secures home-purchase liquidity for genuine end-user buyers.
       </p>
       <p>Accordingly, we close this project by proposing the following policy directions.</p>
-      <ol class="analysis-highlight-list">
+      <ol class="analysis-highlight-list policy-highlight-list">
         <li><strong>Actively expand and accelerate reconstruction and remodeling projects for aging housing in Seoul</strong></li>
         <li><strong>Secure purchase-fund liquidity for genuine home buyers through eased DSR ratios and higher LTV ratios</strong></li>
       </ol>
@@ -979,8 +979,8 @@ const transactionVolumeData = {
   label: { ko: "Housing Transaction Volume", en: "Housing Transaction Volume" },
   title: { ko: "정권별 주택매매거래량 비교", en: "Housing Transaction Volume by Administration" },
   description: {
-    ko: "2014.03부터 2026.03까지의 주택매매거래량을 수도권과 지방으로 나누어 비교합니다.",
-    en: "Compares housing transaction volume in the capital area and local regions from Mar. 2014 to Mar. 2026."
+    ko: "",
+    en: ""
   },
   lineTitle: { ko: "전체 기간 직선그래프", en: "Full-Period Line Chart" },
   footnote: {
@@ -1026,8 +1026,8 @@ const areaPriceData = {
   label: { ko: "Mid-Small Unit Price", en: "Mid-Small Unit Price" },
   title: { ko: "중소형 평형 매매평균가 비교", en: "Average Sale Price for Mid-Small Unit Sizes" },
   description: {
-    ko: "전용면적별 매매평균가 중 중소형 평형만 사용하여 서울, 수도권, 지방 평균 가격을 비교합니다.",
-    en: "Compares average sale prices for mid-small unit sizes across Seoul, the capital area, and local regions."
+    ko: "",
+    en: ""
   },
   lineTitle: { ko: "중소형 평형 매매평균가", en: "Mid-Small Unit Average Sale Price" },
   footnote: {
@@ -1700,6 +1700,7 @@ function drawAreaPriceLineChart(container, lang, period) {
 function renderTransactionVolumeChart(chart, selectedPeriodId = "all") {
   const lang = chart.dataset.lang || "en";
   const period = getTransactionPeriod(selectedPeriodId);
+  const description = transactionVolumeData.description[lang];
 
   chart.innerHTML = `
     <div class="chart-head">
@@ -1712,7 +1713,7 @@ function renderTransactionVolumeChart(chart, selectedPeriodId = "all") {
       ${transactionVolumeData.periods.map((item) => `<button class="map-view-button ${item.id === period.id ? "is-active" : ""}" type="button" data-period="${item.id}" aria-pressed="${item.id === period.id}">${item.name[lang]}</button>`).join("")}
     </div>
     <div class="transaction-chart-block">
-      <p class="chart-intro-text">${transactionVolumeData.description[lang]}</p>
+      ${description ? `<p class="chart-intro-text">${description}</p>` : ""}
       <div class="transaction-legend">
         ${transactionVolumeData.series.map((series) => `<span><i style="--legend-color: ${series.color}"></i>${series.name[lang]}</span>`).join("")}
       </div>
@@ -1728,6 +1729,7 @@ function renderTransactionVolumeChart(chart, selectedPeriodId = "all") {
 function renderAreaPriceChart(chart, selectedPeriodId = "all") {
   const lang = chart.dataset.lang || "en";
   const period = getTransactionPeriod(selectedPeriodId);
+  const description = areaPriceData.description[lang];
 
   chart.innerHTML = `
     <div class="chart-head">
@@ -1740,7 +1742,7 @@ function renderAreaPriceChart(chart, selectedPeriodId = "all") {
       ${transactionVolumeData.periods.map((item) => `<button class="map-view-button ${item.id === period.id ? "is-active" : ""}" type="button" data-period="${item.id}" aria-pressed="${item.id === period.id}">${item.name[lang]}</button>`).join("")}
     </div>
     <div class="transaction-chart-block area-price-chart-block">
-      <p class="chart-intro-text">${areaPriceData.description[lang]}</p>
+      ${description ? `<p class="chart-intro-text">${description}</p>` : ""}
       <div class="transaction-legend">
         ${areaPriceData.series.map((series) => `<span><i style="--legend-color: ${series.color}"></i>${series.name[lang]}</span>`).join("")}
       </div>

@@ -1950,6 +1950,16 @@ figcaption {
   margin-top: 8px;
 }
 
+.policy-highlight-list {
+  margin-top: 18px;
+  font-size: clamp(20px, 2.1vw, 28px);
+  line-height: 1.65;
+}
+
+.policy-highlight-list li + li {
+  margin-top: 14px;
+}
+
 .line-point .line-month {
   fill: #5f6872;
   font-size: 10px;
