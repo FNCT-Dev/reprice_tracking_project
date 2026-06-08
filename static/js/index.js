@@ -1208,14 +1208,8 @@ function getDaysInMonth(year, month) {
   return new Date(year, month, 0).getDate();
 }
 
-function getTransactionPeriodIndexes(period) {
-  return transactionVolumeData.months
-    .map((month, index) => ({ month, index }))
-    .filter((item) => item.month >= period.start && item.month <= period.end);
-}
-
-function getAreaPricePeriodIndexes(period) {
-  return areaPriceData.months
+function getPeriodIndexes(months, period) {
+  return months
     .map((month, index) => ({ month, index }))
     .filter((item) => item.month >= period.start && item.month <= period.end);
 }
@@ -1244,101 +1238,34 @@ function getPolicyMarkerColor(policy) {
   return "#7b8794";
 }
 
-function drawTransactionLineChart(container, lang, period) {
-  const visibleIndexes = getTransactionPeriodIndexes(period);
-  const visibleMonths = visibleIndexes.map((item) => item.month);
-  const visibleSeries = transactionVolumeData.series.map((series) => ({
-    ...series,
-    values: visibleIndexes.map((item) => series.values[item.index])
-  }));
-  const width = Math.max(1600, visibleMonths.length * 110);
-  const height = 360;
-  const padding = { top: 34, right: 42, bottom: 54, left: 74 };
-  const plotWidth = width - padding.left - padding.right;
-  const plotHeight = height - padding.top - padding.bottom;
-  const allValues = visibleSeries.flatMap((series) => series.values);
-  const max = Math.ceil((Math.max(...allValues) * 1.12) / 10000) * 10000;
-  const yTicks = Array.from({ length: 5 }, (_, index) => {
-    const value = max - (max / 4) * index;
-    const y = padding.top + (index / 4) * plotHeight;
-    return { value, y };
-  });
-  const xLabels = visibleMonths.map((month, index) => {
-    if (index !== 0 && index !== visibleMonths.length - 1 && !month.endsWith(".01")) return "";
-    const x = padding.left + (index / Math.max(visibleMonths.length - 1, 1)) * plotWidth;
-    return `<text class="transaction-x-label" x="${x.toFixed(1)}" y="${height - 22}">${month}</text>`;
-  }).join("");
-  const yAxisNodes = yTicks.map((tick) => `
-    <g class="line-y-tick">
-      <line x1="${padding.left}" y1="${tick.y.toFixed(1)}" x2="${width - padding.right}" y2="${tick.y.toFixed(1)}"></line>
-      <text x="${padding.left - 10}" y="${(tick.y + 4).toFixed(1)}">${formatAxisVolume(tick.value, lang)}</text>
-    </g>
-  `).join("");
-  const paths = visibleSeries.map((series) => {
-    const points = series.values.map((value, index) => {
-      const x = padding.left + (index / Math.max(series.values.length - 1, 1)) * plotWidth;
-      const y = padding.top + (1 - value / max) * plotHeight;
-      return { x, y, value, month: visibleMonths[index] };
-    });
-    const path = points.map((point, index) => `${index === 0 ? "M" : "L"} ${point.x.toFixed(1)} ${point.y.toFixed(1)}`).join(" ");
-    const pointNodes = points.map((point, index) => `
-      <g class="line-point transaction-line-point" style="--point-delay: ${(260 + index * 18).toFixed(0)}ms">
-        <circle cx="${point.x.toFixed(1)}" cy="${point.y.toFixed(1)}" r="3"></circle>
-        <text x="${point.x.toFixed(1)}" y="${(point.y - 10).toFixed(1)}">${formatVolume(point.value, lang)}</text>
-      </g>
-    `).join("");
-    return `
-      <g style="--line-color: ${series.color}">
-        <path class="line-path transaction-line-path" pathLength="1" d="${path}"></path>
-        ${pointNodes}
-      </g>
-    `;
-  }).join("");
-  const policyNodes = getTransactionPolicies(period).map((policy, index) => {
-    const x = getTransactionPolicyX(policy.date, visibleMonths, padding.left, plotWidth);
-    if (x === null) return "";
-    const labelY = padding.top + 15 + (index % 3) * 16;
-    return `
-      <g class="transaction-policy-marker" style="--policy-color: ${getPolicyMarkerColor(policy)}">
-        <line x1="${x.toFixed(1)}" y1="${padding.top}" x2="${x.toFixed(1)}" y2="${height - padding.bottom}"></line>
-        <text x="${(x + 5).toFixed(1)}" y="${labelY}">${policy.date.slice(5).replace("-", ".")}</text>
-        <title>${policy.date} ${policy.name[lang]} (${policy.direction[lang]})</title>
-      </g>
-    `;
-  }).join("");
+function getLineChartScale(values, scaleConfig) {
+  if (scaleConfig.type === "zero") {
+    const max = Math.ceil((Math.max(...values) * scaleConfig.maxMultiplier) / scaleConfig.unit) * scaleConfig.unit;
+    return { min: 0, max, range: Math.max(max, 1) };
+  }
 
-  container.innerHTML = `
-    <svg viewBox="0 0 ${width} ${height}" role="img" focusable="false" aria-label="${transactionVolumeData.title[lang]} line chart" style="width: ${width}px; height: 380px;">
-      ${yAxisNodes}
-      <line class="line-axis" x1="${padding.left}" y1="${height - padding.bottom}" x2="${width - padding.right}" y2="${height - padding.bottom}"></line>
-      <line class="line-axis" x1="${padding.left}" y1="${padding.top}" x2="${padding.left}" y2="${height - padding.bottom}"></line>
-      ${policyNodes}
-      ${paths}
-      ${xLabels}
-    </svg>
-  `;
+  const rawMin = Math.min(...values);
+  const rawMax = Math.max(...values);
+  const paddedRange = Math.max((rawMax - rawMin) * scaleConfig.rangeMultiplier, scaleConfig.minRange);
+  const step = Math.max(scaleConfig.unit, Math.ceil((paddedRange / 4) / scaleConfig.unit) * scaleConfig.unit);
+  const min = Math.max(0, Math.floor((rawMin - step * scaleConfig.paddingSteps) / step) * step);
+  const max = Math.ceil((rawMax + step * scaleConfig.paddingSteps) / step) * step;
+  return { min, max, range: Math.max(max - min, 1) };
 }
 
-function drawAreaPriceLineChart(container, lang, period) {
-  const visibleIndexes = getAreaPricePeriodIndexes(period);
+function renderPolicyLineChart(container, lang, period, config) {
+  const visibleIndexes = getPeriodIndexes(config.data.months, period);
   const visibleMonths = visibleIndexes.map((item) => item.month);
-  const visibleSeries = areaPriceData.series.map((series) => ({
+  const visibleSeries = config.data.series.map((series) => ({
     ...series,
     values: visibleIndexes.map((item) => series.values[item.index])
   }));
-  const width = Math.max(1600, visibleMonths.length * 110);
-  const height = 400;
-  const padding = { top: 42, right: 54, bottom: 62, left: 88 };
+  const width = Math.max(config.minWidth, visibleMonths.length * config.monthWidth);
+  const { height, padding } = config;
   const plotWidth = width - padding.left - padding.right;
   const plotHeight = height - padding.top - padding.bottom;
   const allValues = visibleSeries.flatMap((series) => series.values);
-  const rawMin = Math.min(...allValues);
-  const rawMax = Math.max(...allValues);
-  const paddedRange = Math.max((rawMax - rawMin) * 1.24, 10000);
-  const step = Math.max(5000, Math.ceil((paddedRange / 4) / 5000) * 5000);
-  const min = Math.max(0, Math.floor((rawMin - step * 0.7) / step) * step);
-  const max = Math.ceil((rawMax + step * 0.7) / step) * step;
-  const range = Math.max(max - min, 1);
+  const { min, max, range } = getLineChartScale(allValues, config.scale);
   const yTicks = Array.from({ length: 5 }, (_, index) => {
     const value = max - (range / 4) * index;
     const y = padding.top + (index / 4) * plotHeight;
@@ -1352,7 +1279,7 @@ function drawAreaPriceLineChart(container, lang, period) {
   const yAxisNodes = yTicks.map((tick) => `
     <g class="line-y-tick">
       <line x1="${padding.left}" y1="${tick.y.toFixed(1)}" x2="${width - padding.right}" y2="${tick.y.toFixed(1)}"></line>
-      <text x="${padding.left - 10}" y="${(tick.y + 4).toFixed(1)}">${formatAxisAreaPrice(tick.value, lang)}</text>
+      <text x="${padding.left - 10}" y="${(tick.y + 4).toFixed(1)}">${config.axisFormatter(tick.value, lang)}</text>
     </g>
   `).join("");
   const paths = visibleSeries.map((series) => {
@@ -1365,7 +1292,7 @@ function drawAreaPriceLineChart(container, lang, period) {
     const pointNodes = points.map((point, index) => `
       <g class="line-point transaction-line-point" style="--point-delay: ${(260 + index * 18).toFixed(0)}ms">
         <circle cx="${point.x.toFixed(1)}" cy="${point.y.toFixed(1)}" r="3"></circle>
-        <text x="${point.x.toFixed(1)}" y="${(point.y - 10).toFixed(1)}">${formatAreaPrice(point.value, lang)}</text>
+        <text x="${point.x.toFixed(1)}" y="${(point.y - 10).toFixed(1)}">${config.valueFormatter(point.value, lang)}</text>
       </g>
     `).join("");
     return `
@@ -1389,7 +1316,7 @@ function drawAreaPriceLineChart(container, lang, period) {
   }).join("");
 
   container.innerHTML = `
-    <svg viewBox="0 0 ${width} ${height}" role="img" focusable="false" aria-label="${areaPriceData.title[lang]} line chart" style="width: ${width}px; height: 400px;">
+    <svg viewBox="0 0 ${width} ${height}" role="img" focusable="false" aria-label="${config.title[lang]} line chart" style="width: ${width}px; height: ${config.svgHeight}px;">
       ${yAxisNodes}
       <line class="line-axis" x1="${padding.left}" y1="${height - padding.bottom}" x2="${width - padding.right}" y2="${height - padding.bottom}"></line>
       <line class="line-axis" x1="${padding.left}" y1="${padding.top}" x2="${padding.left}" y2="${height - padding.bottom}"></line>
@@ -1398,6 +1325,36 @@ function drawAreaPriceLineChart(container, lang, period) {
       ${xLabels}
     </svg>
   `;
+}
+
+function drawTransactionLineChart(container, lang, period) {
+  renderPolicyLineChart(container, lang, period, {
+    data: transactionVolumeData,
+    title: transactionVolumeData.title,
+    valueFormatter: formatVolume,
+    axisFormatter: formatAxisVolume,
+    minWidth: 1600,
+    monthWidth: 110,
+    height: 360,
+    svgHeight: 380,
+    padding: { top: 34, right: 42, bottom: 54, left: 74 },
+    scale: { type: "zero", unit: 10000, maxMultiplier: 1.12 }
+  });
+}
+
+function drawAreaPriceLineChart(container, lang, period) {
+  renderPolicyLineChart(container, lang, period, {
+    data: areaPriceData,
+    title: areaPriceData.title,
+    valueFormatter: formatAreaPrice,
+    axisFormatter: formatAxisAreaPrice,
+    minWidth: 1600,
+    monthWidth: 110,
+    height: 400,
+    svgHeight: 400,
+    padding: { top: 42, right: 54, bottom: 62, left: 88 },
+    scale: { type: "padded", unit: 5000, minRange: 10000, rangeMultiplier: 1.24, paddingSteps: 0.7 }
+  });
 }
 
 function renderTransactionVolumeChart(chart, selectedPeriodId = "all") {
