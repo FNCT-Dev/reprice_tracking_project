@@ -292,6 +292,66 @@ function syncAnalysisNarrative() {
   }
 }
 
+const notesNarrative = {
+  ko: {
+    progress:
+      "현재까지의 진행상황은 다음과 같습니다<br>: 현재 정부 규제에 따른 부동산 실거래 활성화 추이, 가계부채 대비 집값 상승률, 수도권 지역 공급 확대 가능성 분석 진행 중, 향후 심층분석을 통한 정책적 방향 확대제시 예정",
+    sources: [
+      {
+        text: "국토교통부 보도자료, 국토교통부 제공",
+        href: "https://www.molit.go.kr/USR/NEWS/m_71/lst.jsp"
+      },
+      {
+        text: "지역내총생산(GRDP) 지표 자료, 지표누리 e-나라지표, 국가데이터처 제공",
+        href: "https://www.index.go.kr/unity/potal/main/EachDtlPageDetail.do?idx_cd=1008"
+      }
+    ]
+  },
+  en: {
+    progress:
+      "Current progress is as follows:<br>: Analysis is currently in progress on real-estate transaction activity under current government regulations, housing price growth relative to household debt, and the possibility of expanding housing supply in the capital area. Future in-depth analysis will expand the proposed policy directions.",
+    sources: [
+      {
+        text: "Ministry of Land, Infrastructure and Transport press releases, provided by MOLIT",
+        href: "https://www.molit.go.kr/USR/NEWS/m_71/lst.jsp"
+      },
+      {
+        text: "Gross Regional Domestic Product (GRDP) indicator data, e-Nara Indicators, provided by the National Data Office",
+        href: "https://www.index.go.kr/unity/potal/main/EachDtlPageDetail.do?idx_cd=1008"
+      }
+    ]
+  }
+};
+
+function syncNotesSection() {
+  const notesSection = document.getElementById("notes");
+  if (!notesSection) return;
+  const lang = getPageLang(notesSection);
+  const copy = notesNarrative[lang] || notesNarrative.en;
+  const content = notesSection.querySelector(".content");
+  if (!content) return;
+
+  const progressParagraph = content.querySelector("p:nth-of-type(2)");
+  if (progressParagraph) progressParagraph.innerHTML = copy.progress;
+
+  const referenceHeading = Array.from(content.querySelectorAll("h3")).find((heading) =>
+    /^(참고 데이터 및 사이트|Reference Data and Sites)$/.test(heading.textContent.trim())
+  );
+  if (!referenceHeading) return;
+
+  copy.sources.forEach((source) => {
+    const exists = Array.from(content.querySelectorAll(`a[href="${source.href}"]`)).some(Boolean);
+    if (exists) return;
+    const paragraph = document.createElement("p");
+    paragraph.innerHTML = `${source.text} | <a href="${source.href}" target="_blank" rel="noopener">${source.href}</a>`;
+    let insertionPoint = referenceHeading;
+    while (insertionPoint.nextElementSibling && insertionPoint.nextElementSibling.tagName === "P") {
+      insertionPoint = insertionPoint.nextElementSibling;
+    }
+    insertionPoint.after(paragraph);
+  });
+}
+
 const chartText = {
   ko: {
     average: "1년 평균 거래 가격",
@@ -2193,6 +2253,7 @@ function syncSeoulGrowthSection() {
 function initPage() {
   syncStaticBodySections();
   syncAnalysisNarrative();
+  syncNotesSection();
   updateHeader();
   updateStage();
   maybeStartCounters();
