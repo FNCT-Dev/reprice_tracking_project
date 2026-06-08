@@ -12,6 +12,57 @@ function getPageLang(element = null) {
   return explicitLang.startsWith("ko") ? "ko" : "en";
 }
 
+function ensureElementAfter(anchor, selector, tagName, setup = () => {}) {
+  let element = anchor.nextElementSibling;
+  if (!element || !element.matches(selector)) {
+    element = document.createElement(tagName);
+    setup(element);
+    anchor.after(element);
+  }
+  return element;
+}
+
+function ensureElementBefore(anchor, selector, tagName, setup = () => {}) {
+  let element = anchor.previousElementSibling;
+  if (!element || !element.matches(selector)) {
+    element = document.createElement(tagName);
+    setup(element);
+    anchor.before(element);
+  }
+  return element;
+}
+
+function ensureCustomElementAfter(anchor, selector, createElement) {
+  let element = anchor.nextElementSibling;
+  if (!element || !element.matches(selector)) {
+    element = createElement();
+    anchor.after(element);
+  }
+  return element;
+}
+
+function removeNextElement(anchor, selector) {
+  const element = anchor.nextElementSibling;
+  if (element && element.matches(selector)) element.remove();
+}
+
+function syncParagraphAfter(anchor, selector, text, setup = () => {}) {
+  const paragraph = ensureElementAfter(anchor, selector, "p", setup);
+  paragraph.textContent = text;
+  return paragraph;
+}
+
+function syncContentParagraphsAfter(anchor, selector, paragraphs, setup = () => {}) {
+  if (!paragraphs.length) {
+    removeNextElement(anchor, selector);
+    return null;
+  }
+
+  const content = ensureElementAfter(anchor, selector, "div", setup);
+  content.innerHTML = paragraphs.map((paragraph) => `<p>${paragraph}</p>`).join("");
+  return content;
+}
+
 const chartText = {
   ko: {
     average: "1년 평균 거래 가격",
@@ -855,22 +906,16 @@ function getDonutSegmentPath(startAngle, endAngle, outerRadius = 50, innerRadius
 }
 
 function syncGrdpDonutCopy(chart, lang) {
-  let intro = chart.previousElementSibling;
-  if (!intro || !intro.matches(".chart-intro-text[data-grdp-donut-intro]")) {
-    intro = document.createElement("p");
-    intro.className = "chart-intro-text";
-    intro.dataset.grdpDonutIntro = "";
-    chart.before(intro);
-  }
+  const intro = ensureElementBefore(chart, ".chart-intro-text[data-grdp-donut-intro]", "p", (element) => {
+    element.className = "chart-intro-text";
+    element.dataset.grdpDonutIntro = "";
+  });
   intro.textContent = grdpDonutData.description[lang];
 
-  let analysis = chart.nextElementSibling;
-  if (!analysis || !analysis.matches(".grdp-donut-analysis[data-grdp-donut-analysis]")) {
-    analysis = document.createElement("div");
-    analysis.className = "grdp-donut-analysis";
-    analysis.dataset.grdpDonutAnalysis = "";
-    chart.after(analysis);
-  }
+  const analysis = ensureElementAfter(chart, ".grdp-donut-analysis[data-grdp-donut-analysis]", "div", (element) => {
+    element.className = "grdp-donut-analysis";
+    element.dataset.grdpDonutAnalysis = "";
+  });
   const [main, lead, question, close] = grdpDonutData.analysis[lang];
   analysis.innerHTML = `
     <p>${main}</p>
@@ -1031,13 +1076,10 @@ function renderGrdpDonutCharts() {
 }
 
 function syncComparisonIntro(chart, text) {
-  let intro = chart.previousElementSibling;
-  if (!intro || !intro.matches(".chart-intro-text[data-comparison-intro]")) {
-    intro = document.createElement("p");
-    intro.className = "chart-intro-text";
-    intro.dataset.comparisonIntro = "";
-    chart.before(intro);
-  }
+  const intro = ensureElementBefore(chart, ".chart-intro-text[data-comparison-intro]", "p", (element) => {
+    element.className = "chart-intro-text";
+    element.dataset.comparisonIntro = "";
+  });
   intro.textContent = text;
 }
 
@@ -1176,15 +1218,13 @@ function syncAcademyCountChart() {
   const insertionTarget = followingParagraphs[1];
   if (!insertionTarget) return;
 
-  if (!insertionTarget.nextElementSibling || !insertionTarget.nextElementSibling.matches("[data-academy-count-chart]")) {
-    const chart = document.createElement("div");
+  ensureElementAfter(insertionTarget, "[data-academy-count-chart]", "div", (chart) => {
     chart.className = "interactive-chart";
     chart.dataset.comparisonChart = "";
     chart.dataset.comparisonType = "academy";
     chart.dataset.lang = getPageLang(localChart);
     chart.dataset.academyCountChart = "";
-    insertionTarget.after(chart);
-  }
+  });
 }
 
 function formatVolume(value, lang) {
@@ -1450,22 +1490,19 @@ function syncRegulationTransactionChart() {
   const sectionTitle = document.querySelector("#analysis-regulations");
   if (!sectionTitle) return;
   const lang = getPageLang(sectionTitle);
-  let transactionChart = sectionTitle.nextElementSibling;
-  if (!transactionChart || !transactionChart.matches("[data-transaction-volume-chart]")) {
-    transactionChart = document.createElement("div");
-    transactionChart.className = "interactive-chart transaction-volume-chart";
-    transactionChart.dataset.transactionVolumeChart = "";
-    transactionChart.dataset.lang = lang;
-    sectionTitle.after(transactionChart);
-  }
+  const transactionChart = ensureElementAfter(sectionTitle, "[data-transaction-volume-chart]", "div", (element) => {
+    element.className = "interactive-chart transaction-volume-chart";
+    element.dataset.transactionVolumeChart = "";
+    element.dataset.lang = lang;
+  });
+  transactionChart.dataset.lang = lang;
 
-  if (!transactionChart.nextElementSibling || !transactionChart.nextElementSibling.matches("[data-area-price-chart]")) {
-    const areaPriceChart = document.createElement("div");
-    areaPriceChart.className = "interactive-chart area-price-chart";
-    areaPriceChart.dataset.areaPriceChart = "";
-    areaPriceChart.dataset.lang = lang;
-    transactionChart.after(areaPriceChart);
-  }
+  const areaPriceChart = ensureElementAfter(transactionChart, "[data-area-price-chart]", "div", (element) => {
+    element.className = "interactive-chart area-price-chart";
+    element.dataset.areaPriceChart = "";
+    element.dataset.lang = lang;
+  });
+  areaPriceChart.dataset.lang = lang;
 }
 
 window.addEventListener("resize", () => {
@@ -1888,24 +1925,17 @@ function syncSeoulGrowthSection() {
     setupParagraph.textContent = copy.intro;
   }
 
-  let followup = lineChart.nextElementSibling;
-  if (!followup || !followup.matches(".content")) {
-    followup = document.createElement("div");
-    followup.className = "content";
-    lineChart.after(followup);
-  }
-  followup.innerHTML = `<p>${copy.afterTrend}</p>`;
+  const followup = syncContentParagraphsAfter(lineChart, ".content[data-seoul-growth-followup]", [copy.afterTrend], (element) => {
+    element.className = "content";
+    element.dataset.seoulGrowthFollowup = "";
+  });
 
-  let planIntro = followup.nextElementSibling;
-  if (!planIntro || !planIntro.matches("[data-seoul-plan-intro]")) {
-    planIntro = document.createElement("p");
-    planIntro.className = "chart-intro-text";
-    planIntro.dataset.seoulPlanIntro = "";
-    followup.after(planIntro);
-  }
-  planIntro.textContent = copy.planIntro;
+  const planIntro = syncParagraphAfter(followup, "[data-seoul-plan-intro]", copy.planIntro, (element) => {
+    element.className = "chart-intro-text";
+    element.dataset.seoulPlanIntro = "";
+  });
 
-  if (!planIntro.nextElementSibling || !planIntro.nextElementSibling.matches("[data-seoul-growth-clone]")) {
+  const clonedHeatmap = ensureCustomElementAfter(planIntro, "[data-seoul-growth-clone]", () => {
     const clonedHeatmap = sourceHeatmap.cloneNode(true);
     clonedHeatmap.dataset.seoulGrowthClone = "";
     const clonedTitle = clonedHeatmap.querySelector(".chart-head h3");
@@ -1914,28 +1944,13 @@ function syncSeoulGrowthSection() {
     if (clonedTitle) clonedTitle.textContent = copy.cloneTitle;
     if (clonedMap) clonedMap.dataset.mapView = "region";
     setupSeoulGrowthPlanMap(clonedHeatmap, lang);
-    planIntro.after(clonedHeatmap);
-  }
+    return clonedHeatmap;
+  });
 
-  const clonedHeatmap = planIntro.nextElementSibling && planIntro.nextElementSibling.matches("[data-seoul-growth-clone]")
-    ? planIntro.nextElementSibling
-    : null;
-  if (!clonedHeatmap) return;
-
-  const analysisCopy = copy.planAnalysis || [];
-  let analysis = clonedHeatmap.nextElementSibling;
-  if (!analysisCopy.length) {
-    if (analysis && analysis.matches("[data-seoul-plan-analysis]")) analysis.remove();
-    return;
-  }
-
-  if (!analysis || !analysis.matches("[data-seoul-plan-analysis]")) {
-    analysis = document.createElement("div");
-    analysis.className = "content seoul-plan-analysis";
-    analysis.dataset.seoulPlanAnalysis = "";
-    clonedHeatmap.after(analysis);
-  }
-  analysis.innerHTML = analysisCopy.map((paragraph) => `<p>${paragraph}</p>`).join("");
+  syncContentParagraphsAfter(clonedHeatmap, "[data-seoul-plan-analysis]", copy.planAnalysis || [], (element) => {
+    element.className = "content seoul-plan-analysis";
+    element.dataset.seoulPlanAnalysis = "";
+  });
 }
 
 function initPage() {
