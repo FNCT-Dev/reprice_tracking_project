@@ -102,6 +102,44 @@ function syncStaticBodySections() {
     const section = document.getElementById(sectionId);
     if (section) section.innerHTML = html;
   });
+  syncAuthorBlocks();
+}
+
+function getAuthorBlockHtml(lang) {
+  if (lang === "ko") {
+    return `
+      <h3>REPrice Team</h3>
+      <details class="author-group" open>
+        <summary>현 구성원</summary>
+        <p><strong>배인성</strong><br>데이터과학과, 2학년, 한국조지메이슨대학교<br>인스타그램: @in_bae_nim_hcmv</p>
+        <p><strong>최혁준</strong><br>데이터과학과, 3학년, 한국조지메이슨대학교</p>
+      </details>
+      <details class="author-group">
+        <summary>전 구성원</summary>
+        <p><strong>천수영</strong><br>경제학과, 2학년, 한국조지메이슨대학교</p>
+      </details>
+    `;
+  }
+
+  return `
+    <h3>REPrice Team</h3>
+    <details class="author-group" open>
+      <summary>Current Members</summary>
+      <p><strong>Insung Bae</strong><br>Computational &amp; Data Sciences, B.S., George Mason University Korea, Sophomore<br>Instagram: @in_bae_nim_hcmv</p>
+      <p><strong>Hyukjoon Choi</strong><br>Computational &amp; Data Sciences, B.S., George Mason University Korea, Junior</p>
+    </details>
+    <details class="author-group">
+      <summary>Former Members</summary>
+      <p><strong>Sooyeong Cheon</strong><br>Economics, B.S., George Mason University Korea, Sophomore</p>
+    </details>
+  `;
+}
+
+function syncAuthorBlocks() {
+  const lang = getPageLang();
+  document.querySelectorAll(".author-block").forEach((block) => {
+    block.innerHTML = getAuthorBlockHtml(lang);
+  });
 }
 
 const analysisNarrative = {
@@ -2583,7 +2621,7 @@ const seoulGrowthPlanTiers = {
 };
 
 function getBarAxisMax(value) {
-  const padded = value * 1.14;
+  const padded = value * 1.22;
   if (padded <= 4) return 4;
   if (padded <= 6) return 6;
   if (padded <= 8) return 8;
@@ -2598,7 +2636,7 @@ function formatGrdpValue(value, lang) {
   const trillion = value / 1000;
   return lang === "ko"
     ? `${trillion.toLocaleString("ko-KR", { maximumFractionDigits: 0 })}조 원`
-    : `KRW ${trillion.toLocaleString("en-US", { maximumFractionDigits: 0 })}T`;
+    : `₩${trillion.toLocaleString("en-US", { maximumFractionDigits: 0 })}T`;
 }
 
 function getDonutPoint(cx, cy, radius, angle) {
@@ -2865,8 +2903,8 @@ function getComparisonGapText(gap, lang, config) {
 
 function drawComparisonBars(bars, axisMax, lang, config) {
   const width = 760;
-  const height = 330;
-  const padding = { top: 34, right: 52, bottom: 58, left: 62 };
+  const height = 360;
+  const padding = { top: 58, right: 52, bottom: 58, left: 62 };
   const plotWidth = width - padding.left - padding.right;
   const plotHeight = height - padding.top - padding.bottom;
   const barWidth = 150;
@@ -3028,7 +3066,7 @@ function formatAreaPrice(value, lang) {
   const locale = lang === "ko" ? "ko-KR" : "en-US";
   return lang === "ko"
     ? `${Math.round(value).toLocaleString(locale)}만원`
-    : `KRW ${(value / 100).toLocaleString(locale, { maximumFractionDigits: 1 })}M`;
+    : `₩${(value / 100).toLocaleString(locale, { maximumFractionDigits: 1 })}M`;
 }
 
 function formatAxisAreaPrice(value, lang) {
@@ -3229,8 +3267,8 @@ function drawTransactionLineChart(container, lang, period) {
     title: transactionVolumeData.title,
     valueFormatter: formatVolume,
     axisFormatter: formatAxisVolume,
-    minWidth: 1600,
-    monthWidth: 110,
+    minWidth: 980,
+    monthWidth: 24,
     height: 360,
     svgHeight: 380,
     padding: { top: 34, right: 42, bottom: 54, left: 74 },
@@ -3244,8 +3282,8 @@ function drawAreaPriceLineChart(container, lang, period) {
     title: areaPriceData.title,
     valueFormatter: formatAreaPrice,
     axisFormatter: formatAxisAreaPrice,
-    minWidth: 1600,
-    monthWidth: 110,
+    minWidth: 980,
+    monthWidth: 24,
     height: 400,
     svgHeight: 400,
     padding: { top: 42, right: 54, bottom: 62, left: 88 },

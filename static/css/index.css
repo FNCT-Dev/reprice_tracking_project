@@ -470,6 +470,29 @@ a {
   font-weight: 800;
 }
 
+.author-group {
+  margin-bottom: 12px;
+  border: 1px solid var(--line);
+  background: #ffffff;
+}
+
+.author-group summary {
+  padding: 12px 14px;
+  color: var(--ink);
+  font-size: 15px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.author-group p {
+  margin: 0;
+  padding: 0 14px 14px;
+}
+
+.author-group p + p {
+  padding-top: 2px;
+}
+
 .doc-toc {
   width: 100%;
   margin: 30px 0 42px;
@@ -1392,7 +1415,7 @@ figcaption {
   display: grid;
   align-items: center;
   min-width: 0;
-  min-height: 520px;
+  min-height: 540px;
   padding: 32px clamp(18px, 3vw, 34px);
   overflow-x: auto;
 }
@@ -1400,7 +1423,7 @@ figcaption {
 .comparison-chart-plot svg {
   display: block;
   width: 100%;
-  min-width: 700px;
+  min-width: 640px;
   height: auto;
 }
 
@@ -1461,8 +1484,8 @@ figcaption {
 .transaction-legend {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px 18px;
-  padding: 0 clamp(18px, 3vw, 34px) 18px;
+  gap: 12px 26px;
+  padding: 8px clamp(18px, 3vw, 34px) 22px;
   color: #26313c;
   font-size: 13px;
   font-weight: 900;
@@ -1495,7 +1518,7 @@ figcaption {
 }
 
 .transaction-line-chart svg {
-  min-width: 1500px;
+  min-width: 980px;
 }
 
 .transaction-line-path {
